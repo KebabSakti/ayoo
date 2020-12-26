@@ -2,8 +2,11 @@ import 'package:ayoo/controller/app_page_controller.dart';
 import 'package:ayoo/controller/carousel_banner_controller.dart';
 import 'package:ayoo/controller/home_page_controller.dart';
 import 'package:ayoo/view/widget/ayo_carousel_banner.dart';
+import 'package:ayoo/view/widget/ayo_search_bar.dart';
 import 'package:ayoo/view/widget/ayo_shimmer.dart';
+import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,31 +34,17 @@ class _HomePageState extends State<HomePage>
             SliverAppBar(
               expandedHeight: Get.size.height / 3,
               pinned: true,
-              title: Container(
-                padding: EdgeInsets.only(left: 10, right: 10),
-                width: double.infinity,
-                height: 35,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  color: Colors.white,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Icon(
-                      Icons.search,
-                      color: Colors.grey,
-                      size: 20,
+              titleSpacing: 0,
+              title: Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: AyoSearchBar(),
                     ),
-                    SizedBox(width: 5),
-                    Container(
-                      child: Text(
-                        'Cari di sini',
-                        style: TextStyle(fontSize: 12, color: Colors.grey[400]),
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                  AyoShoppingCart(),
+                ],
               ),
               flexibleSpace: FlexibleSpaceBar(
                 background: Obx(() {

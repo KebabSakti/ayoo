@@ -1,9 +1,10 @@
+import 'package:ayoo/controller/initial_page_controller.dart';
 import 'package:ayoo/instance/dio_instance.dart';
 import 'package:ayoo/model/intro_image_model.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:ayoo/controller/auth_controller.dart';
+import 'package:ayoo/controller/initial_page_controller.dart';
 
 class IntroImageApi {
   final _dio = Get.find<DioInstance>();
@@ -11,8 +12,8 @@ class IntroImageApi {
   Future<List<IntroImageModel>> fetchIntroImages() async {
     try {
       var response = await _dio
-          .withAuth(auth: Get.find<AuthController>().auth.value)
-          .post('intro_sliders');
+          .withAuth(auth: Get.find<InitialPageController>().authModel.value)
+          .post('intro_slider');
 
       return introImageModelFromJson(response.data);
     } on DioError catch (e) {

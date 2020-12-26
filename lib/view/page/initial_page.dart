@@ -1,10 +1,9 @@
-import 'package:ayoo/controller/auth_controller.dart';
-import 'package:ayoo/controller/intro_controller.dart';
+import 'package:ayoo/controller/initial_page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class InitialPage extends StatelessWidget {
+class InitialPage extends GetView<InitialPageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,12 +27,7 @@ class InitialPage extends StatelessWidget {
               ],
             ),
             Obx(() {
-              if (Get.find<AuthController>().auth.value.token.isNotEmpty) {
-                Get.find<IntroController>().fetchIntroImage();
-              }
-
-              if (Get.find<AuthController>().error.value ||
-                  Get.find<IntroController>().error.value) {
+              if (controller.error.value) {
                 return Column(
                   children: [
                     Icon(
@@ -51,7 +45,7 @@ class InitialPage extends StatelessWidget {
                         color: Colors.grey[600],
                       ),
                       onPressed: () {
-                        Get.find<AuthController>().requestGuestAccess();
+                        controller.requestGuestAccess();
                       },
                     ),
                   ],

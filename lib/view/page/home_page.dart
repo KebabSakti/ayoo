@@ -2,8 +2,9 @@ import 'package:ayoo/controller/app_page_controller.dart';
 import 'package:ayoo/controller/carousel_banner_controller.dart';
 import 'package:ayoo/controller/home_page_controller.dart';
 import 'package:ayoo/controller/main_category_controller.dart';
-import 'package:ayoo/controller/most_search_controller.dart';
+import 'package:ayoo/controller/search_controller.dart';
 import 'package:ayoo/controller/product_paginate_controller.dart';
+import 'package:ayoo/model/search_query.dart';
 import 'package:ayoo/view/widget/ayo_carousel_banner.dart';
 import 'package:ayoo/view/widget/ayo_home_section.dart';
 import 'package:ayoo/view/widget/ayo_horizontal_product.dart';
@@ -15,7 +16,6 @@ import 'package:ayoo/view/widget/ayo_shimmer.dart';
 import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
@@ -164,11 +164,11 @@ class _HomePageState extends State<HomePage>
                 child: Obx(
                   () => AyoHorizontalProduct(
                     loading: _homePageController.loading.value,
-                    products: Get.find<ProductPaginateController>(
-                            tag: 'popular_product')
-                        .productPaginateModel
-                        .value
-                        .data,
+                    products:
+                        Get.find<ProductPaginateController>(tag: 'Popular')
+                            .productPaginateModel
+                            .value
+                            .data,
                   ),
                 ),
               ),
@@ -184,11 +184,18 @@ class _HomePageState extends State<HomePage>
                 heading: 'Paling Dicari',
                 tapText: 'Refresh',
                 icon: Icons.refresh,
-                onTap: () {},
+                onTap: () {
+                  Get.find<SearchController>(tag: 'MostSearch')
+                      .setSearchQuery(query: SearchQuery());
+                },
                 child: Obx(
                   () => AyoPopularSearch(
-                    loading: _homePageController.loading.value,
-                    populars: Get.find<MostSearchController>().mostSearchModel,
+                    loading: _homePageController.loading.value ||
+                        Get.find<SearchController>(tag: 'MostSearch')
+                            .loading
+                            .value,
+                    populars: Get.find<SearchController>(tag: 'MostSearch')
+                        .searchModel,
                   ),
                 ),
               ),

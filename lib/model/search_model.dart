@@ -4,15 +4,14 @@
 
 import 'dart:convert';
 
-List<MostSearchModel> mostSearchModelFromJson(String str) =>
-    List<MostSearchModel>.from(
-        json.decode(str).map((x) => MostSearchModel.fromJson(x)));
+List<SearchModel> searchModelFromJson(String str) => List<SearchModel>.from(
+    json.decode(str).map((x) => SearchModel.fromJson(x)));
 
-String mostSearchModelToJson(List<MostSearchModel> data) =>
+String searchModelToJson(List<SearchModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class MostSearchModel {
-  MostSearchModel({
+class SearchModel {
+  SearchModel({
     this.keyword,
     this.hits,
     this.image,
@@ -22,8 +21,7 @@ class MostSearchModel {
   int hits;
   String image;
 
-  factory MostSearchModel.fromJson(Map<String, dynamic> json) =>
-      MostSearchModel(
+  factory SearchModel.fromJson(Map<String, dynamic> json) => SearchModel(
         keyword: json["keyword"],
         hits: json["hits"],
         image: json["image"],

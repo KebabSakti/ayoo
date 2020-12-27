@@ -6,7 +6,7 @@ import 'dart:convert';
 
 import 'package:ayoo/model/carousel_banner_model.dart';
 import 'package:ayoo/model/main_category_model.dart';
-import 'package:ayoo/model/most_search_model.dart';
+import 'package:ayoo/model/search_model.dart';
 import 'package:ayoo/model/product_paginate_model.dart';
 
 InitialHomeModel initialHomeModelFromJson(String str) =>
@@ -28,7 +28,7 @@ class InitialHomeModel {
   List<MainCategoryModel> mainCategoryModel;
   ProductPaginateModel productPopularPaginateModel;
   ProductPaginateModel productPaginateModel;
-  List<MostSearchModel> mostSearchModel;
+  List<SearchModel> mostSearchModel;
 
   factory InitialHomeModel.fromJson(Map<String, dynamic> json) =>
       InitialHomeModel(
@@ -42,8 +42,8 @@ class InitialHomeModel {
             ProductPaginateModel.fromJson(json["product_popular"]),
         productPaginateModel:
             ProductPaginateModel.fromJson(json["product_paginate_model"]),
-        mostSearchModel: List<MostSearchModel>.from(
-            json["most_search_model"].map((x) => MostSearchModel.fromJson(x))),
+        mostSearchModel: List<SearchModel>.from(
+            json["most_search_model"].map((x) => SearchModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

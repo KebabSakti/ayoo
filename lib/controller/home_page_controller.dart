@@ -1,6 +1,6 @@
 import 'package:ayoo/controller/carousel_banner_controller.dart';
 import 'package:ayoo/controller/main_category_controller.dart';
-import 'package:ayoo/controller/most_search_controller.dart';
+import 'package:ayoo/controller/search_controller.dart';
 import 'package:ayoo/controller/product_paginate_controller.dart';
 import 'package:ayoo/repo/remote/initial_home_api.dart';
 import 'package:get/get.dart';
@@ -8,17 +8,12 @@ import 'package:get/get.dart';
 class HomePageController extends GetxController {
   final _initialHomeApi = InitialHomeApi();
 
-  final _carouselBannerController =
-      Get.put<CarouselBannerController>(CarouselBannerController());
-  final _mainCategoryController =
-      Get.put<MainCategoryController>(MainCategoryController());
-  final _productPaginatePopularController = Get.put<ProductPaginateController>(
-      ProductPaginateController(),
-      tag: 'popular_product');
-  final _productPaginateController =
-      Get.put<ProductPaginateController>(ProductPaginateController());
-  final _mostSearchController =
-      Get.put<MostSearchController>(MostSearchController());
+  final _carouselBannerController = Get.find<CarouselBannerController>();
+  final _mainCategoryController = Get.find<MainCategoryController>();
+  final _productPaginatePopularController =
+      Get.find<ProductPaginateController>(tag: 'Popular');
+  final _productPaginateController = Get.find<ProductPaginateController>();
+  final _searchController = Get.find<SearchController>(tag: 'MostSearch');
 
   var loading = true.obs;
   var error = false.obs;
@@ -34,7 +29,7 @@ class HomePageController extends GetxController {
           .setProductPaginateModel(data.productPopularPaginateModel);
       await _productPaginateController
           .setProductPaginateModel(data.productPaginateModel);
-      await _mostSearchController.setMostSearchModel(data.mostSearchModel);
+      await _searchController.setSearchModel(data.mostSearchModel);
     });
 
     loading.value = false;

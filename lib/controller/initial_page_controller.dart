@@ -41,33 +41,6 @@ class InitialPageController extends GetxController {
     });
   }
 
-  void _authStateListener() async {
-    error.value = false;
-
-    ever(_authController.authModel, (auth) async {
-      _initialDataApi.fetchInitialData().then((initialData) async {
-        if (initialData != null) {
-          final prefs = await SharedPreferences.getInstance();
-
-          //set shopping cart
-          await _shoppingCartController
-              .setShoppingCart(initialData.shoppingCartModel);
-
-          //navigate to intro or app
-          if ((prefs.getBool('intro') ?? false) == false) {
-            await _introBannerController.setIntros(initialData.introImageModel);
-
-            Get.offAllNamed('/intro', arguments: initialData.introImageModel);
-          } else {
-            Get.offAllNamed('/app');
-          }
-        } else {
-          error.value = true;
-        }
-      });
-    });
-  }
-
   @override
   void onInit() {
     initAuth();

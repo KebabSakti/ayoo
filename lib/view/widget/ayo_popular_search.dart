@@ -1,11 +1,11 @@
-import 'package:ayoo/model/most_search_model.dart';
+import 'package:ayoo/model/search_model.dart';
 import 'package:ayoo/view/widget/ayo_shimmer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AyoPopularSearch extends StatelessWidget {
-  final List<MostSearchModel> populars;
+  final List<SearchModel> populars;
   final bool loading;
 
   AyoPopularSearch({

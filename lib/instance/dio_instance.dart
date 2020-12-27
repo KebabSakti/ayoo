@@ -21,9 +21,9 @@ class DioInstance {
     dio = Dio(option);
 
     //interceptor for logging (development only)
-    dio.interceptors.add(LogInterceptor(responseBody: false));
+    // dio.interceptors.add(LogInterceptor(responseBody: false));
 
-    //proxy all connection to local sever (development only)
+    //proxy all connection to local sever for request/response logging (development only)
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {
       client.findProxy = (uri) {

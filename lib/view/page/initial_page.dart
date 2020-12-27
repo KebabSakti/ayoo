@@ -45,7 +45,7 @@ class InitialPage extends GetView<InitialPageController> {
                         color: Colors.grey[600],
                       ),
                       onPressed: () {
-                        controller.requestGuestAccess();
+                        controller.initAuth();
                       },
                     ),
                   ],

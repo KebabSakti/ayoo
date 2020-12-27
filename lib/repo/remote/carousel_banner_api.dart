@@ -1,4 +1,4 @@
-import 'package:ayoo/controller/initial_page_controller.dart';
+import 'package:ayoo/controller/auth_controller.dart';
 import 'package:ayoo/instance/dio_instance.dart';
 import 'package:ayoo/model/carousel_banner_model.dart';
 import 'package:dio/dio.dart';
@@ -14,7 +14,7 @@ class CarouselBannerApi {
   }) async {
     try {
       var response = await _dio
-          .withAuth(auth: Get.find<InitialPageController>().authModel.value)
+          .withAuth(auth: Get.find<AuthController>().authModel.value)
           .post(
         'banner_slide',
         data: {
@@ -24,7 +24,7 @@ class CarouselBannerApi {
       );
 
       return carouselBannerModelFromJson(response.data);
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       return null;
     }
   }

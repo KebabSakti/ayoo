@@ -11,7 +11,7 @@ class AuthApi {
       var response = await _dio.get('auth/customer/guest_access');
 
       return authModelFromJson(response.data);
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       return null;
     }
   }

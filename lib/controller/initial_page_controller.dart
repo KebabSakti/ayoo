@@ -1,56 +1,76 @@
-import 'package:ayoo/model/auth_model.dart';
-import 'package:ayoo/repo/remote/auth_api.dart';
-import 'package:ayoo/repo/remote/intro_image_api.dart';
+import 'package:ayoo/controller/auth_controller.dart';
+import 'package:ayoo/controller/intro_banner_controller.dart';
+import 'package:ayoo/controller/shopping_cart_controller.dart';
+import 'package:ayoo/repo/remote/initial_data_api.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class InitialPageController extends GetxController {
-  final _authApi = AuthApi();
-  final _introImageApi = IntroImageApi();
+  final _initialDataApi = InitialDataApi();
 
-  var authModel = AuthModel(userId: "", token: "").obs;
+  final _authController = Get.find<AuthController>();
+  final _shoppingCartController = Get.find<ShoppingCartController>();
+  final _introBannerController = Get.find<IntroBannerController>();
+
   var error = false.obs;
 
-  @override
-  void onInit() {
-    requestGuestAccess();
-    super.onInit();
-  }
-
-  Future requestGuestAccess() async {
+  Future initAuth() async {
     error.value = false;
 
-    final prefs = await SharedPreferences.getInstance();
+    _authController.requestGuestAccess().then((_) {
+      _initialDataApi.fetchInitialData().then((initialData) async {
+        if (initialData != null) {
+          final prefs = await SharedPreferences.getInstance();
 
-    if ((prefs.getString('token') ?? "").isEmpty) {
-      await _authApi.requestGuestAccess().then((auth) {
-        if (auth != null) {
-          prefs.setString('token', auth.token);
-          prefs.setString('user_id', auth.userId);
-          authModel.value = auth;
+          //set shopping cart
+          await _shoppingCartController
+              .setShoppingCart(initialData.shoppingCartModel);
 
-          _fetchIntroImages();
+          //navigate to intro or app
+          if ((prefs.getBool('intro') ?? false) == false) {
+            await _introBannerController.setIntros(initialData.introImageModel);
+
+            Get.offAllNamed('/intro', arguments: initialData.introImageModel);
+          } else {
+            Get.offAllNamed('/app');
+          }
         } else {
           error.value = true;
         }
       });
-    } else {
-      authModel(AuthModel(
-        userId: prefs.getString('user_id'),
-        token: prefs.getString('token'),
-      ));
-
-      Get.offAllNamed('/app');
-    }
+    });
   }
 
-  Future _fetchIntroImages() async {
-    await _introImageApi.fetchIntroImages().then((images) {
-      if (images != null) {
-        Get.offAllNamed('/intro', arguments: images);
-      } else {
-        error.value = true;
-      }
+  void _authStateListener() async {
+    error.value = false;
+
+    ever(_authController.authModel, (auth) async {
+      _initialDataApi.fetchInitialData().then((initialData) async {
+        if (initialData != null) {
+          final prefs = await SharedPreferences.getInstance();
+
+          //set shopping cart
+          await _shoppingCartController
+              .setShoppingCart(initialData.shoppingCartModel);
+
+          //navigate to intro or app
+          if ((prefs.getBool('intro') ?? false) == false) {
+            await _introBannerController.setIntros(initialData.introImageModel);
+
+            Get.offAllNamed('/intro', arguments: initialData.introImageModel);
+          } else {
+            Get.offAllNamed('/app');
+          }
+        } else {
+          error.value = true;
+        }
+      });
     });
+  }
+
+  @override
+  void onInit() {
+    initAuth();
+    super.onInit();
   }
 }

@@ -46,6 +46,8 @@ class AyoBottomNavigationBarItem extends StatelessWidget {
                 style: TextStyle(
                   color: _color,
                   fontSize: 12,
+                  fontWeight:
+                      (active == index) ? FontWeight.w800 : FontWeight.normal,
                 ),
               ),
             ],

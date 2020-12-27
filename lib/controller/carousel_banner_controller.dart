@@ -21,13 +21,17 @@ class CarouselBannerController extends GetxController {
         .fetchCarouselBanner(target: target)
         .then((banners) {
       if (banners != null) {
-        carouselBanners.assignAll(banners);
+        setCarouselBanners(banners);
       } else {
         error.value = true;
       }
     });
 
     loading.value = false;
+  }
+
+  Future setCarouselBanners(List<CarouselBannerModel> banners) async {
+    carouselBanners.assignAll(banners);
   }
 
   void setActive(int index) {

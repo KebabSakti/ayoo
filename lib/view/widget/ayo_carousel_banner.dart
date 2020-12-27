@@ -1,10 +1,8 @@
-import 'package:ayoo/controller/carousel_banner_controller.dart';
 import 'package:ayoo/model/carousel_banner_model.dart';
 import 'package:ayoo/view/widget/ayo_shimmer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AyoCarouselBanner extends StatelessWidget {
   final List<CarouselBannerModel> banners;

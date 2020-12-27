@@ -1,4 +1,5 @@
 import 'package:ayoo/view/widget/ayo_search_bar.dart';
+import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -11,25 +12,12 @@ class ProductPage extends StatelessWidget {
         title: Row(
           children: [
             Expanded(
-              child: AyoSearchBar(),
-            ),
-            ClipOval(
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {},
-                  child: SizedBox(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Icon(
-                        FontAwesomeIcons.shoppingBag,
-                        size: 24,
-                      ),
-                    ),
-                  ),
-                ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 0),
+                child: AyoSearchBar(),
               ),
-            )
+            ),
+            AyoShoppingCart(),
           ],
         ),
       ),

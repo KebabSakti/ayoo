@@ -110,7 +110,7 @@ class AppPage extends GetView<AppPageController> {
                   Obx(
                     () => AyoBottomNavigationBarItem(
                       width: Get.size.width / 5,
-                      icon: FontAwesomeIcons.burn,
+                      icon: FontAwesomeIcons.shoppingCart,
                       text: 'Home',
                       index: 0,
                       active: controller.appPageViewActive.value,

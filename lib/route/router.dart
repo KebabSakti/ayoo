@@ -1,4 +1,5 @@
 import 'package:ayoo/binding/app_page_binding.dart';
+import 'package:ayoo/binding/contoh_binding.dart';
 import 'package:ayoo/binding/intro_page_binding.dart';
 import 'package:ayoo/view/page/page.dart';
 import 'package:ayoo/binding/binding.dart';
@@ -33,6 +34,7 @@ class AppRouter {
     GetPage(
       name: '/product_page',
       page: () => ProductPage(),
+      binding: ContohBinding(),
       transition: _transition,
       transitionDuration: _transitionDuration,
     ),

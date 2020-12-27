@@ -1,9 +1,14 @@
+import 'package:ayoo/controller/contoh_controller.dart';
 import 'package:ayoo/view/widget/ayo_search_bar.dart';
 import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 class ProductPage extends StatelessWidget {
+  final _satu = Get.find<ContohController>(tag: 'Satu');
+  // final _dua = Get.find<ContohController>(tag: 'Dua');
+  final _tiga = Get.find<ContohController>(tag: 'Tiga');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

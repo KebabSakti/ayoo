@@ -10,11 +10,11 @@ class ProductPaginateApi {
   final _dio = Get.find<DioInstance>();
 
   Future<ProductPaginateModel> fetchPaginateProduct(
-      {@required ProductQueryModel query}) async {
+      {@required ProductQueryModel query, int page}) async {
     try {
       var response = await _dio
           .withAuth(auth: Get.find<AuthController>().authModel.value)
-          .post('product', data: {
+          .post('product?page=${page ?? 1}', data: {
         'sub_category_id': query.subCategoryId,
         'main_category_id': query.mainCategoryId,
         'keyword': query.keyword,

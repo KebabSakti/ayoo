@@ -3,10 +3,12 @@ import 'package:ayoo/controller/main_category_controller.dart';
 import 'package:ayoo/controller/search_controller.dart';
 import 'package:ayoo/controller/product_paginate_controller.dart';
 import 'package:ayoo/repo/remote/initial_home_api.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class HomePageController extends GetxController {
   final _initialHomeApi = InitialHomeApi();
+  final ScrollController scrollController = ScrollController();
 
   final _carouselBannerController = Get.find<CarouselBannerController>();
   final _mainCategoryController = Get.find<MainCategoryController>();

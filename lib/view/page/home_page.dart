@@ -10,12 +10,15 @@ import 'package:ayoo/view/widget/ayo_home_section.dart';
 import 'package:ayoo/view/widget/ayo_horizontal_product.dart';
 import 'package:ayoo/view/widget/ayo_main_category.dart';
 import 'package:ayoo/view/widget/ayo_popular_search.dart';
+import 'package:ayoo/view/widget/ayo_product_filter.dart';
 import 'package:ayoo/view/widget/ayo_scanner_with_point_bar.dart';
+import 'package:ayoo/view/widget/ayo_scroll_to_top_button.dart';
 import 'package:ayoo/view/widget/ayo_search_bar.dart';
 import 'package:ayoo/view/widget/ayo_shimmer.dart';
 import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,8 +28,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
-  final _homePageController = Get.find<HomePageController>();
-
   @override
   bool get wantKeepAlive => true;
 
@@ -37,179 +38,185 @@ class _HomePageState extends State<HomePage>
     return Container(
       child: RefreshIndicator(
         onRefresh: () async {
-          _homePageController.fetchHomeData();
+          Get.find<HomePageController>().fetchHomeData();
         },
-        child: CustomScrollView(
-          controller: Get.find<AppPageController>().scrollController,
-          slivers: [
-            SliverAppBar(
-              expandedHeight: Get.size.height / 3,
-              pinned: true,
-              titleSpacing: 0,
-              title: Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: AyoSearchBar(),
-                    ),
+        child: Stack(
+          children: [
+            CustomScrollView(
+              controller: Get.find<HomePageController>().scrollController,
+              slivers: [
+                SliverAppBar(
+                  expandedHeight: Get.size.height / 3,
+                  pinned: true,
+                  titleSpacing: 0,
+                  title: Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: AyoSearchBar(),
+                        ),
+                      ),
+                      AyoShoppingCart(),
+                    ],
                   ),
-                  AyoShoppingCart(),
-                ],
-              ),
-              flexibleSpace: FlexibleSpaceBar(
-                background: Obx(() {
-                  if (!_homePageController.loading.value) {
-                    return AyoCarouselBanner(
-                      banners:
-                          Get.find<CarouselBannerController>().carouselBanners,
-                      active: Get.find<CarouselBannerController>().active.value,
-                      onPageChanged:
-                          Get.find<CarouselBannerController>().setActive,
-                    );
-                  }
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Obx(() {
+                      if (!Get.find<HomePageController>().loading.value) {
+                        return AyoCarouselBanner(
+                          banners: Get.find<CarouselBannerController>()
+                              .carouselBanners,
+                          active:
+                              Get.find<CarouselBannerController>().active.value,
+                          onPageChanged:
+                              Get.find<CarouselBannerController>().setActive,
+                        );
+                      }
 
-                  return AyoShimmer(radius: 0);
-                }),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: SizedBox(height: 10),
-            ),
-            SliverToBoxAdapter(
-              child: AyoScannerWithPointBar(),
-            ),
-            SliverToBoxAdapter(
-              child: SizedBox(height: 10),
-            ),
-            SliverToBoxAdapter(
-              child: AyoHomeSection(
-                heading: 'Kategori',
-                tapText: 'Lihat Semua',
-                onTap: () {},
-                child: Obx(
-                  () => AyoMainCategory(
-                    loading: _homePageController.loading.value,
-                    categories:
-                        Get.find<MainCategoryController>().mainCategories,
+                      return AyoShimmer(radius: 0);
+                    }),
                   ),
                 ),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                height: 10,
-                color: Colors.grey[100],
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: AyoHomeSection(
-                heading: 'Promo',
-                tapText: 'Lihat Semua',
-                onTap: () {},
-                child: Builder(
-                  builder: (context) {
-                    var images = [
-                      'https://image.freepik.com/free-vector/discount-social-media-banner-sale-liquid-background_92715-50.jpg',
-                      'https://image.freepik.com/free-vector/abstract-colorful-big-sale-banner_23-2148345098.jpg',
-                      'https://image.freepik.com/free-vector/end-season-summer-sale-horizontal-banner_23-2148633748.jpg',
-                    ];
+                SliverToBoxAdapter(
+                  child: SizedBox(height: 10),
+                ),
+                SliverToBoxAdapter(
+                  child: AyoScannerWithPointBar(),
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(height: 10),
+                ),
+                SliverToBoxAdapter(
+                  child: AyoHomeSection(
+                    heading: 'Kategori',
+                    tapText: 'Lihat Semua',
+                    onTap: () {},
+                    child: Obx(
+                      () => AyoMainCategory(
+                        loading: Get.find<HomePageController>().loading.value,
+                        categories:
+                            Get.find<MainCategoryController>().mainCategories,
+                      ),
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    height: 10,
+                    color: Colors.grey[100],
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: AyoHomeSection(
+                    heading: 'Promo',
+                    tapText: 'Lihat Semua',
+                    onTap: () {},
+                    child: Builder(
+                      builder: (context) {
+                        var images = [
+                          'https://image.freepik.com/free-vector/discount-social-media-banner-sale-liquid-background_92715-50.jpg',
+                          'https://image.freepik.com/free-vector/abstract-colorful-big-sale-banner_23-2148345098.jpg',
+                          'https://image.freepik.com/free-vector/end-season-summer-sale-horizontal-banner_23-2148633748.jpg',
+                        ];
 
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: images.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.only(left: 5, right: 5),
-                          child: Material(
-                            child: InkWell(
-                              onTap: () {},
-                              borderRadius: BorderRadius.circular(10),
-                              splashColor: Theme.of(context)
-                                  .accentColor
-                                  .withOpacity(0.3),
-                              child: Ink(
-                                width: Get.size.width - 20,
-                                decoration: BoxDecoration(
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: images.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.only(left: 5, right: 5),
+                              child: Material(
+                                child: InkWell(
+                                  onTap: () {},
                                   borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                    image: CachedNetworkImageProvider(
-                                      images[index],
+                                  splashColor: Theme.of(context)
+                                      .accentColor
+                                      .withOpacity(0.3),
+                                  child: Ink(
+                                    width: Get.size.width - 20,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                        image: CachedNetworkImageProvider(
+                                          images[index],
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
+                            );
+                          },
                         );
                       },
-                    );
-                  },
-                ),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                height: 10,
-                color: Colors.grey[100],
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: AyoHomeSection(
-                height: 250,
-                heading: 'Produk Terlaris',
-                tapText: 'Lihat Semua',
-                onTap: () {},
-                child: Obx(
-                  () => AyoHorizontalProduct(
-                    loading: _homePageController.loading.value,
-                    products:
-                        Get.find<ProductPaginateController>(tag: 'Popular')
-                            .productPaginateModel
-                            .value
-                            .data,
+                    ),
                   ),
                 ),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                height: 10,
-                color: Colors.grey[100],
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: AyoHomeSection(
-                heading: 'Paling Dicari',
-                tapText: 'Refresh',
-                icon: Icons.refresh,
-                onTap: () {
-                  Get.find<SearchController>(tag: 'MostSearch')
-                      .setSearchQuery(query: SearchQuery());
-                },
-                child: Obx(
-                  () => AyoPopularSearch(
-                    loading: _homePageController.loading.value ||
-                        Get.find<SearchController>(tag: 'MostSearch')
-                            .loading
-                            .value,
-                    populars: Get.find<SearchController>(tag: 'MostSearch')
-                        .searchModel,
+                SliverToBoxAdapter(
+                  child: Container(
+                    height: 10,
+                    color: Colors.grey[100],
                   ),
                 ),
-              ),
+                SliverToBoxAdapter(
+                  child: AyoHomeSection(
+                    height: 250,
+                    heading: 'Produk Terlaris',
+                    tapText: 'Lihat Semua',
+                    onTap: () {},
+                    child: Obx(
+                      () => AyoHorizontalProduct(
+                        loading: Get.find<HomePageController>().loading.value,
+                        products:
+                            Get.find<ProductPaginateController>(tag: 'Popular')
+                                .productPaginateModel
+                                .value
+                                .data,
+                      ),
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    height: 10,
+                    color: Colors.grey[100],
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: AyoHomeSection(
+                    heading: 'Paling Dicari',
+                    tapText: 'Refresh',
+                    icon: Icons.refresh,
+                    onTap: () {
+                      Get.find<SearchController>(tag: 'MostSearch')
+                          .setSearchQuery(query: SearchQuery());
+                    },
+                    child: Obx(
+                      () => AyoPopularSearch(
+                        loading: Get.find<HomePageController>().loading.value ||
+                            Get.find<SearchController>(tag: 'MostSearch')
+                                .loading
+                                .value,
+                        populars: Get.find<SearchController>(tag: 'MostSearch')
+                            .searchModel,
+                      ),
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    height: 10,
+                    color: Colors.grey[100],
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: AyoProductFilter(),
+                ),
+              ],
             ),
-            SliverToBoxAdapter(
-              child: Container(
-                height: 10,
-                color: Colors.grey[100],
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                height: 500,
-              ),
+            AyoScrollToTopButton(
+              scrollController: Get.find<HomePageController>().scrollController,
             ),
           ],
         ),

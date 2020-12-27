@@ -50,122 +50,49 @@ class AppPage extends GetView<AppPageController> {
           body: Column(
             children: [
               Expanded(
-                child: Stack(
+                child: PageView(
+                  controller: controller.appPageViewController,
+                  physics: NeverScrollableScrollPhysics(),
                   children: [
-                    PageView(
-                      controller: controller.appPageViewController,
-                      physics: NeverScrollableScrollPhysics(),
-                      children: [
-                        HomePage(),
-                        OrderPage(),
-                        Container(),
-                        Container(),
-                        Container(),
-                      ],
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Obx(
-                          () => TweenAnimationBuilder(
-                            curve: Curves.bounceOut,
-                            tween: Tween<double>(
-                              begin: 0.0,
-                              end: controller
-                                  .scrollToTopButtonTweenEndValue.value,
-                            ),
-                            duration: Duration(milliseconds: 300),
-                            builder: (context, scale, child) => Transform.scale(
-                              scale: scale,
-                              child: child,
-                            ),
-                            child: ClipOval(
-                              child: Material(
-                                color: Get.theme.primaryColor.withOpacity(0.8),
-                                child: InkWell(
-                                  child: SizedBox(
-                                    width: 45,
-                                    height: 45,
-                                    child: Icon(
-                                      FontAwesomeIcons.arrowUp,
-                                      size: 18,
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    controller.scrollToTop();
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    HomePage(),
+                    OrderPage(),
+                    Container(),
+                    Container(),
+                    Container(),
                   ],
                 ),
               ),
               AyoBottomNavigationBar(
                 items: [
-                  Obx(
-                    () => AyoBottomNavigationBarItem(
-                      width: Get.size.width / 5,
-                      icon: FontAwesomeIcons.shoppingCart,
-                      text: 'Home',
-                      index: 0,
-                      active: controller.appPageViewActive.value,
-                      onTap: () {
-                        controller.appPageViewNavigateTo(0);
-                      },
-                    ),
+                  AyoBottomNavigationBarItem(
+                    width: Get.size.width / 5,
+                    icon: FontAwesomeIcons.shoppingCart,
+                    text: 'Home',
+                    index: 0,
                   ),
-                  Obx(
-                    () => AyoBottomNavigationBarItem(
-                      width: Get.size.width / 5,
-                      icon: FontAwesomeIcons.clipboardList,
-                      text: 'Order',
-                      index: 1,
-                      active: controller.appPageViewActive.value,
-                      onTap: () {
-                        controller.appPageViewNavigateTo(1);
-                      },
-                    ),
+                  AyoBottomNavigationBarItem(
+                    width: Get.size.width / 5,
+                    icon: FontAwesomeIcons.clipboardList,
+                    text: 'Order',
+                    index: 1,
                   ),
-                  Obx(
-                    () => AyoBottomNavigationBarItem(
-                      width: Get.size.width / 5,
-                      icon: FontAwesomeIcons.solidCommentDots,
-                      text: 'Chat',
-                      index: 2,
-                      active: controller.appPageViewActive.value,
-                      onTap: () {
-                        controller.appPageViewNavigateTo(2);
-                      },
-                    ),
+                  AyoBottomNavigationBarItem(
+                    width: Get.size.width / 5,
+                    icon: FontAwesomeIcons.solidCommentDots,
+                    text: 'Chat',
+                    index: 2,
                   ),
-                  Obx(
-                    () => AyoBottomNavigationBarItem(
-                      width: Get.size.width / 5,
-                      icon: FontAwesomeIcons.solidBell,
-                      text: 'Notif',
-                      index: 3,
-                      active: controller.appPageViewActive.value,
-                      onTap: () {
-                        controller.appPageViewNavigateTo(3);
-                      },
-                    ),
+                  AyoBottomNavigationBarItem(
+                    width: Get.size.width / 5,
+                    icon: FontAwesomeIcons.solidBell,
+                    text: 'Notif',
+                    index: 3,
                   ),
-                  Obx(
-                    () => AyoBottomNavigationBarItem(
-                      width: Get.size.width / 5,
-                      icon: FontAwesomeIcons.userAlt,
-                      text: 'Akun',
-                      index: 4,
-                      active: controller.appPageViewActive.value,
-                      onTap: () {
-                        controller.appPageViewNavigateTo(4);
-                      },
-                    ),
+                  AyoBottomNavigationBarItem(
+                    width: Get.size.width / 5,
+                    icon: FontAwesomeIcons.userAlt,
+                    text: 'Akun',
+                    index: 4,
                   ),
                 ],
               ),

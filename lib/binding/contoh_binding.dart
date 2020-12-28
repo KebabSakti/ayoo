@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 class ContohBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put<ContohController>(ContohController(), tag: "Satu");
-    Get.put<ContohController>(ContohController(), tag: "Tiga");
-    Get.put<ContohController>(ContohController(), tag: "Dua");
+    Get.lazyPut<ContohController>(() => ContohController());
+    // Get.put<ContohController>(ContohController(), tag: "Tiga");
+    // Get.put<ContohController>(ContohController(), tag: "Dua");
   }
 }

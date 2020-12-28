@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static final primary = ThemeData(
     brightness: Brightness.light,
-    primaryColor: Color(0xFFe63946),
+    primaryColor: Color(0xFFd63d8c),
     accentColor: Color(0xFF003049),
     colorScheme: ColorScheme.light().copyWith(
       primary: Color(0xFFD62828),

@@ -4,11 +4,7 @@ import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ProductPage extends StatelessWidget {
-  final _satu = Get.find<ContohController>(tag: 'Satu');
-  // final _dua = Get.find<ContohController>(tag: 'Dua');
-  final _tiga = Get.find<ContohController>(tag: 'Tiga');
-
+class ProductPage extends GetView<ContohController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +24,7 @@ class ProductPage extends StatelessWidget {
       ),
       body: Container(
         child: Center(
-          child: Text('proudct page'),
+          child: Text(controller.asd.value),
         ),
       ),
     );

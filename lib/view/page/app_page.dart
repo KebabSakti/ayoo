@@ -1,4 +1,5 @@
 import 'package:ayoo/controller/app_page_controller.dart';
+import 'package:ayoo/controller/ayo_slidding_up_panel_controller.dart';
 import 'package:ayoo/view/page/home_page.dart';
 import 'package:ayoo/view/page/order_page.dart';
 import 'package:ayoo/view/widget/ayo_bottom_navigation_bar.dart';
@@ -8,45 +9,45 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class AppPage extends GetView<AppPageController> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Get.dialog(
-          AlertDialog(
-            content: Text('Keluar dari aplikasi?'),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Tidak'),
-                onPressed: () {
-                  Get.back();
-                },
-              ),
-              FlatButton(
-                child: Text('Ya'),
-                onPressed: () {
-                  SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                },
-              ),
-            ],
-          ),
-        );
+        if (Get.find<AyoSlidingUpPanelController>()
+                .panelController
+                .panelPosition >
+            0) {
+          //close panel if open
+          Get.find<AyoSlidingUpPanelController>().panelController.close();
+        } else {
+          Get.dialog(
+            AlertDialog(
+              content: Text('Keluar dari aplikasi?'),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Tidak'),
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+                FlatButton(
+                  child: Text('Ya'),
+                  onPressed: () {
+                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                  },
+                ),
+              ],
+            ),
+          );
+        }
 
         return false;
       },
       child: Scaffold(
         backgroundColor: Colors.white,
         body: AyoSlidingUpPanel(
-          controller: controller.appPanelController,
-          defaultPanelState: PanelState.CLOSED,
-          maxHeight: 500.0,
-          minHeight: 0.0,
-          panel: Center(
-            child: Text('Slideee'),
-          ),
           body: Column(
             children: [
               Expanded(

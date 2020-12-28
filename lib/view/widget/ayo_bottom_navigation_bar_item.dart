@@ -23,7 +23,7 @@ class AyoBottomNavigationBarItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(56),
       child: InkWell(
         onTap: () => Get.find<AppPageController>().appPageViewNavigateTo(index),
-        splashColor: Theme.of(context).accentColor.withOpacity(0.3),
+        splashColor: Get.theme.accentColor.withOpacity(0.3),
         borderRadius: BorderRadius.circular(56),
         child: Ink(
           width: width,

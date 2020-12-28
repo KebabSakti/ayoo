@@ -12,6 +12,8 @@ class ProductPaginateController extends GetxController {
   final loading = true.obs;
   final error = false.obs;
 
+  final sort = <String>[""];
+
   Future fetchPaginateProduct() async {
     loading.value = true;
     error.value = false;

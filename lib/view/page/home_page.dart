@@ -1,4 +1,3 @@
-import 'package:ayoo/controller/app_page_controller.dart';
 import 'package:ayoo/controller/carousel_banner_controller.dart';
 import 'package:ayoo/controller/home_page_controller.dart';
 import 'package:ayoo/controller/main_category_controller.dart';
@@ -8,9 +7,9 @@ import 'package:ayoo/model/search_query.dart';
 import 'package:ayoo/view/widget/ayo_carousel_banner.dart';
 import 'package:ayoo/view/widget/ayo_home_section.dart';
 import 'package:ayoo/view/widget/ayo_horizontal_product.dart';
+import 'package:ayoo/view/widget/ayo_horizontal_product_filter.dart';
 import 'package:ayoo/view/widget/ayo_main_category.dart';
 import 'package:ayoo/view/widget/ayo_popular_search.dart';
-import 'package:ayoo/view/widget/ayo_product_filter.dart';
 import 'package:ayoo/view/widget/ayo_scanner_with_point_bar.dart';
 import 'package:ayoo/view/widget/ayo_scroll_to_top_button.dart';
 import 'package:ayoo/view/widget/ayo_search_bar.dart';
@@ -18,7 +17,6 @@ import 'package:ayoo/view/widget/ayo_shimmer.dart';
 import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
@@ -211,7 +209,15 @@ class _HomePageState extends State<HomePage>
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: AyoProductFilter(),
+                  child: AyoHorizontalProductFilter(
+                    controller: Get.find<ProductPaginateController>(),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    height: 300,
+                    color: Colors.white,
+                  ),
                 ),
               ],
             ),

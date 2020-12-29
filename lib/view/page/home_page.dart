@@ -15,6 +15,7 @@ import 'package:ayoo/view/widget/ayo_scroll_to_top_button.dart';
 import 'package:ayoo/view/widget/ayo_search_bar.dart';
 import 'package:ayoo/view/widget/ayo_shimmer.dart';
 import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
+import 'package:ayoo/view/widget/ayo_sticky_widget.dart';
 import 'package:ayoo/view/widget/ayo_vertical_product.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -211,17 +212,13 @@ class _HomePageState extends State<HomePage>
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      AyoHorizontalProductFilter(
-                        controller: Get.find<ProductPaginateController>(),
-                      ),
-                      AyoVerticalProduct(
-                        controller: Get.find<ProductPaginateController>(),
-                        scrollController: controller.scrollController,
-                      ),
-                    ],
+                  child: AyoHorizontalProductFilter(
+                    controller: Get.find<ProductPaginateController>(),
                   ),
+                ),
+                AyoVerticalProduct(
+                  controller: Get.find<ProductPaginateController>(),
+                  scrollController: controller.scrollController,
                 ),
                 SliverToBoxAdapter(
                   child: Container(
@@ -229,6 +226,13 @@ class _HomePageState extends State<HomePage>
                   ),
                 ),
               ],
+            ),
+            AyoStickyWidget(
+              scrollController: controller.scrollController,
+              stickyPosition: 1096,
+              child: AyoHorizontalProductFilter(
+                controller: Get.find<ProductPaginateController>(),
+              ),
             ),
             AyoScrollToTopButton(
               scrollController: controller.scrollController,

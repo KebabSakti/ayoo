@@ -22,31 +22,22 @@ class AyoVerticalProduct extends StatelessWidget {
         scrollController: scrollController,
         productPaginateController: this.controller,
       ),
-      builder: (controller) => Container(
+      builder: (controller) => SliverPadding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: MediaQuery.removePadding(
-          removeTop: true,
-          removeBottom: false,
-          removeLeft: false,
-          removeRight: false,
-          context: context,
-          child: Obx(
-            () {
-              final loading = (Get.find<HomePageController>().loading.value ||
-                  this.controller.loading.value);
-              return GridView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: ((Get.size.width - 30) / 2) / 200,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                ),
-                itemCount: (!loading)
-                    ? this.controller.productPaginateModel.value.data.length
-                    : 4,
-                itemBuilder: (context, index) => (!loading &&
+        sliver: Obx(
+          () {
+            final loading = (Get.find<HomePageController>().loading.value ||
+                this.controller.loading.value);
+
+            return SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: ((Get.size.width - 30) / 2) / 200,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => (!loading &&
                         (index + 1) <=
                             this
                                 .controller
@@ -62,9 +53,50 @@ class AyoVerticalProduct extends StatelessWidget {
                             .data[index],
                       )
                     : AyoShimmer(),
-              );
-            },
-          ),
+                childCount: (!loading)
+                    ? (this.controller.moreLoading.value)
+                        ? this
+                                .controller
+                                .productPaginateModel
+                                .value
+                                .data
+                                .length +
+                            2
+                        : this.controller.productPaginateModel.value.data.length
+                    : 4,
+              ),
+            );
+
+            // return GridView.builder(
+            //   shrinkWrap: true,
+            //   physics: NeverScrollableScrollPhysics(),
+            //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //     crossAxisCount: 2,
+            //     childAspectRatio: ((Get.size.width - 30) / 2) / 200,
+            //     mainAxisSpacing: 10,
+            //     crossAxisSpacing: 10,
+            //   ),
+            //   itemCount: (!loading)
+            //       ? this.controller.productPaginateModel.value.data.length
+            //       : 4,
+            //   itemBuilder: (context, index) => (!loading &&
+            //           (index + 1) <=
+            //               this
+            //                   .controller
+            //                   .productPaginateModel
+            //                   .value
+            //                   .data
+            //                   .length)
+            //       ? AyoProductItem(
+            //           product: this
+            //               .controller
+            //               .productPaginateModel
+            //               .value
+            //               .data[index],
+            //         )
+            //       : AyoShimmer(),
+            // );
+          },
         ),
       ),
     );

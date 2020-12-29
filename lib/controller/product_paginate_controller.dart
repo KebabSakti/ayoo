@@ -16,8 +16,6 @@ class ProductPaginateController extends GetxController {
   final moreError = false.obs;
   final error = false.obs;
 
-  final sort = <String>[""];
-
   Future fetchPaginateProduct() async {
     loading.value = true;
     error.value = false;
@@ -36,17 +34,28 @@ class ProductPaginateController extends GetxController {
   }
 
   Future fetchMorePaginateProduct() async {
-    if (productPaginateModel.value.to < productPaginateModel.value.total) {
+    if (productPaginateModel.value.nextPageUrl != null) {
       moreLoading.value = true;
       moreError.value = false;
 
       await _productPaginateApi
           .fetchPaginateProduct(
               query: productQueryModel.value,
-              page: productPaginateModel.value.currentPage++)
+              page: productPaginateModel.value.currentPage + 1)
           .then((product) {
         if (product != null) {
           productPaginateModel.update((val) {
+            val.currentPage = product.currentPage;
+            val.firstPageUrl = product.firstPageUrl;
+            val.from = product.from;
+            val.lastPage = product.lastPage;
+            val.lastPageUrl = product.lastPageUrl;
+            val.nextPageUrl = product.nextPageUrl;
+            val.prevPageUrl = product.prevPageUrl;
+            val.path = product.path;
+            val.perPage = product.perPage;
+            val.to = product.to;
+            val.total = product.total;
             val.data.addAll(product.data);
           });
         } else {

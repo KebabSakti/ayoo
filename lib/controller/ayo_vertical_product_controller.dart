@@ -22,7 +22,9 @@ class AyoVerticalProductController extends GetxController {
   }
 
   void _scrollListener() {
-    if (scrollController.offset == scrollController.position.maxScrollExtent) {
+    if (scrollController.offset >=
+            (scrollController.position.maxScrollExtent - 300) &&
+        productPaginateController.moreLoading.value == false) {
       productPaginateController.fetchMorePaginateProduct();
     }
   }

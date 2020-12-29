@@ -9,13 +9,13 @@ import 'package:get/get.dart';
 class AppPageBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put<CarouselBannerController>(CarouselBannerController());
-    Get.put<MainCategoryController>(MainCategoryController());
-    Get.put<ProductPaginateController>(ProductPaginateController());
-    Get.put<ProductPaginateController>(ProductPaginateController(),
+    Get.lazyPut<CarouselBannerController>(() => CarouselBannerController());
+    Get.lazyPut<MainCategoryController>(() => MainCategoryController());
+    Get.lazyPut<ProductPaginateController>(() => ProductPaginateController());
+    Get.lazyPut<ProductPaginateController>(() => ProductPaginateController(),
         tag: 'Popular');
-    Get.put<SearchController>(SearchController(), tag: 'MostSearch');
-    Get.put(AppPageController());
-    Get.put(HomePageController());
+    Get.lazyPut<SearchController>(() => SearchController(), tag: 'MostSearch');
+    Get.lazyPut(() => AppPageController());
+    Get.lazyPut(() => HomePageController());
   }
 }

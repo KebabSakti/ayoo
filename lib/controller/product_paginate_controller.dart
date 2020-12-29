@@ -7,9 +7,13 @@ import 'package:get/get.dart';
 class ProductPaginateController extends GetxController {
   final _productPaginateApi = ProductPaginateApi();
 
+  final scrollController = ScrollController();
   final productPaginateModel = ProductPaginateModel().obs;
   final productQueryModel = ProductQueryModel().obs;
-  final loading = true.obs;
+
+  final loading = false.obs;
+  final moreLoading = false.obs;
+  final moreError = false.obs;
   final error = false.obs;
 
   final sort = <String>[""];
@@ -19,16 +23,39 @@ class ProductPaginateController extends GetxController {
     error.value = false;
 
     await _productPaginateApi
-        .fetchPaginateProduct(query: productQueryModel.value)
+        .fetchPaginateProduct(query: productQueryModel.value, page: 1)
         .then((product) {
       if (product != null) {
         setProductPaginateModel(product);
       } else {
         error.value = true;
       }
-    });
 
-    loading.value = false;
+      loading.value = false;
+    });
+  }
+
+  Future fetchMorePaginateProduct() async {
+    if (productPaginateModel.value.to < productPaginateModel.value.total) {
+      moreLoading.value = true;
+      moreError.value = false;
+
+      await _productPaginateApi
+          .fetchPaginateProduct(
+              query: productQueryModel.value,
+              page: productPaginateModel.value.currentPage++)
+          .then((product) {
+        if (product != null) {
+          productPaginateModel.update((val) {
+            val.data.addAll(product.data);
+          });
+        } else {
+          moreError.value = true;
+        }
+
+        moreLoading.value = false;
+      });
+    }
   }
 
   Future setProductPaginateModel(ProductPaginateModel productPaginate) async {
@@ -44,6 +71,13 @@ class ProductPaginateController extends GetxController {
     debounce(productQueryModel, (_) {
       fetchPaginateProduct();
     }, time: Duration(milliseconds: 300));
+
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
   }
 }

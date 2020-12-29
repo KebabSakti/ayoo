@@ -15,6 +15,7 @@ import 'package:ayoo/view/widget/ayo_scroll_to_top_button.dart';
 import 'package:ayoo/view/widget/ayo_search_bar.dart';
 import 'package:ayoo/view/widget/ayo_shimmer.dart';
 import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
+import 'package:ayoo/view/widget/ayo_vertical_product.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,15 +34,16 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return Container(
-      child: RefreshIndicator(
+    return GetBuilder(
+      init: HomePageController(),
+      builder: (controller) => RefreshIndicator(
         onRefresh: () async {
-          Get.find<HomePageController>().fetchHomeData();
+          controller.fetchHomeData();
         },
         child: Stack(
           children: [
             CustomScrollView(
-              controller: Get.find<HomePageController>().scrollController,
+              controller: controller.scrollController,
               slivers: [
                 SliverAppBar(
                   expandedHeight: Get.size.height / 3,
@@ -60,7 +62,7 @@ class _HomePageState extends State<HomePage>
                   ),
                   flexibleSpace: FlexibleSpaceBar(
                     background: Obx(() {
-                      if (!Get.find<HomePageController>().loading.value) {
+                      if (!controller.loading.value) {
                         return AyoCarouselBanner(
                           banners: Get.find<CarouselBannerController>()
                               .carouselBanners,
@@ -91,7 +93,7 @@ class _HomePageState extends State<HomePage>
                     onTap: () {},
                     child: Obx(
                       () => AyoMainCategory(
-                        loading: Get.find<HomePageController>().loading.value,
+                        loading: controller.loading.value,
                         categories:
                             Get.find<MainCategoryController>().mainCategories,
                       ),
@@ -165,7 +167,7 @@ class _HomePageState extends State<HomePage>
                     onTap: () {},
                     child: Obx(
                       () => AyoHorizontalProduct(
-                        loading: Get.find<HomePageController>().loading.value,
+                        loading: controller.loading.value,
                         products:
                             Get.find<ProductPaginateController>(tag: 'Popular')
                                 .productPaginateModel
@@ -192,7 +194,7 @@ class _HomePageState extends State<HomePage>
                     },
                     child: Obx(
                       () => AyoPopularSearch(
-                        loading: Get.find<HomePageController>().loading.value ||
+                        loading: controller.loading.value ||
                             Get.find<SearchController>(tag: 'MostSearch')
                                 .loading
                                 .value,
@@ -209,20 +211,27 @@ class _HomePageState extends State<HomePage>
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: AyoHorizontalProductFilter(
-                    controller: Get.find<ProductPaginateController>(),
+                  child: Column(
+                    children: [
+                      AyoHorizontalProductFilter(
+                        controller: Get.find<ProductPaginateController>(),
+                      ),
+                      AyoVerticalProduct(
+                        controller: Get.find<ProductPaginateController>(),
+                        scrollController: controller.scrollController,
+                      ),
+                    ],
                   ),
                 ),
                 SliverToBoxAdapter(
                   child: Container(
-                    height: 300,
-                    color: Colors.white,
+                    height: 10,
                   ),
                 ),
               ],
             ),
             AyoScrollToTopButton(
-              scrollController: Get.find<HomePageController>().scrollController,
+              scrollController: controller.scrollController,
             ),
           ],
         ),

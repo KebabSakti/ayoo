@@ -13,14 +13,14 @@ class AyoHorizontalProductFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            padding: const EdgeInsets.symmetric(horizontal: 5),
             child: ButtonTheme(
-              buttonColor: Colors.grey[350],
+              buttonColor: Colors.grey[200],
               padding: EdgeInsets.symmetric(
                 vertical: 8.0,
                 horizontal: 20.0,
@@ -70,6 +70,7 @@ class AyoHorizontalProductFilter extends StatelessWidget {
                           color: Colors.black.withOpacity(0.6),
                         ),
                       ),
+                      backgroundColor: Colors.grey[200],
                       selected: (index == 1) ? true : false,
                       selectedColor: Colors.green.withOpacity(0.5),
                       checkmarkColor: Colors.green,

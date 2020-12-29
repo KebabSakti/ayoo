@@ -42,4 +42,10 @@ class HomePageController extends GetxController {
     fetchHomeData();
     super.onInit();
   }
+
+  @override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
+  }
 }

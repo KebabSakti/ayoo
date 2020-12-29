@@ -33,8 +33,6 @@ class SearchController extends GetxController {
   }
 
   void setSearchQuery({@required SearchQuery query}) {
-    loading.value = true;
-
     searchQuery(query);
   }
 

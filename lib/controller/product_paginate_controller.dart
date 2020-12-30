@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 
 class ProductPaginateController extends GetxController {
   final _productPaginateApi = ProductPaginateApi();
-
   final scrollController = ScrollController();
+
   final productPaginateModel = ProductPaginateModel().obs;
   final productQueryModel = ProductQueryModel().obs;
 

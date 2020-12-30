@@ -27,6 +27,7 @@ class ProductPaginateApi {
         'harga_min': query.hargaMin,
         'harga_max': query.hargaMax,
         'sorting': query.sorting,
+        'seen': query.seen,
       });
 
       return productPaginateModelFromJson(response.data);

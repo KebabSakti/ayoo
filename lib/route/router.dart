@@ -1,8 +1,10 @@
 import 'package:ayoo/binding/app_page_binding.dart';
 import 'package:ayoo/binding/contoh_binding.dart';
 import 'package:ayoo/binding/intro_page_binding.dart';
+import 'package:ayoo/binding/search_page_binding.dart';
 import 'package:ayoo/view/page/page.dart';
 import 'package:ayoo/binding/binding.dart';
+import 'package:ayoo/view/page/search_page.dart';
 import 'package:get/get.dart';
 
 class AppRouter {
@@ -32,10 +34,10 @@ class AppRouter {
       transitionDuration: _transitionDuration,
     ),
     GetPage(
-      name: '/product_page',
-      page: () => ProductPage(),
-      binding: ContohBinding(),
-      transition: _transition,
+      name: '/search',
+      page: () => SearchPage(),
+      binding: SearchPageBinding(),
+      transition: Transition.fadeIn,
       transitionDuration: _transitionDuration,
     ),
   ];

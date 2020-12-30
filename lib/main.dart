@@ -7,7 +7,6 @@ void main() {
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
     initialRoute: '/',
-    // initialBinding: GlobalBinding(),
     getPages: AppRouter.routes,
     theme: AppTheme.primary,
   ));

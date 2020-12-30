@@ -36,7 +36,9 @@ class AyoHorizontalProductFilter extends StatelessWidget {
                     Get.find<AyoSlidingUpPanelController>()
                         .setPanel(
                       Container(
-                        child: AyoWrapPoductFilter(),
+                        child: AyoWrapPoductFilter(
+                          controller: this.controller,
+                        ),
                       ),
                     )
                         .then((_) {
@@ -60,32 +62,61 @@ class AyoHorizontalProductFilter extends StatelessWidget {
               child: SizedBox(
                 height: 50,
                 child: Obx(
-                  () => ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: controller.filter.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: FilterChip(
-                          label: Text(
-                            '${controller.filter[index].title}',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black.withOpacity(0.6),
-                            ),
-                          ),
-                          backgroundColor: Colors.grey[200],
-                          selected: (controller.filter[index].key),
-                          selectedColor: Colors.green.withOpacity(0.5),
-                          checkmarkColor: Colors.green,
-                          onSelected: (value) {
-                            controller.filter[index].selected = value;
-                          },
-                        ),
-                      );
-                    },
-                  ),
+                  () {
+                    var filters = controller.filter.where((i) {
+                      return i.tag == 'filter';
+                    }).toList();
+                    return ListView.builder(
+                      controller: controller.scrollController,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: filters.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: (filters[index].key != 'rating')
+                              ? FilterChip(
+                                  label: Text(
+                                    '${filters[index].title}',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black.withOpacity(0.6),
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.grey[200],
+                                  selected: filters[index].selected,
+                                  selectedColor: Colors.green.withOpacity(0.5),
+                                  checkmarkColor: Colors.green,
+                                  onSelected: (value) {
+                                    controller.setFilter(filters[index], value);
+                                  },
+                                )
+                              : FilterChip(
+                                  label: Text(
+                                    '${filters[index].title}',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black.withOpacity(0.6),
+                                    ),
+                                  ),
+                                  avatar: Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                    size: 18,
+                                  ),
+                                  backgroundColor: Colors.grey[200],
+                                  selected: filters[index].selected,
+                                  selectedColor: Colors.green.withOpacity(0.5),
+                                  checkmarkColor: Colors.green,
+                                  onSelected: (value) {
+                                    controller.setFilter(filters[index], value);
+                                  },
+                                ),
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
             ),

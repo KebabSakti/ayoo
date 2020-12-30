@@ -1,19 +1,20 @@
 class ProductQueryModel {
-  final String subCategoryId;
-  final String mainCategoryId;
-  final String keyword;
-  final int terlaris;
-  final int diskon;
-  final int search;
-  final int view;
-  final int rating;
-  final String pengiriman;
-  final double hargaMin;
-  final double hargaMax;
-  final int favourite;
-  final String sorting;
+  String subCategoryId;
+  String mainCategoryId;
+  String keyword;
+  int terlaris;
+  int diskon;
+  int search;
+  int view;
+  int rating;
+  String pengiriman;
+  double hargaMin;
+  double hargaMax;
+  int favourite;
+  int seen;
+  String sorting;
 
-  const ProductQueryModel({
+  ProductQueryModel({
     this.subCategoryId,
     this.mainCategoryId,
     this.keyword,
@@ -26,6 +27,7 @@ class ProductQueryModel {
     this.hargaMin,
     this.hargaMax,
     this.favourite,
+    this.seen,
     this.sorting,
   });
 
@@ -42,6 +44,7 @@ class ProductQueryModel {
     double hargaMin,
     double hargaMax,
     int favourite,
+    int seen,
     String sorting,
   }) {
     return ProductQueryModel(
@@ -57,6 +60,7 @@ class ProductQueryModel {
       hargaMin: hargaMin ?? this.hargaMin,
       hargaMax: hargaMax ?? this.hargaMax,
       favourite: favourite ?? this.favourite,
+      seen: seen ?? this.seen,
       sorting: sorting ?? this.sorting,
     );
   }

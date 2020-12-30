@@ -191,6 +191,9 @@ class _HomePageState extends State<HomePage>
                     icon: Icons.refresh,
                     onTap: () {
                       Get.find<SearchController>(tag: 'MostSearch')
+                          .loading
+                          .value = true;
+                      Get.find<SearchController>(tag: 'MostSearch')
                           .setSearchQuery(query: SearchQuery());
                     },
                     child: Obx(

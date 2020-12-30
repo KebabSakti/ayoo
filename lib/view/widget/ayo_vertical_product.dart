@@ -29,6 +29,22 @@ class AyoVerticalProduct extends StatelessWidget {
             final loading = (Get.find<HomePageController>().loading.value ||
                 this.controller.loading.value);
 
+            if (!loading &&
+                this.controller.productPaginateModel.value.total == 0) {
+              return SliverToBoxAdapter(
+                child: Container(
+                  height: 200,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Produk tidak ditemukan',
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ),
+              );
+            }
+
             return SliverGrid(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -66,36 +82,6 @@ class AyoVerticalProduct extends StatelessWidget {
                     : 4,
               ),
             );
-
-            // return GridView.builder(
-            //   shrinkWrap: true,
-            //   physics: NeverScrollableScrollPhysics(),
-            //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //     crossAxisCount: 2,
-            //     childAspectRatio: ((Get.size.width - 30) / 2) / 200,
-            //     mainAxisSpacing: 10,
-            //     crossAxisSpacing: 10,
-            //   ),
-            //   itemCount: (!loading)
-            //       ? this.controller.productPaginateModel.value.data.length
-            //       : 4,
-            //   itemBuilder: (context, index) => (!loading &&
-            //           (index + 1) <=
-            //               this
-            //                   .controller
-            //                   .productPaginateModel
-            //                   .value
-            //                   .data
-            //                   .length)
-            //       ? AyoProductItem(
-            //           product: this
-            //               .controller
-            //               .productPaginateModel
-            //               .value
-            //               .data[index],
-            //         )
-            //       : AyoShimmer(),
-            // );
           },
         ),
       ),

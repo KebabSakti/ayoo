@@ -23,4 +23,30 @@ class SearchApi {
       return null;
     }
   }
+
+  Future<bool> clearSearchHistory() async {
+    try {
+      await _dio
+          .withAuth(auth: Get.find<AuthController>().authModel.value)
+          .post('search/clear');
+
+      return true;
+    } on DioError catch (_) {
+      return null;
+    }
+  }
+
+  Future<bool> saveSearchHistory({@required String keyword}) async {
+    try {
+      await _dio
+          .withAuth(auth: Get.find<AuthController>().authModel.value)
+          .post('search/save', data: {
+        'keyword': keyword,
+      });
+
+      return true;
+    } on DioError catch (_) {
+      return null;
+    }
+  }
 }

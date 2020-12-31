@@ -14,14 +14,24 @@ class SearchPageController extends GetxController {
   final searchPopular = Get.find<SearchController>(tag: 'Popular');
 
   final TextEditingController searchField = TextEditingController();
+  final searchMode = false.obs;
+  final keyword = "".obs;
 
-  void _search(String keyword) {
-    searchController.loading.value = true;
-    searchController.setSearchQuery(query: SearchQuery(keyword: keyword));
+  void _search() {
+    if (searchMode.value) {
+      searchController.loading.value = true;
+      searchController.setSearchQuery(
+          query: SearchQuery(keyword: keyword.value));
+    }
   }
 
   void _searchFieldListener() {
-    _search(searchField.text);
+    if ((searchField.text.length > 0)) {
+      searchMode.value = true;
+      keyword.value = searchField.text;
+    } else {
+      searchMode.value = false;
+    }
   }
 
   void _fetchlastSeenProduct() {
@@ -40,6 +50,25 @@ class SearchPageController extends GetxController {
     searchPopular.setSearchQuery(query: SearchQuery());
   }
 
+  void clearSearchHistory() {
+    searchHistory.loading.value = true;
+    searchHistory.clearSearchHistory();
+  }
+
+  void saveSearchHistory({@required String keyword}) {
+    searchController.saveSearchHistory(keyword: keyword);
+  }
+
+  void clearSearchKeyword() {
+    searchField.text = '';
+    searchMode.value = false;
+  }
+
+  void navigateToProduct({@required String keyword}) {
+    saveSearchHistory(keyword: keyword);
+    Get.offNamed('/product', arguments: ProductQueryModel(keyword: keyword));
+  }
+
   Future init() async {
     _fetchlastSeenProduct();
     _fetchSearchHistory();
@@ -49,6 +78,9 @@ class SearchPageController extends GetxController {
   @override
   void onInit() {
     searchField.addListener(_searchFieldListener);
+    debounce(keyword, (_) {
+      _search();
+    }, time: Duration(seconds: 1));
 
     init();
     super.onInit();

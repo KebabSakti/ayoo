@@ -36,6 +36,7 @@ class AyoSearchBar extends StatelessWidget {
               child: Text(
                 hint ?? 'Cari di sini',
                 style: TextStyle(fontSize: 14, color: Colors.grey[400]),
+                overflow: TextOverflow.ellipsis,
               ),
             )
           ],

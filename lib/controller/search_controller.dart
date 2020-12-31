@@ -28,6 +28,25 @@ class SearchController extends GetxController {
     });
   }
 
+  Future clearSearchHistory() async {
+    loading.value = true;
+    error.value = false;
+
+    await _searchApi.clearSearchHistory().then((status) {
+      if (status != null) {
+        setSearchModel([]);
+      } else {
+        error.value = true;
+      }
+
+      loading.value = false;
+    });
+  }
+
+  Future saveSearchHistory({@required String keyword}) async {
+    await _searchApi.saveSearchHistory(keyword: keyword);
+  }
+
   Future setSearchModel(List<SearchModel> searches) async {
     searchModel.assignAll(searches);
   }

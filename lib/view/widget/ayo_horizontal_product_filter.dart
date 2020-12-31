@@ -1,15 +1,18 @@
-import 'package:ayoo/controller/ayo_slidding_up_panel_controller.dart';
 import 'package:ayoo/controller/product_filter_controller.dart';
 import 'package:ayoo/controller/product_paginate_controller.dart';
-import 'package:ayoo/view/widget/ayo_wrap_product_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class AyoHorizontalProductFilter extends StatelessWidget {
   final ProductPaginateController controller;
+  final PanelController panelController;
 
-  AyoHorizontalProductFilter({@required this.controller});
+  AyoHorizontalProductFilter({
+    @required this.controller,
+    @required this.panelController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,18 +36,7 @@ class AyoHorizontalProductFilter extends StatelessWidget {
                 height: 0, //wraps child's height
                 child: RaisedButton(
                   onPressed: () {
-                    Get.find<AyoSlidingUpPanelController>()
-                        .setPanel(
-                      Container(
-                        child: AyoWrapPoductFilter(
-                          controller: this.controller,
-                        ),
-                      ),
-                    )
-                        .then((_) {
-                      Get.find<AyoSlidingUpPanelController>()
-                          .setPanelPosition(0.7);
-                    });
+                    panelController.panelPosition = 0.7;
                   },
                   elevation: 1,
                   shape: RoundedRectangleBorder(

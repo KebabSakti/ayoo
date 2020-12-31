@@ -32,7 +32,9 @@ class ProductPage extends GetView<ProductPageController> {
               ),
               SliverToBoxAdapter(
                 child: AyoHorizontalProductFilter(
-                    controller: controller.productController),
+                  controller: controller.productController,
+                  panelController: controller.panelController,
+                ),
               ),
             ],
           ),

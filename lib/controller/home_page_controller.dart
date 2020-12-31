@@ -14,7 +14,7 @@ class HomePageController extends GetxController {
   final _mainCategoryController = Get.find<MainCategoryController>();
   final _productPaginatePopularController =
       Get.find<ProductPaginateController>(tag: 'Popular');
-  final _productPaginateController = Get.find<ProductPaginateController>();
+  final productPaginateController = Get.find<ProductPaginateController>();
   final _searchController = Get.find<SearchController>(tag: 'MostSearch');
 
   var loading = true.obs;
@@ -29,7 +29,7 @@ class HomePageController extends GetxController {
       await _mainCategoryController.setMainCategories(data.mainCategoryModel);
       await _productPaginatePopularController
           .setProductPaginateModel(data.productPopularPaginateModel);
-      await _productPaginateController
+      await productPaginateController
           .setProductPaginateModel(data.productPaginateModel);
       await _searchController.setSearchModel(data.mostSearchModel);
     });

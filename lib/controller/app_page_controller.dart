@@ -5,7 +5,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class AppPageController extends GetxController {
   final PageController appPageViewController = PageController();
-  final PanelController appPanelController = PanelController();
+  final PanelController panelController = PanelController();
 
   var appPageViewActive = 0.obs;
 

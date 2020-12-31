@@ -41,7 +41,7 @@ class ProductFilterController extends GetxController {
   void setFilter(Filter filter, bool v) {
     var q = productController.productQueryModel.value;
     productController.setProductQuery(
-      query: ProductQueryModel(
+      query: q.copyWith(
         terlaris: (filter.key == 'terlaris')
             ? (v)
                 ? 1

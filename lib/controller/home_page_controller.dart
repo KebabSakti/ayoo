@@ -1,5 +1,6 @@
 import 'package:ayoo/controller/carousel_banner_controller.dart';
 import 'package:ayoo/controller/main_category_controller.dart';
+import 'package:ayoo/controller/product_filter_controller.dart';
 import 'package:ayoo/controller/search_controller.dart';
 import 'package:ayoo/controller/product_paginate_controller.dart';
 import 'package:ayoo/repo/remote/initial_home_api.dart';
@@ -16,6 +17,7 @@ class HomePageController extends GetxController {
       Get.find<ProductPaginateController>(tag: 'Popular');
   final productPaginateController = Get.find<ProductPaginateController>();
   final _searchController = Get.find<SearchController>(tag: 'MostSearch');
+  final productFilterController = Get.find<ProductFilterController>();
 
   var loading = true.obs;
   var error = false.obs;

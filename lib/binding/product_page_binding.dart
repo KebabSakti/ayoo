@@ -1,3 +1,4 @@
+import 'package:ayoo/controller/product_filter_controller.dart';
 import 'package:ayoo/controller/product_page_controller.dart';
 import 'package:ayoo/controller/product_paginate_controller.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,11 @@ class ProductPageBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<ProductPaginateController>(() => ProductPaginateController(),
         tag: 'ProductPage');
+    Get.lazyPut<ProductFilterController>(
+        () => ProductFilterController(
+            productController:
+                Get.find<ProductPaginateController>(tag: 'ProductPage')),
+        tag: 'ProductPageFilter');
     Get.lazyPut<ProductPageController>(() => ProductPageController());
   }
 }

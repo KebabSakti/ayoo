@@ -1,12 +1,9 @@
 import 'package:ayoo/controller/app_page_controller.dart';
-import 'package:ayoo/controller/ayo_slidding_up_panel_controller.dart';
-import 'package:ayoo/controller/product_page_controller.dart';
 import 'package:ayoo/controller/product_paginate_controller.dart';
 import 'package:ayoo/view/page/home_page.dart';
 import 'package:ayoo/view/page/order_page.dart';
 import 'package:ayoo/view/widget/ayo_bottom_navigation_bar.dart';
 import 'package:ayoo/view/widget/ayo_bottom_navigation_bar_item.dart';
-import 'package:ayoo/view/widget/ayo_sliding_up_panel.dart';
 import 'package:ayoo/view/widget/ayo_wrap_product_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -131,6 +128,8 @@ class AppPage extends GetView<AppPageController> {
                   Expanded(
                     child: AyoWrapPoductFilter(
                       controller: Get.find<ProductPaginateController>(),
+                      productFilterController:
+                          controller.productFilterController,
                     ),
                   )
                 ],

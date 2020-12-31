@@ -56,7 +56,10 @@ class _HomePageState extends State<HomePage>
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),
-                          child: AyoSearchBar(),
+                          child: GestureDetector(
+                            onTap: () => Get.toNamed('/search'),
+                            child: AyoSearchBar(),
+                          ),
                         ),
                       ),
                       AyoShoppingCart(),
@@ -220,6 +223,7 @@ class _HomePageState extends State<HomePage>
                     panelController:
                         Get.find<AppPageController>().panelController,
                     controller: Get.find<ProductPaginateController>(),
+                    productFilterController: controller.productFilterController,
                   ),
                 ),
                 AyoVerticalProduct(
@@ -239,6 +243,7 @@ class _HomePageState extends State<HomePage>
               child: AyoHorizontalProductFilter(
                 controller: Get.find<ProductPaginateController>(),
                 panelController: Get.find<AppPageController>().panelController,
+                productFilterController: controller.productFilterController,
               ),
             ),
             AyoScrollToTopButton(

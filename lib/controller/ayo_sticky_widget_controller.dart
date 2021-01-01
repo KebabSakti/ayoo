@@ -13,6 +13,7 @@ class AyoStickyWidgetController extends GetxController {
   final show = false.obs;
 
   void _scrollListener() {
+    print(scrollController.offset);
     show.value = (scrollController.offset >= stickyPosition);
   }
 

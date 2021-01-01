@@ -3,6 +3,7 @@ import 'package:ayoo/view/widget/ayo_horizontal_product_filter.dart';
 import 'package:ayoo/view/widget/ayo_scroll_to_top_button.dart';
 import 'package:ayoo/view/widget/ayo_search_bar.dart';
 import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
+import 'package:ayoo/view/widget/ayo_sliding_up_product_filter.dart';
 import 'package:ayoo/view/widget/ayo_vertical_product.dart';
 import 'package:ayoo/view/widget/ayo_wrap_product_filter.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class ProductPage extends GetView<ProductPageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           CustomScrollView(
@@ -48,46 +50,20 @@ class ProductPage extends GetView<ProductPageController> {
                 controller: controller.productController,
                 scrollController: controller.scrollController,
               ),
+              SliverToBoxAdapter(
+                child: Container(
+                  height: 10,
+                ),
+              ),
             ],
           ),
           AyoScrollToTopButton(
             scrollController: controller.scrollController,
           ),
-          SlidingUpPanel(
-            controller: controller.panelController,
-            defaultPanelState: PanelState.CLOSED,
-            minHeight: 0,
-            backdropEnabled: true,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 16.0,
-                spreadRadius: 0.2,
-                offset: Offset(0.0, 1),
-              ),
-            ],
-            panel: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: FaIcon(
-                    FontAwesomeIcons.minus,
-                    color: Colors.grey[400],
-                  ),
-                ),
-                Expanded(
-                  child: AyoWrapPoductFilter(
-                    controller: controller.productController,
-                    productFilterController: controller.productFilterController,
-                  ),
-                )
-              ],
-            ),
+          AyoSlidingUpProductFilter(
+            panelController: controller.panelController,
+            productController: controller.productController,
+            productFilterController: controller.productFilterController,
           ),
         ],
       ),

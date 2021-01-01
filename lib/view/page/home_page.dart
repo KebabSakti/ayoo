@@ -95,7 +95,9 @@ class _HomePageState extends State<HomePage>
                   child: AyoHomeSection(
                     heading: 'Kategori',
                     tapText: 'Lihat Semua',
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed('/category');
+                    },
                     child: Obx(
                       () => AyoMainCategory(
                         loading: controller.loading.value,

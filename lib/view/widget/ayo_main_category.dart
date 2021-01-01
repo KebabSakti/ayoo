@@ -25,7 +25,9 @@ class AyoMainCategory extends StatelessWidget {
             color: Colors.grey[100],
             borderRadius: BorderRadius.circular(20),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed('/product_category', arguments: categories[index]);
+              },
               borderRadius: BorderRadius.circular(20),
               splashColor: Get.theme.accentColor.withOpacity(0.3),
               child: Ink(

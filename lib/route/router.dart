@@ -1,9 +1,13 @@
 import 'package:ayoo/binding/app_page_binding.dart';
+import 'package:ayoo/binding/category_page_binding.dart';
 import 'package:ayoo/binding/intro_page_binding.dart';
+import 'package:ayoo/binding/product_category_page_binding.dart';
 import 'package:ayoo/binding/product_page_binding.dart';
 import 'package:ayoo/binding/search_page_binding.dart';
+import 'package:ayoo/view/page/category_page.dart';
 import 'package:ayoo/view/page/page.dart';
 import 'package:ayoo/binding/binding.dart';
+import 'package:ayoo/view/page/product_category_page.dart';
 import 'package:get/get.dart';
 
 class AppRouter {
@@ -43,6 +47,20 @@ class AppRouter {
       name: '/product',
       page: () => ProductPage(),
       binding: ProductPageBinding(),
+      transition: _transition,
+      transitionDuration: _transitionDuration,
+    ),
+    GetPage(
+      name: '/category',
+      page: () => CategoryPage(),
+      binding: CategoryPageBinding(),
+      transition: _transition,
+      transitionDuration: _transitionDuration,
+    ),
+    GetPage(
+      name: '/product_category',
+      page: () => ProductCategoryPage(),
+      binding: ProductCategoryPageBinding(),
       transition: _transition,
       transitionDuration: _transitionDuration,
     ),

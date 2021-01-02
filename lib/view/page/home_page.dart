@@ -1,8 +1,4 @@
-import 'package:ayoo/controller/carousel_banner_controller.dart';
 import 'package:ayoo/controller/home_page_controller.dart';
-import 'package:ayoo/controller/main_category_controller.dart';
-import 'package:ayoo/controller/search_controller.dart';
-import 'package:ayoo/controller/product_paginate_controller.dart';
 import 'package:ayoo/model/search_query.dart';
 import 'package:ayoo/view/widget/ayo_carousel_banner.dart';
 import 'package:ayoo/view/widget/ayo_home_section.dart';
@@ -68,12 +64,12 @@ class _HomePageState extends State<HomePage>
                     background: Obx(() {
                       if (!controller.loading.value) {
                         return AyoCarouselBanner(
-                          banners: Get.find<CarouselBannerController>()
-                              .carouselBanners,
+                          banners: controller
+                              .carouselBannerController.carouselBanners,
                           active:
-                              Get.find<CarouselBannerController>().active.value,
+                              controller.carouselBannerController.active.value,
                           onPageChanged:
-                              Get.find<CarouselBannerController>().setActive,
+                              controller.carouselBannerController.setActive,
                         );
                       }
 
@@ -101,7 +97,7 @@ class _HomePageState extends State<HomePage>
                       () => AyoMainCategory(
                         loading: controller.loading.value,
                         categories:
-                            Get.find<MainCategoryController>().mainCategories,
+                            controller.mainCategoryController.mainCategories,
                       ),
                     ),
                   ),
@@ -174,11 +170,8 @@ class _HomePageState extends State<HomePage>
                     child: Obx(
                       () => AyoHorizontalProduct(
                         loading: controller.loading.value,
-                        products:
-                            Get.find<ProductPaginateController>(tag: 'Popular')
-                                .productPaginateModel
-                                .value
-                                .data,
+                        products: controller.productPaginatePopularController
+                            .productPaginateModel.value.data,
                       ),
                     ),
                   ),
@@ -195,20 +188,15 @@ class _HomePageState extends State<HomePage>
                     tapText: 'Refresh',
                     icon: Icons.refresh,
                     onTap: () {
-                      Get.find<SearchController>(tag: 'MostSearch')
-                          .loading
-                          .value = true;
-                      Get.find<SearchController>(tag: 'MostSearch')
+                      controller.searchController.loading.value = true;
+                      controller.searchController
                           .setSearchQuery(query: SearchQuery());
                     },
                     child: Obx(
                       () => AyoPopularSearch(
                         loading: controller.loading.value ||
-                            Get.find<SearchController>(tag: 'MostSearch')
-                                .loading
-                                .value,
-                        populars: Get.find<SearchController>(tag: 'MostSearch')
-                            .searchModel,
+                            controller.searchController.loading.value,
+                        populars: controller.searchController.searchModel,
                       ),
                     ),
                   ),
@@ -226,7 +214,7 @@ class _HomePageState extends State<HomePage>
                   ),
                 ),
                 AyoVerticalProduct(
-                  controller: Get.find<ProductPaginateController>(),
+                  controller: controller.productPaginateController,
                   scrollController: controller.scrollController,
                 ),
                 SliverToBoxAdapter(

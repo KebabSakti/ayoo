@@ -47,7 +47,7 @@ class AyoWrapPoductFilter extends StatelessWidget {
                     runSpacing: -10,
                     children: List<Widget>.from(sortings
                         .map(
-                          (item) => FilterChip(
+                          (item) => ChoiceChip(
                             label: Text(
                               '${item.title}',
                               style: TextStyle(
@@ -59,7 +59,6 @@ class AyoWrapPoductFilter extends StatelessWidget {
                             backgroundColor: Colors.grey[200],
                             selected: item.selected,
                             selectedColor: Colors.green.withOpacity(0.5),
-                            checkmarkColor: Colors.green,
                             onSelected: (value) {
                               controller.setFilter(item, value);
                             },
@@ -85,7 +84,7 @@ class AyoWrapPoductFilter extends StatelessWidget {
                     children: List<Widget>.from(filters
                         .map(
                           (item) => (item.key != 'rating')
-                              ? FilterChip(
+                              ? ChoiceChip(
                                   label: Text(
                                     '${item.title}',
                                     style: TextStyle(
@@ -97,12 +96,11 @@ class AyoWrapPoductFilter extends StatelessWidget {
                                   backgroundColor: Colors.grey[200],
                                   selected: item.selected,
                                   selectedColor: Colors.green.withOpacity(0.5),
-                                  checkmarkColor: Colors.green,
                                   onSelected: (value) {
                                     controller.setFilter(item, value);
                                   },
                                 )
-                              : FilterChip(
+                              : ChoiceChip(
                                   label: Text(
                                     '${item.title}',
                                     style: TextStyle(
@@ -119,7 +117,6 @@ class AyoWrapPoductFilter extends StatelessWidget {
                                   backgroundColor: Colors.grey[200],
                                   selected: item.selected,
                                   selectedColor: Colors.green.withOpacity(0.5),
-                                  checkmarkColor: Colors.green,
                                   onSelected: (value) {
                                     controller.setFilter(item, value);
                                   },
@@ -142,7 +139,7 @@ class AyoWrapPoductFilter extends StatelessWidget {
                     runSpacing: -10,
                     children: List<Widget>.from(types
                         .map(
-                          (item) => FilterChip(
+                          (item) => ChoiceChip(
                             label: Text(
                               '${item.title}',
                               style: TextStyle(
@@ -154,7 +151,6 @@ class AyoWrapPoductFilter extends StatelessWidget {
                             backgroundColor: Colors.grey[200],
                             selected: item.selected,
                             selectedColor: Colors.green.withOpacity(0.5),
-                            checkmarkColor: Colors.green,
                             onSelected: (value) {
                               controller.setFilter(item, value);
                             },

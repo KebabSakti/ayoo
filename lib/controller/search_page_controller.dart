@@ -89,4 +89,10 @@ class SearchPageController extends GetxController {
     init();
     super.onInit();
   }
+
+  @override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
+  }
 }

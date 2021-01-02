@@ -79,7 +79,7 @@ class AyoVerticalProduct extends StatelessWidget {
                                 .length +
                             2
                         : this.controller.productPaginateModel.value.data.length
-                    : 4,
+                    : 6,
               ),
             );
           },

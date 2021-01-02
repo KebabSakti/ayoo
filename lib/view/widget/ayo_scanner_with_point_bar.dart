@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AyoScannerWithPointBar extends StatelessWidget {
@@ -23,11 +24,7 @@ class AyoScannerWithPointBar extends StatelessWidget {
                 children: [
                   IconButton(
                     splashColor: Theme.of(context).accentColor.withOpacity(0.3),
-                    icon: Icon(
-                      FontAwesomeIcons.camera,
-                      size: 20,
-                      color: Theme.of(context).primaryColor,
-                    ),
+                    icon: SvgPicture.asset('assets/images/qr.svg', width: 20),
                     onPressed: () async {},
                   ),
                   Text(
@@ -44,20 +41,16 @@ class AyoScannerWithPointBar extends StatelessWidget {
                 padding: EdgeInsets.only(right: 15),
                 child: Row(
                   children: [
-                    Icon(
-                      FontAwesomeIcons.coins,
-                      color: Colors.amber,
-                      size: 20,
-                    ),
-                    SizedBox(width: 10),
                     Text(
-                      '100',
+                      '9999',
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
-                        color: Theme.of(context).primaryColor,
+                        color: Colors.amber,
                       ),
                     ),
+                    SizedBox(width: 10),
+                    SvgPicture.asset('assets/images/coin-rp.svg', width: 20),
                   ],
                 ),
               ),

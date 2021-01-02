@@ -55,9 +55,7 @@ class ProductCategoryPage extends GetView<ProductCategoryPageController> {
                 ),
               ),
               SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 10,
-                ),
+                child: SizedBox(height: 10),
               ),
               SliverToBoxAdapter(
                 child: AyoHomeSection(
@@ -78,7 +76,7 @@ class ProductCategoryPage extends GetView<ProductCategoryPageController> {
               ),
               SliverToBoxAdapter(
                 child: AyoHorizontalProductFilter(
-                  tag: 'ProducCategoryPage',
+                  tag: 'ProductCategoryPage',
                   productController: controller.product,
                   panelController: controller.panelController,
                 ),
@@ -95,23 +93,23 @@ class ProductCategoryPage extends GetView<ProductCategoryPageController> {
             ],
           ),
           AyoStickyWidget(
+            tag: 'ProductCategoryPage',
             scrollController: controller.scrollController,
             stickyPosition: 410,
-            tag: 'ProductCategoryPage',
             child: AyoHorizontalProductFilter(
-              tag: 'ProducCategoryPage',
+              tag: 'ProductCategoryPage',
               productController: controller.product,
               panelController: controller.panelController,
             ),
           ),
           AyoScrollToTopButton(
-            tag: 'ProducCategoryPage',
+            tag: 'ProductCategoryPage',
             scrollController: controller.scrollController,
           ),
           AyoSlidingUpPanel(
             panelController: controller.panelController,
             panel: AyoWrapPoductFilter(
-              tag: 'ProducCategoryPage',
+              tag: 'ProductCategoryPage',
               productController: controller.product,
             ),
           ),

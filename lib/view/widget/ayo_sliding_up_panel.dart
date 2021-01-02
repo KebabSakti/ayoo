@@ -1,18 +1,14 @@
-import 'package:ayoo/controller/ayo_slidding_up_panel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class AyoSlidingUpPanel extends StatelessWidget {
   final PanelController panelController;
   final Widget panel;
-  final String tag;
 
   AyoSlidingUpPanel({
     @required this.panelController,
     @required this.panel,
-    this.tag,
   });
 
   @override

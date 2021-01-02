@@ -1,5 +1,4 @@
 import 'package:ayoo/controller/carousel_banner_controller.dart';
-import 'package:ayoo/controller/product_filter_controller.dart';
 import 'package:ayoo/controller/product_paginate_controller.dart';
 import 'package:ayoo/model/product_query_model.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +10,6 @@ class ProductCategoryPageController extends GetxController {
       Get.find(tag: 'ProductCategoryPage');
   final product =
       Get.find<ProductPaginateController>(tag: 'ProductCategoryPage');
-  final productFilter =
-      Get.find<ProductFilterController>(tag: 'ProductCategoryPageFilter');
 
   final PanelController panelController = PanelController();
   final ScrollController scrollController = ScrollController();
@@ -40,5 +37,11 @@ class ProductCategoryPageController extends GetxController {
   void onInit() {
     init();
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
   }
 }

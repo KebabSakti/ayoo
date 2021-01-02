@@ -69,7 +69,7 @@ class AyoHorizontalProductFilter extends StatelessWidget {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 4.0),
                             child: (filters[index].key != 'rating')
-                                ? FilterChip(
+                                ? ChoiceChip(
                                     label: Text(
                                       '${filters[index].title}',
                                       style: TextStyle(
@@ -82,13 +82,12 @@ class AyoHorizontalProductFilter extends StatelessWidget {
                                     selected: filters[index].selected,
                                     selectedColor:
                                         Colors.green.withOpacity(0.5),
-                                    checkmarkColor: Colors.green,
                                     onSelected: (value) {
                                       controller.setFilter(
                                           filters[index], value);
                                     },
                                   )
-                                : FilterChip(
+                                : ChoiceChip(
                                     label: Text(
                                       '${filters[index].title}',
                                       style: TextStyle(
@@ -106,7 +105,6 @@ class AyoHorizontalProductFilter extends StatelessWidget {
                                     selected: filters[index].selected,
                                     selectedColor:
                                         Colors.green.withOpacity(0.5),
-                                    checkmarkColor: Colors.green,
                                     onSelected: (value) {
                                       controller.setFilter(
                                           filters[index], value);

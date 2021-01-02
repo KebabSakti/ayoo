@@ -1,4 +1,3 @@
-import 'package:ayoo/controller/ayo_slidding_up_panel_controller.dart';
 import 'package:ayoo/controller/product_filter_controller.dart';
 import 'package:ayoo/controller/product_paginate_controller.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,5 +23,11 @@ class ProductPageController extends GetxController {
   void onInit() {
     init();
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
   }
 }

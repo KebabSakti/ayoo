@@ -5,7 +5,6 @@ import 'package:ayoo/view/widget/ayo_search_last_seen_section.dart';
 import 'package:ayoo/view/widget/ayo_search_popular_section.dart';
 import 'package:ayoo/view/widget/ayo_shimmer.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 

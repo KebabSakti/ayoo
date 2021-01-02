@@ -13,8 +13,8 @@ class CategoryPage extends GetView<CategoryPageController> {
         title: Text('Semua Kategori'),
       ),
       body: Obx(() {
-        final _gridItemRatio = (Get.size.width / 3) /
-            ((Get.size.height - kToolbarHeight - 190) / 3);
+        // final _gridItemRatio = (Get.size.width / 3) /
+        //     ((Get.size.height - kToolbarHeight - 190) / 3);
         return Row(
           children: [
             Ink(

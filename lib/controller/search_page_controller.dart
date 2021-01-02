@@ -3,7 +3,6 @@ import 'package:ayoo/controller/search_controller.dart';
 import 'package:ayoo/model/product_query_model.dart';
 import 'package:ayoo/model/search_query.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class SearchPageController extends GetxController {

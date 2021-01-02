@@ -1,4 +1,3 @@
-import 'package:ayoo/controller/search_page_controller.dart';
 import 'package:ayoo/view/widget/ayo_shimmer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';

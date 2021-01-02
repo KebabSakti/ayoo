@@ -45,8 +45,7 @@ class AyoSlidingUpProductFilter extends StatelessWidget {
           ),
           Expanded(
             child: AyoWrapPoductFilter(
-              controller: productController,
-              productFilterController: productFilterController,
+              productController: productController,
             ),
           )
         ],

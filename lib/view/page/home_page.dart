@@ -1,4 +1,3 @@
-import 'package:ayoo/controller/app_page_controller.dart';
 import 'package:ayoo/controller/carousel_banner_controller.dart';
 import 'package:ayoo/controller/home_page_controller.dart';
 import 'package:ayoo/controller/main_category_controller.dart';
@@ -222,10 +221,8 @@ class _HomePageState extends State<HomePage>
                 ),
                 SliverToBoxAdapter(
                   child: AyoHorizontalProductFilter(
-                    panelController:
-                        Get.find<AppPageController>().panelController,
-                    controller: Get.find<ProductPaginateController>(),
-                    productFilterController: controller.productFilterController,
+                    panelController: controller.panelController,
+                    productController: controller.productPaginateController,
                   ),
                 ),
                 AyoVerticalProduct(
@@ -243,9 +240,8 @@ class _HomePageState extends State<HomePage>
               scrollController: controller.scrollController,
               stickyPosition: 1096,
               child: AyoHorizontalProductFilter(
-                controller: Get.find<ProductPaginateController>(),
-                panelController: Get.find<AppPageController>().panelController,
-                productFilterController: controller.productFilterController,
+                panelController: controller.panelController,
+                productController: controller.productPaginateController,
               ),
             ),
             AyoScrollToTopButton(

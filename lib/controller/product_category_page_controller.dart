@@ -1,5 +1,4 @@
 import 'package:ayoo/controller/carousel_banner_controller.dart';
-import 'package:ayoo/controller/main_category_controller.dart';
 import 'package:ayoo/controller/product_filter_controller.dart';
 import 'package:ayoo/controller/product_paginate_controller.dart';
 import 'package:ayoo/model/product_query_model.dart';

@@ -1,3 +1,4 @@
+import 'package:ayoo/controller/ayo_slidding_up_panel_controller.dart';
 import 'package:ayoo/controller/product_filter_controller.dart';
 import 'package:ayoo/controller/product_paginate_controller.dart';
 import 'package:flutter/cupertino.dart';

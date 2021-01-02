@@ -3,14 +3,12 @@ import 'package:ayoo/view/widget/ayo_horizontal_product_filter.dart';
 import 'package:ayoo/view/widget/ayo_scroll_to_top_button.dart';
 import 'package:ayoo/view/widget/ayo_search_bar.dart';
 import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
-import 'package:ayoo/view/widget/ayo_sliding_up_product_filter.dart';
+import 'package:ayoo/view/widget/ayo_sliding_up_panel.dart';
 import 'package:ayoo/view/widget/ayo_sticky_widget.dart';
 import 'package:ayoo/view/widget/ayo_vertical_product.dart';
 import 'package:ayoo/view/widget/ayo_wrap_product_filter.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ProductPage extends GetView<ProductPageController> {
   @override
@@ -42,9 +40,9 @@ class ProductPage extends GetView<ProductPageController> {
               ),
               SliverToBoxAdapter(
                 child: AyoHorizontalProductFilter(
-                  controller: controller.productController,
+                  tag: 'ProductPage',
+                  productController: controller.productController,
                   panelController: controller.panelController,
-                  productFilterController: controller.productFilterController,
                 ),
               ),
               AyoVerticalProduct(
@@ -63,19 +61,21 @@ class ProductPage extends GetView<ProductPageController> {
             scrollController: controller.scrollController,
             stickyPosition: 0.0,
             child: AyoHorizontalProductFilter(
-              controller: controller.productController,
+              tag: 'ProductPage',
+              productController: controller.productController,
               panelController: controller.panelController,
-              productFilterController: controller.productFilterController,
             ),
           ),
           AyoScrollToTopButton(
-            scrollController: controller.scrollController,
             tag: 'ProductPage',
+            scrollController: controller.scrollController,
           ),
-          AyoSlidingUpProductFilter(
+          AyoSlidingUpPanel(
             panelController: controller.panelController,
-            productController: controller.productController,
-            productFilterController: controller.productFilterController,
+            panel: AyoWrapPoductFilter(
+              tag: 'ProductPage',
+              productController: controller.productController,
+            ),
           ),
         ],
       ),

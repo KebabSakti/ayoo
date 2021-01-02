@@ -6,10 +6,11 @@ import 'package:ayoo/view/widget/ayo_scroll_to_top_button.dart';
 import 'package:ayoo/view/widget/ayo_search_bar.dart';
 import 'package:ayoo/view/widget/ayo_shimmer.dart';
 import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
-import 'package:ayoo/view/widget/ayo_sliding_up_product_filter.dart';
+import 'package:ayoo/view/widget/ayo_sliding_up_panel.dart';
 import 'package:ayoo/view/widget/ayo_sticky_widget.dart';
 import 'package:ayoo/view/widget/ayo_sub_category.dart';
 import 'package:ayoo/view/widget/ayo_vertical_product.dart';
+import 'package:ayoo/view/widget/ayo_wrap_product_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -77,9 +78,9 @@ class ProductCategoryPage extends GetView<ProductCategoryPageController> {
               ),
               SliverToBoxAdapter(
                 child: AyoHorizontalProductFilter(
-                  controller: controller.product,
+                  tag: 'ProducCategoryPage',
+                  productController: controller.product,
                   panelController: controller.panelController,
-                  productFilterController: controller.productFilter,
                 ),
               ),
               AyoVerticalProduct(
@@ -98,19 +99,21 @@ class ProductCategoryPage extends GetView<ProductCategoryPageController> {
             stickyPosition: 410,
             tag: 'ProductCategoryPage',
             child: AyoHorizontalProductFilter(
-              controller: controller.product,
+              tag: 'ProducCategoryPage',
+              productController: controller.product,
               panelController: controller.panelController,
-              productFilterController: controller.productFilter,
             ),
           ),
           AyoScrollToTopButton(
-            scrollController: controller.scrollController,
             tag: 'ProducCategoryPage',
+            scrollController: controller.scrollController,
           ),
-          AyoSlidingUpProductFilter(
+          AyoSlidingUpPanel(
             panelController: controller.panelController,
-            productController: controller.product,
-            productFilterController: controller.productFilter,
+            panel: AyoWrapPoductFilter(
+              tag: 'ProducCategoryPage',
+              productController: controller.product,
+            ),
           ),
         ],
       ),

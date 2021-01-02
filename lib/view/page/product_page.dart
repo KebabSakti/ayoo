@@ -4,6 +4,7 @@ import 'package:ayoo/view/widget/ayo_scroll_to_top_button.dart';
 import 'package:ayoo/view/widget/ayo_search_bar.dart';
 import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
 import 'package:ayoo/view/widget/ayo_sliding_up_product_filter.dart';
+import 'package:ayoo/view/widget/ayo_sticky_widget.dart';
 import 'package:ayoo/view/widget/ayo_vertical_product.dart';
 import 'package:ayoo/view/widget/ayo_wrap_product_filter.dart';
 import 'package:flutter/material.dart';
@@ -57,8 +58,19 @@ class ProductPage extends GetView<ProductPageController> {
               ),
             ],
           ),
+          AyoStickyWidget(
+            tag: 'ProductPage',
+            scrollController: controller.scrollController,
+            stickyPosition: 0.0,
+            child: AyoHorizontalProductFilter(
+              controller: controller.productController,
+              panelController: controller.panelController,
+              productFilterController: controller.productFilterController,
+            ),
+          ),
           AyoScrollToTopButton(
             scrollController: controller.scrollController,
+            tag: 'ProductPage',
           ),
           AyoSlidingUpProductFilter(
             panelController: controller.panelController,

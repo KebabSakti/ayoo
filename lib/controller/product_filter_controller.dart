@@ -1,5 +1,4 @@
 import 'package:ayoo/controller/product_paginate_controller.dart';
-import 'package:ayoo/model/product_query_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

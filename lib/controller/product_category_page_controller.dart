@@ -10,7 +10,6 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class ProductCategoryPageController extends GetxController {
   final CarouselBannerController carousel =
       Get.find(tag: 'ProductCategoryPage');
-  final MainCategoryController category = Get.find();
   final product =
       Get.find<ProductPaginateController>(tag: 'ProductCategoryPage');
   final productFilter =
@@ -33,13 +32,7 @@ class ProductCategoryPageController extends GetxController {
         query: ProductQueryModel(mainCategoryId: Get.arguments.mainCategoryId));
   }
 
-  void fillSubCategories() {
-    subCategories.addAll(category.mainCategories
-        .where((i) => i.mainCategoryId == Get.arguments));
-  }
-
   void init() {
-    fillSubCategories();
     initCarousel();
     initProduct();
   }

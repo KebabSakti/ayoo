@@ -18,7 +18,7 @@ class CarouselBannerController extends GetxController {
     loading.value = true;
 
     await _carouselBannerApi
-        .fetchCarouselBanner(target: target)
+        .fetchCarouselBanner(target: target, id: id)
         .then((banners) {
       if (banners != null) {
         setCarouselBanners(banners);

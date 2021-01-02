@@ -5,13 +5,18 @@ import 'package:get/get.dart';
 
 class AyoScrollToTopButton extends StatelessWidget {
   final ScrollController scrollController;
+  final String tag;
 
-  AyoScrollToTopButton({@required this.scrollController});
+  AyoScrollToTopButton({
+    @required this.scrollController,
+    this.tag,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
       init: ScrollToTopButtonController(scrollController: scrollController),
+      tag: tag,
       builder: (controller) => Align(
         alignment: Alignment.bottomRight,
         child: Padding(

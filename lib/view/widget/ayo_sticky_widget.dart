@@ -6,11 +6,13 @@ class AyoStickyWidget extends StatelessWidget {
   final ScrollController scrollController;
   final double stickyPosition;
   final Widget child;
+  final String tag;
 
   AyoStickyWidget({
     @required this.scrollController,
     @required this.stickyPosition,
     @required this.child,
+    this.tag,
   });
 
   @override
@@ -20,6 +22,7 @@ class AyoStickyWidget extends StatelessWidget {
         scrollController: scrollController,
         stickyPosition: stickyPosition,
       ),
+      tag: tag,
       builder: (controller) => SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 56),

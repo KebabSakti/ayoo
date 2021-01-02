@@ -13,8 +13,6 @@ class CategoryPage extends GetView<CategoryPageController> {
         title: Text('Semua Kategori'),
       ),
       body: Obx(() {
-        // final _gridItemRatio = (Get.size.width / 3) /
-        //     ((Get.size.height - kToolbarHeight - 190) / 3);
         return Row(
           children: [
             Ink(
@@ -89,7 +87,13 @@ class CategoryPage extends GetView<CategoryPageController> {
                 itemBuilder: (context, index) => Ink(
                   color: Colors.white,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      controller.navigateToProductPage(controller
+                          .category
+                          .mainCategories[controller.active.value]
+                          .subCategoryModel[index]
+                          .subCategoryId);
+                    },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Column(

@@ -20,25 +20,22 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
               SliverAppBar(
                 pinned: true,
                 titleSpacing: 0,
-                title: Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => Get.toNamed('/search'),
-                        child: AyoSearchBar(),
-                      ),
-                    ),
-                    AyoShoppingCart(),
-                  ],
+                expandedHeight: Get.size.height / 3,
+                title: GestureDetector(
+                  onTap: () => Get.toNamed('/search'),
+                  child: AyoSearchBar(),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: CachedNetworkImage(
-                  imageUrl: controller.product.cover,
-                  height: Get.size.height / 3,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) =>
-                      AyoShimmer(height: Get.size.height / 3),
+                actions: [
+                  AyoShoppingCart(),
+                ],
+                flexibleSpace: FlexibleSpaceBar(
+                  background: CachedNetworkImage(
+                    imageUrl: controller.product.cover,
+                    height: Get.size.height / 3,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) =>
+                        AyoShimmer(height: Get.size.height / 3),
+                  ),
                 ),
               ),
               SliverToBoxAdapter(
@@ -62,8 +59,9 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                               fontSize: 18,
                             ),
                           ),
+                          SizedBox(height: 6),
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            padding: const EdgeInsets.only(bottom: 6),
                             child: Row(
                               children: [
                                 Container(
@@ -86,9 +84,7 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 6,
-                                ),
+                                SizedBox(width: 6),
                                 Text(
                                   '${controller.helper.formatMoney(double.parse(controller.product.price))}',
                                   style: TextStyle(
@@ -122,6 +118,11 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                       ),
                     ],
                   ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 500,
                 ),
               ),
             ],

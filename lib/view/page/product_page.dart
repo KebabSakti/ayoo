@@ -23,20 +23,16 @@ class ProductPage extends GetView<ProductPageController> {
               SliverAppBar(
                 pinned: true,
                 titleSpacing: 0,
-                title: Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => Get.offNamed('/search'),
-                        child: AyoSearchBar(
-                          hint: controller.productController.productQueryModel
-                              .value.keyword,
-                        ),
-                      ),
-                    ),
-                    AyoShoppingCart(),
-                  ],
+                title: GestureDetector(
+                  onTap: () => Get.offNamed('/search'),
+                  child: AyoSearchBar(
+                    hint: controller
+                        .productController.productQueryModel.value.keyword,
+                  ),
                 ),
+                actions: [
+                  AyoShoppingCart(),
+                ],
               ),
               SliverToBoxAdapter(
                 child: AyoHorizontalProductFilter(

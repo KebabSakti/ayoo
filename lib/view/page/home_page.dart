@@ -46,20 +46,16 @@ class _HomePageState extends State<HomePage>
                   expandedHeight: Get.size.height / 3,
                   pinned: true,
                   titleSpacing: 0,
-                  title: Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: GestureDetector(
-                            onTap: () => Get.toNamed('/search'),
-                            child: AyoSearchBar(),
-                          ),
-                        ),
-                      ),
-                      AyoShoppingCart(),
-                    ],
+                  title: Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: GestureDetector(
+                      onTap: () => Get.toNamed('/search'),
+                      child: AyoSearchBar(),
+                    ),
                   ),
+                  actions: [
+                    AyoShoppingCart(),
+                  ],
                   flexibleSpace: FlexibleSpaceBar(
                     background: Obx(() {
                       if (!controller.loading.value) {

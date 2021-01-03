@@ -30,17 +30,13 @@ class ProductCategoryPage extends GetView<ProductCategoryPageController> {
                 pinned: true,
                 titleSpacing: 0,
                 expandedHeight: Get.size.height / 3,
-                title: Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => Get.toNamed('/search'),
-                        child: AyoSearchBar(),
-                      ),
-                    ),
-                    AyoShoppingCart(),
-                  ],
+                title: GestureDetector(
+                  onTap: () => Get.toNamed('/search'),
+                  child: AyoSearchBar(),
                 ),
+                actions: [
+                  AyoShoppingCart(),
+                ],
                 flexibleSpace: FlexibleSpaceBar(
                   background: Obx(() {
                     if (!controller.carousel.loading.value) {

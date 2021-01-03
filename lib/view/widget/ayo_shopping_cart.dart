@@ -18,7 +18,7 @@ class AyoShoppingCart extends GetView<ShoppingCartController> {
                   padding: const EdgeInsets.all(15),
                   child: Icon(
                     FontAwesomeIcons.shoppingBag,
-                    size: 24,
+                    size: 22,
                   ),
                 ),
               ),

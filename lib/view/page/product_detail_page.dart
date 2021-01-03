@@ -1,6 +1,6 @@
 import 'package:ayoo/controller/product_detail_page_controller.dart';
+import 'package:ayoo/view/widget/ayo_product_detail_statistic.dart';
 import 'package:ayoo/view/widget/ayo_scroll_to_top_button.dart';
-import 'package:ayoo/view/widget/ayo_search_bar.dart';
 import 'package:ayoo/view/widget/ayo_shimmer.dart';
 import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -20,10 +20,12 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
               SliverAppBar(
                 pinned: true,
                 titleSpacing: 0,
-                expandedHeight: Get.size.height / 3,
-                title: GestureDetector(
-                  onTap: () => Get.toNamed('/search'),
-                  child: AyoSearchBar(),
+                expandedHeight: Get.size.height / 2.5,
+                title: Text(
+                  controller.product.name,
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
                 ),
                 actions: [
                   AyoShoppingCart(),
@@ -105,6 +107,10 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
+                          ),
+                          SizedBox(height: 6),
+                          AyoProductDetailStatistic(
+                            productModel: controller.product,
                           ),
                         ],
                       ),

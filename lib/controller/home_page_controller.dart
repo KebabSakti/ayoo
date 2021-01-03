@@ -12,6 +12,7 @@ class HomePageController extends GetxController {
   final _initialHomeApi = InitialHomeApi();
 
   final ScrollController scrollController = ScrollController();
+
   final CarouselBannerController carouselBannerController = Get.find();
   final MainCategoryController mainCategoryController = Get.find();
   final ProductPaginateController productPaginatePopularController =

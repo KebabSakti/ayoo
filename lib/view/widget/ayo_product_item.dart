@@ -15,7 +15,9 @@ class AyoProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Get.toNamed('product_detail', arguments: product);
+        },
         onDoubleTap: () {
           print('love it');
         },

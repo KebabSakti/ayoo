@@ -48,6 +48,7 @@ class ProductPage extends GetView<ProductPageController> {
               AyoVerticalProduct(
                 controller: controller.productController,
                 scrollController: controller.scrollController,
+                tag: 'ProductPage',
               ),
               SliverToBoxAdapter(
                 child: Container(

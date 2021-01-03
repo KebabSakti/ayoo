@@ -5,14 +5,17 @@
 import 'dart:convert';
 
 import 'package:ayoo/model/delivery_type_model.dart';
+import 'package:ayoo/model/product_info_model.dart';
 import 'package:ayoo/model/product_sale_model.dart';
+import 'package:ayoo/model/rating_model.dart';
 import 'package:ayoo/model/rating_weight_model.dart';
 import 'package:ayoo/model/unit_model.dart';
 
-ProductModel productModelFromJson(String str) =>
-    ProductModel.fromJson(json.decode(str));
+List<ProductModel> productModelFromJson(String str) => List<ProductModel>.from(
+    json.decode(str).map((x) => ProductModel.fromJson(x)));
 
-String productModelToJson(ProductModel data) => json.encode(data.toJson());
+String productModelToJson(List<ProductModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ProductModel {
   ProductModel({
@@ -33,6 +36,8 @@ class ProductModel {
     this.active,
     this.createdAt,
     this.updatedAt,
+    this.productInfoModel,
+    this.ratingModel,
     this.ratingWeightModel,
     this.deliveryTypeModel,
     this.unitModel,
@@ -57,6 +62,8 @@ class ProductModel {
   int active;
   DateTime createdAt;
   DateTime updatedAt;
+  List<ProductInfoModel> productInfoModel;
+  List<RatingModel> ratingModel;
   RatingWeightModel ratingWeightModel;
   DeliveryTypeModel deliveryTypeModel;
   UnitModel unitModel;
@@ -81,6 +88,10 @@ class ProductModel {
         active: json["active"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        productInfoModel: List<ProductInfoModel>.from(json["product_info_model"]
+            .map((x) => ProductInfoModel.fromJson(x))),
+        ratingModel: List<RatingModel>.from(
+            json["rating_model"].map((x) => RatingModel.fromJson(x))),
         ratingWeightModel:
             RatingWeightModel.fromJson(json["rating_weight_model"]),
         deliveryTypeModel:
@@ -108,6 +119,9 @@ class ProductModel {
         "active": active,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+        "product_info_model":
+            List<dynamic>.from(productInfoModel.map((x) => x.toJson())),
+        "rating_model": List<dynamic>.from(ratingModel.map((x) => x.toJson())),
         "rating_weight_model": ratingWeightModel.toJson(),
         "delivery_type_model": deliveryTypeModel.toJson(),
         "unit_model": unitModel.toJson(),

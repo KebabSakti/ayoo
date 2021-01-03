@@ -9,10 +9,12 @@ import 'package:get/get.dart';
 class AyoVerticalProduct extends StatelessWidget {
   final ProductPaginateController controller;
   final ScrollController scrollController;
+  final String tag;
 
   AyoVerticalProduct({
     @required this.controller,
     @required this.scrollController,
+    this.tag,
   });
 
   @override
@@ -22,6 +24,7 @@ class AyoVerticalProduct extends StatelessWidget {
         scrollController: scrollController,
         productPaginateController: this.controller,
       ),
+      tag: tag,
       builder: (controller) => SliverPadding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         sliver: Obx(

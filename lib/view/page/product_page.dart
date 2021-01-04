@@ -13,68 +13,79 @@ import 'package:get/get.dart';
 class ProductPage extends GetView<ProductPageController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          CustomScrollView(
-            controller: controller.scrollController,
-            slivers: [
-              SliverAppBar(
-                pinned: true,
-                titleSpacing: 0,
-                title: GestureDetector(
-                  onTap: () => Get.offNamed('/search'),
-                  child: AyoSearchBar(
-                    hint: controller
-                        .productController.productQueryModel.value.keyword,
+    return WillPopScope(
+      onWillPop: () async {
+        if (controller.panelController.panelPosition > 0) {
+          //close panel if open
+          controller.panelController.close();
+        } else {
+          Get.back();
+        }
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Stack(
+          children: [
+            CustomScrollView(
+              controller: controller.scrollController,
+              slivers: [
+                SliverAppBar(
+                  pinned: true,
+                  titleSpacing: 0,
+                  title: GestureDetector(
+                    onTap: () => Get.offNamed('/search'),
+                    child: AyoSearchBar(
+                      hint: controller
+                          .productController.productQueryModel.value.keyword,
+                    ),
+                  ),
+                  actions: [
+                    AyoShoppingCart(),
+                  ],
+                ),
+                SliverToBoxAdapter(
+                  child: AyoHorizontalProductFilter(
+                    tag: 'ProductPage',
+                    productController: controller.productController,
+                    panelController: controller.panelController,
                   ),
                 ),
-                actions: [
-                  AyoShoppingCart(),
-                ],
-              ),
-              SliverToBoxAdapter(
-                child: AyoHorizontalProductFilter(
+                AyoVerticalProduct(
+                  controller: controller.productController,
+                  scrollController: controller.scrollController,
                   tag: 'ProductPage',
-                  productController: controller.productController,
-                  panelController: controller.panelController,
                 ),
-              ),
-              AyoVerticalProduct(
-                controller: controller.productController,
-                scrollController: controller.scrollController,
+                SliverToBoxAdapter(
+                  child: Container(
+                    height: 10,
+                  ),
+                ),
+              ],
+            ),
+            AyoStickyWidget(
+              tag: 'ProductPage',
+              scrollController: controller.scrollController,
+              stickyPosition: 0.0,
+              child: AyoHorizontalProductFilter(
                 tag: 'ProductPage',
+                productController: controller.productController,
+                panelController: controller.panelController,
               ),
-              SliverToBoxAdapter(
-                child: Container(
-                  height: 10,
-                ),
-              ),
-            ],
-          ),
-          AyoStickyWidget(
-            tag: 'ProductPage',
-            scrollController: controller.scrollController,
-            stickyPosition: 0.0,
-            child: AyoHorizontalProductFilter(
+            ),
+            AyoScrollToTopButton(
               tag: 'ProductPage',
-              productController: controller.productController,
+              scrollController: controller.scrollController,
+            ),
+            AyoSlidingUpPanel(
               panelController: controller.panelController,
+              panel: AyoWrapPoductFilter(
+                tag: 'ProductPage',
+                productController: controller.productController,
+              ),
             ),
-          ),
-          AyoScrollToTopButton(
-            tag: 'ProductPage',
-            scrollController: controller.scrollController,
-          ),
-          AyoSlidingUpPanel(
-            panelController: controller.panelController,
-            panel: AyoWrapPoductFilter(
-              tag: 'ProductPage',
-              productController: controller.productController,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

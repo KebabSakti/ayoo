@@ -1,4 +1,5 @@
 import 'package:ayoo/controller/home_page_controller.dart';
+import 'package:ayoo/model/product_query_model.dart';
 import 'package:ayoo/model/search_query.dart';
 import 'package:ayoo/view/widget/ayo_carousel_banner.dart';
 import 'package:ayoo/view/widget/ayo_home_section.dart';
@@ -162,7 +163,10 @@ class _HomePageState extends State<HomePage>
                     height: 250,
                     heading: 'Produk Terlaris',
                     tapText: 'Lihat Semua',
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed('/product',
+                          arguments: ProductQueryModel(terlaris: 1));
+                    },
                     child: Obx(
                       () => AyoHorizontalProduct(
                         loading: controller.loading.value,

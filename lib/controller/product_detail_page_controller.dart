@@ -1,4 +1,3 @@
-import 'package:ayoo/controller/product_page_controller.dart';
 import 'package:ayoo/controller/product_paginate_controller.dart';
 import 'package:ayoo/instance/helper_instance.dart';
 import 'package:ayoo/model/product_info_model.dart';

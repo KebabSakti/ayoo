@@ -17,6 +17,7 @@ import 'package:ayoo/view/widget/ayo_vertical_product.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sticky_headers/sticky_headers/widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -207,6 +208,22 @@ class _HomePageState extends State<HomePage>
                     color: Colors.grey[100],
                   ),
                 ),
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      StickyHeader(
+                        header: Container(
+                          height: 56,
+                          color: Colors.red,
+                        ),
+                        content: Container(
+                          height: 600,
+                          color: Colors.green,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 SliverToBoxAdapter(
                   child: AyoHorizontalProductFilter(
                     panelController: controller.panelController,
@@ -224,14 +241,14 @@ class _HomePageState extends State<HomePage>
                 ),
               ],
             ),
-            AyoStickyWidget(
-              scrollController: controller.scrollController,
-              stickyPosition: 1096,
-              child: AyoHorizontalProductFilter(
-                panelController: controller.panelController,
-                productController: controller.productPaginateController,
-              ),
-            ),
+            // AyoStickyWidget(
+            //   scrollController: controller.scrollController,
+            //   stickyPosition: 1096,
+            //   child: AyoHorizontalProductFilter(
+            //     panelController: controller.panelController,
+            //     productController: controller.productPaginateController,
+            //   ),
+            // ),
             AyoScrollToTopButton(
               scrollController: controller.scrollController,
             ),

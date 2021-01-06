@@ -67,6 +67,10 @@ class ProductPaginateController extends GetxController {
     }
   }
 
+  Future addProductView({@required String productId}) async {
+    await _productPaginateApi.addProductView(productId: productId);
+  }
+
   Future setProductPaginateModel(ProductPaginateModel productPaginate) async {
     productPaginateModel.value = productPaginate;
   }

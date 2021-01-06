@@ -35,4 +35,28 @@ class ProductPaginateApi {
       return null;
     }
   }
+
+  Future<bool> addProductView({@required String productId}) async {
+    try {
+      await _dio
+          .withAuth(auth: Get.find<AuthController>().authModel.value)
+          .post('product/view', data: {'product_id': productId});
+
+      return true;
+    } on DioError catch (_) {
+      return null;
+    }
+  }
+
+  Future<bool> toggleFavourite({@required String productId}) async {
+    try {
+      await _dio
+          .withAuth(auth: Get.find<AuthController>().authModel.value)
+          .post('product/favourite', data: {'product_id': productId});
+
+      return true;
+    } on DioError catch (_) {
+      return null;
+    }
+  }
 }

@@ -5,7 +5,6 @@ import 'package:ayoo/controller/main_category_controller.dart';
 import 'package:ayoo/controller/product_filter_controller.dart';
 import 'package:ayoo/controller/product_paginate_controller.dart';
 import 'package:ayoo/controller/search_controller.dart';
-import 'package:ayoo/controller/shopping_cart_controller.dart';
 import 'package:get/get.dart';
 
 class AppPageBinding extends Bindings {

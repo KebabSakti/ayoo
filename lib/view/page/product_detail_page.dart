@@ -26,6 +26,7 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                 pinned: true,
                 titleSpacing: 0,
                 expandedHeight: Get.size.height / 2.5,
+                centerTitle: true,
                 title: Text(
                   controller.product.name,
                   style: TextStyle(
@@ -156,9 +157,7 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        height: 6,
-                      ),
+                      SizedBox(height: 6),
                       MediaQuery.removePadding(
                         context: context,
                         removeBottom: true,
@@ -456,60 +455,124 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
               ),
               SliverToBoxAdapter(
                 child: Container(
-                  padding: EdgeInsets.all(15),
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Produk Terkait',
-                            style: TextStyle(
-                              color: Colors.grey[800],
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Produk Terkait',
+                              style: TextStyle(
+                                color: Colors.grey[800],
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Lihat Semua',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Get.theme.primaryColor,
-                                    fontWeight: FontWeight.bold,
+                            GestureDetector(
+                              onTap: () {},
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Lihat Semua',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Get.theme.primaryColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                      SizedBox(
-                        height: 6,
-                      ),
+                      SizedBox(height: 10),
                       Obx(
-                        () => AyoHorizontalProduct(
-                          loading:
-                              controller.productRelatedController.loading.value,
-                          products: controller.productRelatedController
-                              .productPaginateModel.value.data,
+                        () => Container(
+                          height: 210,
+                          child: AyoHorizontalProduct(
+                            loading: controller
+                                .productRelatedController.loading.value,
+                            products: controller.productRelatedController
+                                .productPaginateModel.value.data,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
+              SliverToBoxAdapter(
+                child: SizedBox(height: 50),
+              ),
             ],
           ),
-          AyoScrollToTopButton(
-            tag: 'ProductDetailPage',
-            scrollController: controller.scrollController,
+          Positioned(
+            bottom: 56,
+            right: 0,
+            child: AyoScrollToTopButton(
+              tag: 'ProductDetailPage',
+              scrollController: controller.scrollController,
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 56,
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  top: BorderSide(
+                    color: Colors.grey[200],
+                  ),
+                ),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: FlatButton(
+                      onPressed: () {},
+                      splashColor: Get.theme.accentColor.withOpacity(0.3),
+                      child: Text(
+                        'Beli Langsung',
+                        style: TextStyle(color: Get.theme.primaryColor),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                          width: 1.5,
+                          style: BorderStyle.solid,
+                        ),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 15),
+                  Expanded(
+                    child: FlatButton(
+                      onPressed: () {},
+                      splashColor: Get.theme.accentColor.withOpacity(0.3),
+                      color: Get.theme.primaryColor,
+                      child: Text(
+                        '+ Keranjang',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
         ],
       ),

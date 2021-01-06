@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:ayoo/controller/product_detail_page_controller.dart';
+import 'package:ayoo/model/product_query_model.dart';
 import 'package:ayoo/view/widget/ayo_horizontal_product.dart';
 import 'package:ayoo/view/widget/ayo_product_detail_statistic.dart';
 import 'package:ayoo/view/widget/ayo_scroll_to_top_button.dart';
@@ -137,64 +138,64 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                   ),
                 ),
               ),
-              SliverToBoxAdapter(
-                child: Container(
-                  height: 10,
-                  color: Colors.grey[100],
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Informasi Produk',
-                        style: TextStyle(
-                          color: Colors.grey[800],
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 6),
-                      MediaQuery.removePadding(
-                        context: context,
-                        removeBottom: true,
-                        removeLeft: true,
-                        removeRight: true,
-                        removeTop: true,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: controller.product.productInfoModel.length,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  controller
-                                      .product.productInfoModel[index].caption,
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                                Text(
-                                  controller.product.productInfoModel[index]
-                                      .description,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // SliverToBoxAdapter(
+              //   child: Container(
+              //     height: 10,
+              //     color: Colors.grey[100],
+              //   ),
+              // ),
+              // SliverToBoxAdapter(
+              //   child: Container(
+              //     padding: EdgeInsets.all(15),
+              //     child: Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         Text(
+              //           'Informasi Produk',
+              //           style: TextStyle(
+              //             color: Colors.grey[800],
+              //             fontSize: 16,
+              //             fontWeight: FontWeight.bold,
+              //           ),
+              //         ),
+              //         SizedBox(height: 6),
+              //         MediaQuery.removePadding(
+              //           context: context,
+              //           removeBottom: true,
+              //           removeLeft: true,
+              //           removeRight: true,
+              //           removeTop: true,
+              //           child: ListView.builder(
+              //             shrinkWrap: true,
+              //             itemCount: controller.product.productInfoModel.length,
+              //             physics: NeverScrollableScrollPhysics(),
+              //             itemBuilder: (context, index) => Padding(
+              //               padding: const EdgeInsets.symmetric(vertical: 10),
+              //               child: Row(
+              //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //                 children: [
+              //                   Text(
+              //                     controller
+              //                         .product.productInfoModel[index].caption,
+              //                     style: TextStyle(fontSize: 14),
+              //                   ),
+              //                   Text(
+              //                     controller.product.productInfoModel[index]
+              //                         .description,
+              //                     style: TextStyle(
+              //                       fontSize: 14,
+              //                       fontWeight: FontWeight.w600,
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
               SliverToBoxAdapter(
                 child: Container(
                   height: 10,
@@ -473,7 +474,12 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Get.toNamed('/product',
+                                    arguments: ProductQueryModel(
+                                        subCategoryId:
+                                            controller.product.subCategoryId));
+                              },
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:

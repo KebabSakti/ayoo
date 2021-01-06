@@ -8,11 +8,6 @@ class ProductPageBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<ProductPaginateController>(() => ProductPaginateController(),
         tag: 'ProductPage');
-    Get.lazyPut<ProductFilterController>(
-        () => ProductFilterController(
-            productController:
-                Get.find<ProductPaginateController>(tag: 'ProductPage')),
-        tag: 'ProductPageFilter');
     Get.lazyPut<ProductPageController>(() => ProductPageController());
   }
 }

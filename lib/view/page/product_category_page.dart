@@ -12,6 +12,7 @@ import 'package:ayoo/view/widget/ayo_sub_category.dart';
 import 'package:ayoo/view/widget/ayo_vertical_product.dart';
 import 'package:ayoo/view/widget/ayo_wrap_product_filter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get/get.dart';
 
 class ProductCategoryPage extends GetView<ProductCategoryPageController> {
@@ -80,17 +81,17 @@ class ProductCategoryPage extends GetView<ProductCategoryPageController> {
                     color: Colors.grey[100],
                   ),
                 ),
-                SliverToBoxAdapter(
-                  child: AyoHorizontalProductFilter(
+                SliverStickyHeader(
+                  header: AyoHorizontalProductFilter(
                     tag: 'ProductCategoryPage',
                     productController: controller.product,
                     panelController: controller.panelController,
                   ),
-                ),
-                AyoVerticalProduct(
-                  controller: controller.product,
-                  scrollController: controller.scrollController,
-                  tag: 'ProductCategoryPage',
+                  sliver: AyoVerticalProduct(
+                    controller: controller.product,
+                    scrollController: controller.scrollController,
+                    tag: 'ProductCategoryPage',
+                  ),
                 ),
                 SliverToBoxAdapter(
                   child: Container(
@@ -98,16 +99,6 @@ class ProductCategoryPage extends GetView<ProductCategoryPageController> {
                   ),
                 ),
               ],
-            ),
-            AyoStickyWidget(
-              tag: 'ProductCategoryPage',
-              scrollController: controller.scrollController,
-              stickyPosition: 410,
-              child: AyoHorizontalProductFilter(
-                tag: 'ProductCategoryPage',
-                productController: controller.product,
-                panelController: controller.panelController,
-              ),
             ),
             AyoScrollToTopButton(
               tag: 'ProductCategoryPage',

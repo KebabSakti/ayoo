@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ayoo/instance/helper_instance.dart';
 import 'package:ayoo/model/product_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -16,7 +18,7 @@ class AyoProductItem extends StatelessWidget {
     return Material(
       child: InkWell(
         onTap: () {
-          Get.toNamed('/product_detail',
+          Get.toNamed('/product_detail/' + Random().nextInt(999999).toString(),
               arguments: product, preventDuplicates: false);
         },
         onDoubleTap: () {

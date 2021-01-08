@@ -16,6 +16,9 @@ import 'package:get/get.dart';
 
 class ProductDetailPage extends GetView<ProductDetailPageController> {
   @override
+  final String tag = Get.parameters['tag'];
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -524,7 +527,7 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
             bottom: 56,
             right: 0,
             child: AyoScrollToTopButton(
-              tag: 'ProductDetailPage',
+              tag: tag,
               scrollController: controller.scrollController,
             ),
           ),

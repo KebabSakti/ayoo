@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:ayoo/model/delivery_type_model.dart';
+import 'package:ayoo/model/favourite_model.dart';
 import 'package:ayoo/model/product_info_model.dart';
 import 'package:ayoo/model/product_sale_model.dart';
 import 'package:ayoo/model/rating_model.dart';
@@ -44,7 +45,7 @@ class ProductModel {
     this.unitModel,
     this.productSaleModel,
     this.viewModel,
-    this.favourite,
+    this.favouriteModel,
   });
 
   int id;
@@ -71,7 +72,7 @@ class ProductModel {
   UnitModel unitModel;
   ProductSaleModel productSaleModel;
   ViewModel viewModel;
-  dynamic favourite;
+  List<FavouriteModel> favouriteModel;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"] == null ? null : json["id"],
@@ -121,7 +122,10 @@ class ProductModel {
         viewModel: json["view_model"] == null
             ? null
             : ViewModel.fromJson(json["view_model"]),
-        favourite: json["favourite"],
+        favouriteModel: json["favourite_model"] == null
+            ? null
+            : List<FavouriteModel>.from(
+                json["favourite_model"].map((x) => FavouriteModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -156,6 +160,8 @@ class ProductModel {
         "product_sale_model":
             productSaleModel == null ? null : productSaleModel.toJson(),
         "view_model": viewModel == null ? null : viewModel.toJson(),
-        "favourite": favourite,
+        "favourite_model": favouriteModel == null
+            ? null
+            : List<dynamic>.from(favouriteModel.map((x) => x.toJson())),
       };
 }

@@ -5,7 +5,6 @@ import 'package:ayoo/model/product_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class AyoProductItem extends StatelessWidget {
@@ -69,20 +68,20 @@ class AyoProductItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 6, right: 6),
-                      child: CircleAvatar(
-                        backgroundColor: Colors.grey[100],
-                        radius: 10,
-                        child: Icon(
-                          FontAwesomeIcons.solidHeart,
-                          size: 13,
-                          color: (product.favourite != null)
-                              ? Theme.of(context).primaryColor
-                              : Colors.grey[400],
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(bottom: 6, right: 6),
+                    //   child: CircleAvatar(
+                    //     backgroundColor: Colors.grey[100],
+                    //     radius: 10,
+                    //     child: Icon(
+                    //       FontAwesomeIcons.solidHeart,
+                    //       size: 13,
+                    //       color: (product.favourite != null)
+                    //           ? Theme.of(context).primaryColor
+                    //           : Colors.grey[400],
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

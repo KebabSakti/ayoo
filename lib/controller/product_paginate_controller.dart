@@ -96,14 +96,18 @@ class ProductPaginateController extends GetxController {
   Future toggleFavourite({@required String productId}) async {
     await _productPaginateApi
         .toggleFavourite(productId: productId)
-        .then((value) => favourite.value = value);
+        .then((product) {
+      if (product != null) {
+        setProductDetail(product);
+      }
+    });
   }
 
-  Future isFavourite({@required String productId}) async {
-    await _productPaginateApi
-        .toggleFavourite(productId: productId)
-        .then((value) => favourite.value = value);
-  }
+  // Future isFavourite({@required String productId}) async {
+  //   await _productPaginateApi
+  //       .toggleFavourite(productId: productId)
+  //       .then((value) => favourite.value = value);
+  // }
 
   Future setProductPaginateModel(ProductPaginateModel productPaginate) async {
     productPaginateModel.value = productPaginate;

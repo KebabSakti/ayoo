@@ -32,7 +32,6 @@ class ProductDetailPageController extends GetxController {
   }
 
   void toggleFavourite() {
-    productRelatedController.favourite.value = false;
     productRelatedController.toggleFavourite(productId: product.productId);
   }
 

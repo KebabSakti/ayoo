@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ayoo/controller/product_paginate_controller.dart';
 import 'package:ayoo/controller/search_controller.dart';
 import 'package:ayoo/model/product_query_model.dart';
@@ -69,7 +71,8 @@ class SearchPageController extends GetxController {
   void navigateToProduct({@required String keyword}) {
     if (keyword.length > 0) {
       saveSearchHistory(keyword: keyword);
-      Get.offNamed('/product', arguments: ProductQueryModel(keyword: keyword));
+      Get.offNamed('/product/' + Random().nextInt(999999999).toString(),
+          arguments: ProductQueryModel(keyword: keyword));
     }
   }
 

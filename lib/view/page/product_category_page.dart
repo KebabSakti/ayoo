@@ -7,7 +7,6 @@ import 'package:ayoo/view/widget/ayo_search_bar.dart';
 import 'package:ayoo/view/widget/ayo_shimmer.dart';
 import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
 import 'package:ayoo/view/widget/ayo_sliding_up_panel.dart';
-import 'package:ayoo/view/widget/ayo_sticky_widget.dart';
 import 'package:ayoo/view/widget/ayo_sub_category.dart';
 import 'package:ayoo/view/widget/ayo_vertical_product.dart';
 import 'package:ayoo/view/widget/ayo_wrap_product_filter.dart';

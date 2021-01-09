@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ayoo/controller/home_page_controller.dart';
 import 'package:ayoo/model/product_query_model.dart';
 import 'package:ayoo/model/search_query.dart';
@@ -164,7 +166,8 @@ class _HomePageState extends State<HomePage>
                     heading: 'Produk Terlaris',
                     tapText: 'Lihat Semua',
                     onTap: () {
-                      Get.toNamed('/product',
+                      Get.toNamed(
+                          '/product/' + Random().nextInt(999999999).toString(),
                           arguments: ProductQueryModel(terlaris: 1));
                     },
                     child: Obx(

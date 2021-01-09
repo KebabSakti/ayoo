@@ -12,6 +12,9 @@ import 'package:get/get.dart';
 
 class ProductPage extends GetView<ProductPageController> {
   @override
+  final String tag = Get.parameters['tag'];
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
@@ -46,14 +49,14 @@ class ProductPage extends GetView<ProductPageController> {
                 ),
                 SliverStickyHeader(
                   header: AyoHorizontalProductFilter(
-                    tag: 'ProductPage',
+                    tag: tag,
                     productController: controller.productController,
                     panelController: controller.panelController,
                   ),
                   sliver: AyoVerticalProduct(
                     controller: controller.productController,
                     scrollController: controller.scrollController,
-                    tag: 'ProductPage',
+                    tag: tag,
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -64,13 +67,13 @@ class ProductPage extends GetView<ProductPageController> {
               ],
             ),
             AyoScrollToTopButton(
-              tag: 'ProductPage',
+              tag: tag,
               scrollController: controller.scrollController,
             ),
             AyoSlidingUpPanel(
               panelController: controller.panelController,
               panel: AyoWrapPoductFilter(
-                tag: 'ProductPage',
+                tag: tag,
                 productController: controller.productController,
               ),
             ),

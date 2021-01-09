@@ -6,7 +6,8 @@ class ProductPageBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<ProductPaginateController>(() => ProductPaginateController(),
-        tag: 'ProductPage');
-    Get.lazyPut<ProductPageController>(() => ProductPageController());
+        tag: Get.parameters['tag'], fenix: true);
+    Get.lazyPut<ProductPageController>(() => ProductPageController(),
+        tag: Get.parameters['tag'], fenix: true);
   }
 }

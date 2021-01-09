@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ayoo/model/main_category_model.dart';
 import 'package:ayoo/model/product_query_model.dart';
 import 'package:ayoo/view/widget/ayo_shimmer.dart';
@@ -29,7 +31,8 @@ class AyoSubCategory extends StatelessWidget {
             color: Colors.grey[100],
             child: InkWell(
               onTap: () {
-                Get.toNamed('/product',
+                Get.toNamed(
+                    '/product/' + Random().nextInt(999999999).toString(),
                     arguments: ProductQueryModel(
                         subCategoryId: categories[index].subCategoryId));
               },

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ayoo/view/widget/ayo_shimmer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -46,18 +48,30 @@ class AyoSearchLastSeenSection extends StatelessWidget {
                     itemCount: (!controller.lastSeenProduct.loading.value)
                         ? controller.lastSeenProduct.productPaginateModel.value
                             .data.length
-                        : 4,
+                        : 5,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(6),
-                          child: Container(
-                            width: 70,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(6),
-                              child: (!controller.lastSeenProduct.loading.value)
-                                  ? CachedNetworkImage(
+                        child: Ink(
+                          width: 70,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(6),
+                            child: (!controller.lastSeenProduct.loading.value)
+                                ? InkWell(
+                                    onTap: () {
+                                      Get.toNamed(
+                                          '/product_detail/' +
+                                              Random()
+                                                  .nextInt(999999999)
+                                                  .toString(),
+                                          arguments: controller
+                                              .lastSeenProduct
+                                              .productPaginateModel
+                                              .value
+                                              .data[index],
+                                          preventDuplicates: false);
+                                    },
+                                    child: CachedNetworkImage(
                                       imageUrl: controller
                                           .lastSeenProduct
                                           .productPaginateModel
@@ -67,9 +81,9 @@ class AyoSearchLastSeenSection extends StatelessWidget {
                                       placeholder: (context, url) =>
                                           AyoShimmer(radius: 6),
                                       fit: BoxFit.cover,
-                                    )
-                                  : AyoShimmer(radius: 6),
-                            ),
+                                    ),
+                                  )
+                                : AyoShimmer(radius: 6),
                           ),
                         ),
                       );

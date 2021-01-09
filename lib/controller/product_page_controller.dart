@@ -6,7 +6,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ProductPageController extends GetxController {
   final ProductPaginateController productController =
-      Get.find(tag: 'ProductPage');
+      Get.find(tag: Get.parameters['tag']);
 
   final PanelController panelController = PanelController();
   final ScrollController scrollController = ScrollController();

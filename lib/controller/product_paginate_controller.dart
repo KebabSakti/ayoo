@@ -15,6 +15,7 @@ class ProductPaginateController extends GetxController {
   final moreLoading = false.obs;
   final moreError = false.obs;
   final error = false.obs;
+  final favourite = false.obs;
 
   Future fetchPaginateProduct() async {
     loading.value = true;
@@ -69,6 +70,18 @@ class ProductPaginateController extends GetxController {
 
   Future addProductView({@required String productId}) async {
     await _productPaginateApi.addProductView(productId: productId);
+  }
+
+  Future toggleFavourite({@required String productId}) async {
+    await _productPaginateApi
+        .toggleFavourite(productId: productId)
+        .then((value) => favourite.value = value);
+  }
+
+  Future isFavourite({@required String productId}) async {
+    await _productPaginateApi
+        .toggleFavourite(productId: productId)
+        .then((value) => favourite.value = value);
   }
 
   Future setProductPaginateModel(ProductPaginateModel productPaginate) async {

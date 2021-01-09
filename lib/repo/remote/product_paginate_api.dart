@@ -50,11 +50,23 @@ class ProductPaginateApi {
 
   Future<bool> toggleFavourite({@required String productId}) async {
     try {
-      await _dio
+      var response = await _dio
           .withAuth(auth: Get.find<AuthController>().authModel.value)
           .post('product/favourite', data: {'product_id': productId});
 
-      return true;
+      return (int.parse(response.data) > 0);
+    } on DioError catch (_) {
+      return null;
+    }
+  }
+
+  Future<bool> isFavourite({@required String productId}) async {
+    try {
+      var response = await _dio
+          .withAuth(auth: Get.find<AuthController>().authModel.value)
+          .post('product/isfavourite', data: {'product_id': productId});
+
+      return (int.parse(response.data) > 0);
     } on DioError catch (_) {
       return null;
     }

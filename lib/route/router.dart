@@ -46,7 +46,7 @@ class AppRouter {
       transitionDuration: _transitionDuration,
     ),
     GetPage(
-      name: '/product',
+      name: '/product/:tag',
       page: () => ProductPage(),
       binding: ProductPageBinding(),
       transition: _transition,

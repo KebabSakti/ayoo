@@ -18,8 +18,10 @@ class AyoProductItem extends StatelessWidget {
     return Material(
       child: InkWell(
         onTap: () {
-          Get.toNamed('/product_detail/' + Random().nextInt(999999).toString(),
-              arguments: product, preventDuplicates: false);
+          Get.toNamed(
+              '/product_detail/' + Random().nextInt(999999999).toString(),
+              arguments: product,
+              preventDuplicates: false);
         },
         onDoubleTap: () {
           print('love it');

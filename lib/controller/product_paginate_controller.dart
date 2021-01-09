@@ -1,3 +1,4 @@
+import 'package:ayoo/model/product_model.dart';
 import 'package:ayoo/model/product_paginate_model.dart';
 import 'package:ayoo/model/product_query_model.dart';
 import 'package:ayoo/repo/remote/product_paginate_api.dart';
@@ -10,12 +11,15 @@ class ProductPaginateController extends GetxController {
 
   final productPaginateModel = ProductPaginateModel().obs;
   final productQueryModel = ProductQueryModel().obs;
+  final productModel = List<ProductModel>().obs;
 
   final loading = false.obs;
   final moreLoading = false.obs;
   final moreError = false.obs;
   final error = false.obs;
   final favourite = false.obs;
+  final detailLoading = false.obs;
+  final detailError = false.obs;
 
   Future fetchPaginateProduct() async {
     loading.value = true;
@@ -31,6 +35,23 @@ class ProductPaginateController extends GetxController {
       }
 
       loading.value = false;
+    });
+  }
+
+  Future fetchProductDetail({@required String productId}) async {
+    detailLoading.value = true;
+    detailError.value = false;
+
+    await _productPaginateApi
+        .fetchProductDetail(productId: productId)
+        .then((product) {
+      if (product != null) {
+        setProductDetail(product);
+      } else {
+        detailError.value = true;
+      }
+
+      detailLoading.value = false;
     });
   }
 
@@ -86,6 +107,10 @@ class ProductPaginateController extends GetxController {
 
   Future setProductPaginateModel(ProductPaginateModel productPaginate) async {
     productPaginateModel.value = productPaginate;
+  }
+
+  void setProductDetail(List<ProductModel> products) {
+    productModel.assignAll(products);
   }
 
   void setProductQuery({@required ProductQueryModel query}) {

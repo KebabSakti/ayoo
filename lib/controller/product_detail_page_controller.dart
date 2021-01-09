@@ -26,25 +26,18 @@ class ProductDetailPageController extends GetxController {
         query: ProductQueryModel(subCategoryId: Get.arguments.subCategoryId));
   }
 
-  void addProductView() {
-    productRelatedController.addProductView(productId: product.productId);
+  void fetchProductDetail() {
+    productRelatedController.detailLoading.value = true;
+    productRelatedController.fetchProductDetail(productId: product.productId);
   }
 
   void toggleFavourite() {
     productRelatedController.favourite.value = false;
-
     productRelatedController.toggleFavourite(productId: product.productId);
   }
 
-  void isFavourite() {
-    productRelatedController.favourite.value = false;
-
-    productRelatedController.isFavourite(productId: product.productId);
-  }
-
   void init() {
-    isFavourite();
-    addProductView();
+    fetchProductDetail();
     fetchRelatedProduct();
   }
 

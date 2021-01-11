@@ -13,6 +13,7 @@ class ProductDetailPageController extends GetxController {
   final ProductPaginateController productRelatedController =
       Get.find(tag: Get.parameters['tag']);
 
+  final TextEditingController qtyField = TextEditingController();
   final ScrollController scrollController = ScrollController();
   final PanelController panelController = PanelController();
 
@@ -32,14 +33,26 @@ class ProductDetailPageController extends GetxController {
   }
 
   void toggleFavourite() {
-<<<<<<< HEAD
-    productRelatedController.favourite.value = false;
-=======
->>>>>>> refactor-detail-page
     productRelatedController.toggleFavourite(productId: product.productId);
   }
 
+  void plusQty() {
+    int currentValue = int.parse(qtyField.text);
+
+    setQty(currentValue + 1);
+  }
+
+  void minQty() {
+    int currentValue = int.parse(qtyField.text);
+    if (currentValue > 1) setQty(currentValue - 1);
+  }
+
+  void setQty(int value) {
+    qtyField.text = value.toString();
+  }
+
   void init() {
+    setQty(1);
     fetchProductDetail();
     fetchRelatedProduct();
   }

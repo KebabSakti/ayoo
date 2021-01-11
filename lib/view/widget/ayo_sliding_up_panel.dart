@@ -5,10 +5,12 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class AyoSlidingUpPanel extends StatelessWidget {
   final PanelController panelController;
   final Widget panel;
+  final double maxHeight;
 
   AyoSlidingUpPanel({
     @required this.panelController,
     @required this.panel,
+    this.maxHeight = 500,
   });
 
   @override
@@ -17,6 +19,7 @@ class AyoSlidingUpPanel extends StatelessWidget {
       controller: panelController,
       defaultPanelState: PanelState.CLOSED,
       minHeight: 0,
+      maxHeight: maxHeight,
       backdropEnabled: true,
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(20),

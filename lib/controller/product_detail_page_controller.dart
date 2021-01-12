@@ -1,4 +1,5 @@
 import 'package:ayoo/controller/product_paginate_controller.dart';
+import 'package:ayoo/controller/shopping_cart_controller.dart';
 import 'package:ayoo/instance/helper_instance.dart';
 import 'package:ayoo/model/product_info_model.dart';
 import 'package:ayoo/model/product_model.dart';
@@ -12,6 +13,7 @@ class ProductDetailPageController extends GetxController {
   final HelperInstance helper = Get.find();
   final ProductPaginateController productRelatedController =
       Get.find(tag: Get.parameters['tag']);
+  final ShoppingCartController shoppingCart = Get.find();
 
   final TextEditingController qtyField = TextEditingController();
   final ScrollController scrollController = ScrollController();

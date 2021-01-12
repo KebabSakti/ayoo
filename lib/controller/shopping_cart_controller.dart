@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 class ShoppingCartController extends GetxController {
   var shoppingCart = List<ShoppingCartModel>().obs;
   var totalItem = 0.obs;
+  var totalPaid = 0.0.obs;
 
   Future setShoppingCart(List<ShoppingCartModel> carts) async {
     shoppingCart.assignAll(carts);
@@ -13,10 +14,17 @@ class ShoppingCartController extends GetxController {
     totalItem.value = total;
   }
 
+  void setTotalPaid(double total) {
+    totalPaid.value = total;
+  }
+
   @override
   void onInit() {
     ever(shoppingCart, (carts) {
-      setTotalItem(carts.fold(0, (value, element) => value + element.qty));
+      setTotalItem(
+          carts.fold(totalItem.value, (value, element) => value + element.qty));
+      setTotalPaid(carts.fold(totalPaid.value,
+          (value, element) => value + double.parse(element.total)));
     });
 
     super.onInit();

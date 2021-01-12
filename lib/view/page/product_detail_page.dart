@@ -32,7 +32,7 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
           Get.back();
         }
         return false;
-      }
+      },
       child: Scaffold(
         body: Obx(() {
           var loading = controller.productRelatedController.detailLoading.value;
@@ -697,28 +697,32 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   alignment: Alignment.center,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        'Daging Sirloin Premium',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey[800],
-                        ),
+                      Column(
+                        children: [
+                          Text(
+                            'Daging Sirloin Premium',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[800],
+                            ),
+                          ),
+                          SizedBox(height: 6),
+                          Text(
+                            'Rp 200.000 / Kg',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey[800],
+                            ),
+                          )
+                        ],
                       ),
-                      SizedBox(height: 6),
-                      Text(
-                        'Rp 200.000 / Kg',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.grey[800],
-                        ),
-                      ),
-                      Spacer(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -788,18 +792,27 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
-                      FlatButton(
-                        onPressed: () {},
-                        splashColor: Get.theme.accentColor.withOpacity(0.3),
-                        color: Get.theme.primaryColor,
-                        child: Text(
-                          'Masukkan Keranjang',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
+                      Column(
+                        children: [
+                          Text(
+                            'Total',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey[400],
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            'Rp 200.000',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

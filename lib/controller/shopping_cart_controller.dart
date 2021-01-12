@@ -1,3 +1,4 @@
+import 'package:ayoo/model/product_model.dart';
 import 'package:ayoo/model/shoppin_cart_model.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +18,16 @@ class ShoppingCartController extends GetxController {
   void setTotalPaid(double total) {
     totalPaid.value = total;
   }
+
+  ShoppingCartModel getProductFromCart(String productId) {
+    return shoppingCart.firstWhere((i) => i.productId == productId);
+  }
+
+  void updateShoppingCart(ProductModel product) {
+    shoppingCart.assignAll(shoppingCart);
+  }
+
+  void addQty() {}
 
   @override
   void onInit() {

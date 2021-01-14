@@ -30,81 +30,159 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
               ),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   child: MediaQuery.removePadding(
                     context: context,
                     removeTop: true,
                     removeBottom: false,
                     removeLeft: false,
                     removeRight: false,
-                    child: ListView.builder(
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) => Divider(height: 20),
                       shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
                       itemCount:
                           controller.shoppingCartController.shoppingCart.length,
                       itemBuilder: (context, index) {
                         var cartItem = controller
                             .shoppingCartController.shoppingCart[index];
-                        return Column(
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(6),
-                                  child: CachedNetworkImage(
-                                    imageUrl: cartItem.product.cover,
-                                    width: 50,
-                                    height: 50,
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) => AyoShimmer(),
-                                  ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(6),
+                                child: CachedNetworkImage(
+                                  imageUrl: cartItem.product.cover,
+                                  width: 50,
+                                  height: 50,
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => AyoShimmer(),
                                 ),
-                                SizedBox(width: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
                                           cartItem.product.name,
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
                                           style: TextStyle(
                                             fontWeight: FontWeight.w800,
                                             color: Colors.grey[800],
-                                            fontSize: 12,
+                                            // fontSize: 12,
                                           ),
                                         ),
-                                        FaIcon(
-                                          FontAwesomeIcons.solidTimesCircle,
-                                          color: Colors.grey[800],
-                                          size: 16,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 20),
+                                        child: FaIcon(
+                                          FontAwesomeIcons.times,
+                                          color: Colors.red,
+                                          size: 20,
                                         ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 4),
-                                    AyoDeliveryTypeContainer(
-                                      type: cartItem.product.deliveryTypeModel,
-                                    ),
-                                    // Text(
-                                    //   controller.helper.formatMoney(
-                                    //       double.parse(cartItem.total)),
-                                    //   style: TextStyle(
-                                    //     fontSize: 12,
-                                    //     fontWeight: FontWeight.w600,
-                                    //     color: Colors.grey[800],
-                                    //   ),
-                                    // ),
-                                    // SizedBox(height: 15),
-                                  ],
-                                ),
-                                Spacer(),
-                                SizedBox(width: 10),
-                              ],
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 4),
+                                  AyoDeliveryTypeContainer(
+                                    type: cartItem.product.deliveryTypeModel,
+                                  ),
+                                  SizedBox(height: 20),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        controller.helper.formatMoney(
+                                            double.parse(cartItem.total)),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w800,
+                                          color: Colors.grey[800],
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          SizedBox.fromSize(
+                                            size: Size(30, 30),
+                                            child: ClipOval(
+                                              child: Material(
+                                                color: Colors.grey[200],
+                                                child: InkWell(
+                                                  onTap: () {},
+                                                  child: Center(
+                                                    child: FaIcon(
+                                                      FontAwesomeIcons.minus,
+                                                      size: 10,
+                                                      color: Colors.redAccent,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox.fromSize(
+                                            size: Size(30, 30),
+                                            child: Center(
+                                              child: TextField(
+                                                textAlign: TextAlign.center,
+                                                showCursor: false,
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                inputFormatters: [
+                                                  LengthLimitingTextInputFormatter(
+                                                      3),
+                                                ],
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.grey[800],
+                                                ),
+                                                decoration: InputDecoration(
+                                                  border: InputBorder.none,
+                                                  hintText: '1',
+                                                ),
+                                                onChanged: (value) {},
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox.fromSize(
+                                            size: Size(30, 30),
+                                            child: ClipOval(
+                                              child: Material(
+                                                color: Colors.grey[200],
+                                                child: InkWell(
+                                                  onTap: () {},
+                                                  child: Center(
+                                                    child: FaIcon(
+                                                      FontAwesomeIcons.plus,
+                                                      size: 10,
+                                                      color: Colors.green,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                            Divider(height: 30),
                           ],
                         );
                       },

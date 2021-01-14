@@ -36,6 +36,33 @@ class ShoppingCartModel {
   DateTime updatedAt;
   ProductModel product;
 
+  ShoppingCartModel copyWith({
+    int id,
+    String cartId,
+    String userId,
+    int checked,
+    String productId,
+    String price,
+    int qty,
+    String total,
+    DateTime createdAt,
+    DateTime updatedAt,
+    ProductModel product,
+  }) =>
+      ShoppingCartModel(
+        id: id ?? this.id,
+        cartId: cartId ?? this.cartId,
+        userId: userId ?? this.userId,
+        checked: checked ?? this.checked,
+        productId: productId ?? this.productId,
+        price: price ?? this.price,
+        qty: qty ?? this.qty,
+        total: total ?? this.total,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        product: product ?? this.product,
+      );
+
   factory ShoppingCartModel.fromJson(Map<String, dynamic> json) =>
       ShoppingCartModel(
         id: json["id"],

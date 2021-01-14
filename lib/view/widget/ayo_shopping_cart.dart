@@ -12,7 +12,9 @@ class AyoShoppingCart extends GetView<ShoppingCartController> {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed('/cart_page');
+              },
               child: SizedBox(
                 child: Padding(
                   padding: const EdgeInsets.all(15),

@@ -5,6 +5,7 @@ import 'package:ayoo/model/product_info_model.dart';
 import 'package:ayoo/model/product_model.dart';
 import 'package:ayoo/model/product_query_model.dart';
 import 'package:ayoo/model/rating_model.dart';
+import 'package:ayoo/model/shoppin_cart_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -38,15 +39,21 @@ class ProductDetailPageController extends GetxController {
     productRelatedController.toggleFavourite(productId: product.productId);
   }
 
-  void plusQty() {
-    int currentValue = int.parse(qtyField.text);
+  ShoppingCartModel cartItem() {
+    var index = shoppingCart.getCartItemIndex(product.productId);
+    return (index >= 0)
+        ? shoppingCart.shoppingCart[index]
+        : ShoppingCartModel();
+  }
 
-    setQty(currentValue + 1);
+  void plusQty() {
+    shoppingCart.plusQty(product: product);
+    setQty(cartItem().qty);
   }
 
   void minQty() {
-    int currentValue = int.parse(qtyField.text);
-    if (currentValue > 1) setQty(currentValue - 1);
+    shoppingCart.minQty(product: product);
+    setQty(cartItem().qty ?? 0);
   }
 
   void setQty(int value) {
@@ -54,7 +61,7 @@ class ProductDetailPageController extends GetxController {
   }
 
   void init() {
-    setQty(1);
+    setQty(cartItem().qty ?? 0);
     fetchProductDetail();
     fetchRelatedProduct();
   }

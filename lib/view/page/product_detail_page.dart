@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:ayoo/controller/product_detail_page_controller.dart';
 import 'package:ayoo/model/product_model.dart';
 import 'package:ayoo/model/product_query_model.dart';
+import 'package:ayoo/view/widget/ayo_cart_item_control.dart';
+import 'package:ayoo/view/widget/ayo_delivery_type_container.dart';
 import 'package:ayoo/view/widget/ayo_horizontal_product.dart';
 import 'package:ayoo/view/widget/ayo_product_detail_statistic.dart';
 import 'package:ayoo/view/widget/ayo_scroll_to_top_button.dart';
@@ -34,14 +36,15 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
         return false;
       },
       child: Scaffold(
-        body: Obx(() {
-          var loading = controller.productRelatedController.detailLoading.value;
-          var product = (!loading)
-              ? controller.productRelatedController.productModel[0]
-              : ProductModel();
-          return Stack(
-            children: [
-              CustomScrollView(
+        body: Stack(
+          children: [
+            Obx(() {
+              var loading =
+                  controller.productRelatedController.detailLoading.value;
+              var product = (!loading)
+                  ? controller.productRelatedController.productModel[0]
+                  : ProductModel();
+              return CustomScrollView(
                 controller: controller.scrollController,
                 slivers: [
                   (!loading)
@@ -52,6 +55,7 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                           centerTitle: true,
                           title: Text(
                             product.name,
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 18,
                             ),
@@ -62,10 +66,10 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                           flexibleSpace: FlexibleSpaceBar(
                             background: CachedNetworkImage(
                               imageUrl: product.cover,
-                              height: Get.size.height / 3,
+                              height: Get.size.height / 2.5,
                               fit: BoxFit.cover,
                               placeholder: (context, url) =>
-                                  AyoShimmer(height: Get.size.height / 3),
+                                  AyoShimmer(height: Get.size.height / 2.5),
                             ),
                           ),
                         )
@@ -195,6 +199,14 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                                             ),
                                           ],
                                         ),
+                                      ),
+                                SizedBox(height: 10),
+                                (!loading)
+                                    ? AyoDeliveryTypeContainer(
+                                        type: product.deliveryTypeModel)
+                                    : AyoShimmer(
+                                        width: 200,
+                                        height: 15,
                                       ),
                               ],
                             )
@@ -622,16 +634,20 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                     ),
                   ),
                 ],
+              );
+            }),
+            Positioned(
+              bottom: 56,
+              right: 0,
+              child: AyoScrollToTopButton(
+                tag: tag,
+                scrollController: controller.scrollController,
               ),
-              Positioned(
-                bottom: 56,
-                right: 0,
-                child: AyoScrollToTopButton(
-                  tag: tag,
-                  scrollController: controller.scrollController,
-                ),
-              ),
-              (!loading)
+            ),
+            Obx(() {
+              var loading =
+                  controller.productRelatedController.detailLoading.value;
+              return (!loading)
                   ? Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
@@ -689,138 +705,92 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                         ),
                       ),
                     )
-                  : SizedBox.shrink(),
-              AyoSlidingUpPanel(
-                panelController: controller.panelController,
-                maxHeight: Get.size.height / 2.5,
-                panel: Container(
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            'Daging Sirloin Premium',
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey[800],
-                            ),
-                          ),
-                          SizedBox(height: 6),
-                          Text(
-                            'Rp 200.000 / Kg',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey[800],
-                            ),
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: FlatButton(
-                              onPressed: () {
-                                controller.minQty();
-                              },
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25)),
-                              color: Colors.grey[50],
-                              child: FaIcon(
-                                FontAwesomeIcons.minus,
-                                size: 20,
-                                color: Colors.red,
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 4),
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: Colors.grey[50],
-                            ),
-                            alignment: Alignment.center,
-                            child: TextField(
-                              controller: controller.qtyField,
-                              textAlign: TextAlign.center,
-                              showCursor: false,
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(3),
+                  : SizedBox.shrink();
+            }),
+            AyoSlidingUpPanel(
+              panelController: controller.panelController,
+              maxHeight: Get.size.height / 2.5,
+              panel: Container(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                alignment: Alignment.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Obx(() {
+                      var loading = controller
+                          .productRelatedController.detailLoading.value;
+                      var product = (!loading)
+                          ? controller.productRelatedController.productModel[0]
+                          : ProductModel();
+                      return (!loading)
+                          ? Column(
+                              children: [
+                                Text(
+                                  product.name,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[800],
+                                  ),
+                                ),
+                                SizedBox(height: 6),
+                                Text(
+                                  controller.helper.formatMoney(double.parse(
+                                          controller.product.lastPrice)) +
+                                      ' / ' +
+                                      product.unitModel.unit,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey[800],
+                                  ),
+                                )
                               ],
-                              maxLines: 1,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey[800],
-                              ),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                              ),
-                              onChanged: (value) =>
-                                  controller.setQty(int.parse(value)),
-                            ),
+                            )
+                          : SizedBox.shrink();
+                    }),
+                    AyoCartItemControl(
+                      qtyField: controller.qtyField,
+                      minus: controller.minQty,
+                      plus: controller.plusQty,
+                      change: controller.setQty,
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          'Total',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.grey[400],
                           ),
-                          SizedBox(width: 4),
-                          SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: FlatButton(
-                              onPressed: () {
-                                controller.plusQty();
-                              },
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25)),
-                              color: Colors.grey[50],
-                              child: FaIcon(
-                                FontAwesomeIcons.plus,
-                                size: 20,
-                                color: Colors.green,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            'Total',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                          SizedBox(height: 4),
-                          Text(
-                            'Rp 200.000',
+                        ),
+                        SizedBox(height: 4),
+                        Obx(() {
+                          return Text(
+                            (controller.cartItem().total != null)
+                                ? controller.helper.formatMoney(
+                                    double.parse(controller.cartItem().total))
+                                : 'Rp 0',
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
                               color: Colors.green,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                          );
+                        }),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ],
-          );
-        }),
+            ),
+          ],
+        ),
       ),
     );
   }

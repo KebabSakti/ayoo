@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:ayoo/instance/helper_instance.dart';
 import 'package:ayoo/model/product_model.dart';
+import 'package:ayoo/view/widget/ayo_delivery_type_container.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -162,17 +163,7 @@ class AyoProductItem extends StatelessWidget {
                 onRatingUpdate: (_) {},
               ),
               Spacer(),
-              Text(
-                product.deliveryTypeModel.instant == 1
-                    ? 'Pengiriman Langsung'
-                    : 'Pengiriman Terjadwal',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.green[600],
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              AyoDeliveryTypeContainer(type: product.deliveryTypeModel),
               SizedBox(height: 8),
             ],
           ),

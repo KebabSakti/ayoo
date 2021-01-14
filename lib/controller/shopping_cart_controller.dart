@@ -1,9 +1,12 @@
 import 'package:ayoo/model/product_model.dart';
 import 'package:ayoo/model/shoppin_cart_model.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ShoppingCartController extends GetxController {
   var shoppingCart = List<ShoppingCartModel>().obs;
+  var shoppingCartItem = ShoppingCartModel().obs;
+
   var totalItem = 0.obs;
   var totalPaid = 0.0.obs;
 
@@ -19,23 +22,63 @@ class ShoppingCartController extends GetxController {
     totalPaid.value = total;
   }
 
-  ShoppingCartModel getProductFromCart(String productId) {
-    return shoppingCart.firstWhere((i) => i.productId == productId);
+  void setShoppingCartItem(ShoppingCartModel cartItem) {
+    shoppingCartItem.value = cartItem;
   }
 
-  void updateShoppingCart(ProductModel product) {
-    shoppingCart.assignAll(shoppingCart);
+  void updateShoppingCart(String productId) {
+    var index = shoppingCart.indexWhere((i) => i.productId == productId);
+    shoppingCart[index] = ShoppingCartModel();
   }
 
-  void addQty() {}
+  int getCartItemIndex(String productId) {
+    return shoppingCart.indexWhere((i) => i.productId == productId);
+  }
+
+  void plusQty({@required ProductModel product, int count = 1}) {
+    var index = getCartItemIndex(product.productId);
+    if (index >= 0) {
+      int qty = shoppingCart[index].qty + count;
+      shoppingCart[index] = shoppingCart[index].copyWith(
+        qty: qty,
+        total: (qty * double.parse(product.lastPrice)).toString(),
+      );
+    } else {
+      shoppingCart.add(ShoppingCartModel(
+        productId: product.productId,
+        checked: 1,
+        price: product.lastPrice,
+        qty: count,
+        total: product.lastPrice,
+        product: product,
+      ));
+    }
+  }
+
+  void minQty({@required ProductModel product, int count = 1}) {
+    var index = getCartItemIndex(product.productId);
+    if (index >= 0) {
+      int qty = shoppingCart[index].qty - count;
+      if (qty > 0) {
+        shoppingCart[index] = shoppingCart[index].copyWith(
+          qty: qty,
+          total: (qty * double.parse(product.lastPrice)).toString(),
+        );
+      } else {
+        // shoppingCart.removeAt(index);
+        shoppingCart.assignAll(shoppingCart
+            .where((i) => i.productId != product.productId)
+            .toList());
+      }
+    }
+  }
 
   @override
   void onInit() {
     ever(shoppingCart, (carts) {
-      setTotalItem(
-          carts.fold(totalItem.value, (value, element) => value + element.qty));
-      setTotalPaid(carts.fold(totalPaid.value,
-          (value, element) => value + double.parse(element.total)));
+      setTotalItem(carts.fold(0, (value, element) => value + element.qty));
+      setTotalPaid(carts.fold(
+          0.0, (value, element) => value + double.parse(element.total)));
     });
 
     super.onInit();

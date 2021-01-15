@@ -754,8 +754,10 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                     }),
                     AyoCartItemControl(
                       qtyField: controller.qtyField,
-                      minus: controller.minQty,
-                      plus: controller.plusQty,
+                      minus: () => controller.shoppingCart
+                          .minQty(product: controller.product),
+                      plus: () => controller.shoppingCart
+                          .plusQty(product: controller.product),
                       change: controller.setQty,
                     ),
                     Column(

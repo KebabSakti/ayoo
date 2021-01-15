@@ -46,16 +46,6 @@ class ProductDetailPageController extends GetxController {
         : ShoppingCartModel();
   }
 
-  void plusQty() {
-    shoppingCart.plusQty(product: product);
-    setQty(cartItem().qty);
-  }
-
-  void minQty() {
-    shoppingCart.minQty(product: product);
-    setQty(cartItem().qty ?? 0);
-  }
-
   void setQty(int value) {
     qtyField.text = value.toString();
   }
@@ -64,6 +54,10 @@ class ProductDetailPageController extends GetxController {
     setQty(cartItem().qty ?? 0);
     fetchProductDetail();
     fetchRelatedProduct();
+
+    ever(shoppingCart.shoppingCart, (_) {
+      setQty(cartItem().qty ?? 0);
+    });
   }
 
   @override

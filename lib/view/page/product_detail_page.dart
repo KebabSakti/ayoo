@@ -35,6 +35,7 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
         return false;
       },
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Stack(
           children: [
             Obx(() {
@@ -617,18 +618,22 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                           ),
                           SizedBox(height: 10),
                           Container(
-                            height: 210,
-                            child: AyoHorizontalProduct(
-                              loading: controller
-                                  .productRelatedController.loading.value,
-                              products: controller
-                                      .productRelatedController.loading.value
-                                  ? []
-                                  : controller.productRelatedController
-                                      .productPaginateModel.value.data
-                                      .where((i) =>
-                                          i.productId != product.productId)
-                                      .toList(),
+                            height: 230,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: AyoHorizontalProduct(
+                                loading: controller
+                                    .productRelatedController.loading.value,
+                                products: controller
+                                        .productRelatedController.loading.value
+                                    ? []
+                                    : controller.productRelatedController
+                                        .productPaginateModel.value.data
+                                        .where((i) =>
+                                            i.productId != product.productId)
+                                        .toList(),
+                              ),
                             ),
                           ),
                           (!loading) ? SizedBox(height: 50) : SizedBox.shrink(),

@@ -51,7 +51,7 @@ class AyoVerticalProduct extends StatelessWidget {
             return SliverGrid(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: ((Get.size.width - 30) / 2) / 210,
+                childAspectRatio: ((Get.size.width - 30) / 2) / 230,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
               ),

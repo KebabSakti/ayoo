@@ -18,7 +18,12 @@ class AyoProductItem extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Get.toNamed(
+              '/product_detail/' + Random().nextInt(999999999).toString(),
+              arguments: product,
+              preventDuplicates: false);
+        },
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -29,85 +34,88 @@ class AyoProductItem extends StatelessWidget {
                 width: double.infinity,
               ),
             ),
-            Container(
-              color: Colors.grey[50],
-              padding: EdgeInsets.all(6),
-              child: Column(
-                children: [
-                  Text(
-                    product.name,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12,
-                    ),
-                  ),
-                  SizedBox(height: 6),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      (double.parse(product.discount) > 0)
-                          ? Row(
-                              children: [
-                                Text(
-                                  Get.find<HelperInstance>()
-                                      .formatMoney(double.parse(product.price)),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.grey[400],
-                                    decoration: TextDecoration.lineThrough,
-                                  ),
-                                ),
-                                SizedBox(width: 4),
-                              ],
-                            )
-                          : SizedBox.shrink(),
-                      Text(
-                        Get.find<HelperInstance>()
-                            .formatMoney(double.parse(product.lastPrice)),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: Get.theme.primaryColor,
-                        ),
+            Expanded(
+              child: Container(
+                color: Colors.grey[50],
+                padding: EdgeInsets.all(6),
+                child: Column(
+                  children: [
+                    Text(
+                      product.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
                       ),
-                    ],
-                  ),
-                  SizedBox(height: 6),
-                  RatingBar(
-                    initialRating: product.ratingWeightModel != null
-                        ? double.parse(product.ratingWeightModel.rating)
-                        : 0,
-                    minRating: 0,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    ignoreGestures: true,
-                    itemSize: 12,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                    ratingWidget: RatingWidget(
-                        empty: Icon(
-                          Icons.star,
-                          color: Colors.grey,
+                    ),
+                    Spacer(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        (double.parse(product.discount) > 0)
+                            ? Row(
+                                children: [
+                                  Text(
+                                    Get.find<HelperInstance>().formatMoney(
+                                        double.parse(product.price)),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.grey[400],
+                                      decoration: TextDecoration.lineThrough,
+                                    ),
+                                  ),
+                                  SizedBox(width: 4),
+                                ],
+                              )
+                            : SizedBox.shrink(),
+                        Text(
+                          Get.find<HelperInstance>()
+                              .formatMoney(double.parse(product.lastPrice)),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: Get.theme.primaryColor,
+                          ),
                         ),
-                        half: Icon(
-                          Icons.star_half,
-                          color: Colors.amber,
-                        ),
-                        full: Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        )),
-                    onRatingUpdate: (_) {},
-                  ),
-                  SizedBox(height: 6),
-                  AyoDeliveryTypeContainer(type: product.deliveryTypeModel),
-                ],
+                      ],
+                    ),
+                    SizedBox(height: 6),
+                    RatingBar(
+                      initialRating: product.ratingWeightModel != null
+                          ? double.parse(product.ratingWeightModel.rating)
+                          : 0,
+                      minRating: 0,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      ignoreGestures: true,
+                      itemSize: 12,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                      ratingWidget: RatingWidget(
+                          empty: Icon(
+                            Icons.star,
+                            color: Colors.grey,
+                          ),
+                          half: Icon(
+                            Icons.star_half,
+                            color: Colors.amber,
+                          ),
+                          full: Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          )),
+                      onRatingUpdate: (_) {},
+                    ),
+                    SizedBox(height: 6),
+                    AyoDeliveryTypeContainer(type: product.deliveryTypeModel),
+                    SizedBox(height: 6),
+                  ],
+                ),
               ),
             ),
           ],

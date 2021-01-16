@@ -166,7 +166,11 @@ class _HomePageState extends State<HomePage>
                     height: 275,
                     heading: 'Produk Terlaris',
                     tapText: 'Lihat Semua',
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(
+                          '/product/' + Random().nextInt(999999999).toString(),
+                          arguments: ProductQueryModel(terlaris: 1));
+                    },
                     child: Obx(
                       () => Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),

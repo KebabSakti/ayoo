@@ -57,11 +57,11 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                           var cartItem = controller
                               .shoppingCartController.shoppingCart[index];
                           return Column(
+                            key: ValueKey(cartItem.productId),
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Row(
-                                key: ValueKey(cartItem.productId),
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   ClipRRect(
@@ -103,7 +103,12 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                                 right: 8,
                                               ),
                                               child: GestureDetector(
-                                                onTap: () {},
+                                                onTap: () {
+                                                  controller
+                                                      .shoppingCartController
+                                                      .removeProductById(
+                                                          cartItem.productId);
+                                                },
                                                 child: FaIcon(
                                                   FontAwesomeIcons.times,
                                                   color: Colors.red,
@@ -253,6 +258,69 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
             ],
           ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        height: 56,
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            top: BorderSide(
+              width: 1,
+              color: Colors.grey[100],
+            ),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Total',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600, color: Colors.grey[800]),
+                ),
+                Obx(() {
+                  return Text(
+                    '${controller.shoppingCartController.totalItem.value} Item',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w800, color: Colors.grey[800]),
+                  );
+                }),
+              ],
+            ),
+            Obx(() {
+              return Text(
+                controller.helper.formatMoney(
+                  controller.shoppingCartController.totalPaid.value,
+                ),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                  color: Get.theme.primaryColor,
+                ),
+              );
+            }),
+            FlatButton(
+              onPressed: () {},
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              color: Get.theme.primaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Text(
+                'Lanjut',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

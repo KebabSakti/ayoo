@@ -65,12 +65,14 @@ class ShoppingCartController extends GetxController {
           total: (qty * double.parse(product.lastPrice)).toString(),
         );
       } else {
-        // shoppingCart.removeAt(index);
-        shoppingCart.assignAll(shoppingCart
-            .where((i) => i.productId != product.productId)
-            .toList());
+        removeProductById(product.productId);
       }
     }
+  }
+
+  void removeProductById(String productId) {
+    shoppingCart.assignAll(
+        shoppingCart.where((i) => i.productId != productId).toList());
   }
 
   @override

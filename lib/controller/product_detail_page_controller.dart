@@ -5,7 +5,7 @@ import 'package:ayoo/model/product_info_model.dart';
 import 'package:ayoo/model/product_model.dart';
 import 'package:ayoo/model/product_query_model.dart';
 import 'package:ayoo/model/rating_model.dart';
-import 'package:ayoo/model/shoppin_cart_model.dart';
+import 'package:ayoo/model/shopping_cart_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';

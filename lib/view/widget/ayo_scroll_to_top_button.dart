@@ -1,7 +1,6 @@
 import 'package:ayoo/controller/scroll_to_top_button_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class AyoScrollToTopButton extends StatelessWidget {

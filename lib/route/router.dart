@@ -7,7 +7,6 @@ import 'package:ayoo/binding/product_page_binding.dart';
 import 'package:ayoo/binding/product_review_page_binding.dart';
 import 'package:ayoo/binding/search_page_binding.dart';
 import 'package:ayoo/binding/shopping_cart_page_binding.dart';
-import 'package:ayoo/controller/shopping_cart_page_controller.dart';
 import 'package:ayoo/view/page/category_page.dart';
 import 'package:ayoo/view/page/page.dart';
 import 'package:ayoo/binding/binding.dart';

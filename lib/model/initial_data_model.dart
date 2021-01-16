@@ -5,7 +5,7 @@
 import 'dart:convert';
 
 import 'package:ayoo/model/intro_image_model.dart';
-import 'package:ayoo/model/shoppin_cart_model.dart';
+import 'package:ayoo/model/shopping_cart_model.dart';
 
 InitialDataModel initialDataModelFromJson(String str) =>
     InitialDataModel.fromJson(json.decode(str));

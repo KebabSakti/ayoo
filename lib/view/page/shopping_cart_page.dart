@@ -1,5 +1,4 @@
 import 'package:ayoo/controller/shopping_cart_page_controller.dart';
-import 'package:ayoo/view/widget/ayo_cart_item_control.dart';
 import 'package:ayoo/view/widget/ayo_delivery_type_container.dart';
 import 'package:ayoo/view/widget/ayo_shimmer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -49,7 +48,7 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
 
                       return ListView.separated(
                         separatorBuilder: (context, index) =>
-                            Divider(height: 20),
+                            Divider(height: 30),
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: controller
@@ -69,8 +68,8 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                     borderRadius: BorderRadius.circular(6),
                                     child: CachedNetworkImage(
                                       imageUrl: cartItem.product.cover,
-                                      width: 100,
-                                      height: 100,
+                                      width: 80,
+                                      height: 70,
                                       fit: BoxFit.cover,
                                       placeholder: (context, url) =>
                                           AyoShimmer(),
@@ -90,7 +89,7 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                               child: Text(
                                                 cartItem.product.name,
                                                 overflow: TextOverflow.ellipsis,
-                                                maxLines: 2,
+                                                maxLines: 1,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w800,
                                                   color: Colors.grey[800],
@@ -100,11 +99,16 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(
-                                                  left: 20),
-                                              child: FaIcon(
-                                                FontAwesomeIcons.times,
-                                                color: Colors.red,
-                                                size: 20,
+                                                left: 20,
+                                                right: 8,
+                                              ),
+                                              child: GestureDetector(
+                                                onTap: () {},
+                                                child: FaIcon(
+                                                  FontAwesomeIcons.times,
+                                                  color: Colors.red,
+                                                  size: 14,
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -114,7 +118,7 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                           type: cartItem
                                               .product.deliveryTypeModel,
                                         ),
-                                        SizedBox(height: 25),
+                                        // SizedBox(height: 25),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -154,7 +158,7 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                                   ),
                                                 ),
                                                 SizedBox.fromSize(
-                                                  size: Size(30, 30),
+                                                  size: Size(40, 30),
                                                   child: Center(
                                                     child: TextField(
                                                       controller: controller

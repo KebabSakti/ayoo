@@ -1,5 +1,5 @@
 import 'package:ayoo/model/product_model.dart';
-import 'package:ayoo/model/shoppin_cart_model.dart';
+import 'package:ayoo/model/shopping_cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

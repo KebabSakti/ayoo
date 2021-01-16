@@ -1,7 +1,5 @@
-import 'package:ayoo/controller/product_category_page_controller.dart';
 import 'package:ayoo/controller/product_review_page_controller.dart';
 import 'package:ayoo/view/widget/ayo_scroll_to_top_button.dart';
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';

@@ -15,158 +15,102 @@ class AyoProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: InkWell(
-        onTap: () {
-          Get.toNamed(
-              '/product_detail/' + Random().nextInt(999999999).toString(),
-              arguments: product,
-              preventDuplicates: false);
-        },
-        onDoubleTap: () {
-          print('love it');
-        },
-        borderRadius: BorderRadius.circular(10),
-        splashColor: Theme.of(context).accentColor.withOpacity(0.3),
-        child: Ink(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Colors.grey[200]),
-          ),
-          child: Column(
-            children: [
-              Ink(
-                height: 100,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(6),
+      child: GestureDetector(
+        onTap: () {},
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Expanded(
+              child: CachedNetworkImage(
+                imageUrl: product.cover,
+                fit: BoxFit.cover,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                  ),
-                  image: DecorationImage(
-                    image: CachedNetworkImageProvider(product.cover),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(4),
-                      margin: EdgeInsets.only(top: 6, right: 6),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        '${Get.find<HelperInstance>().formatMoney(double.parse(product.unitModel.amount), name: '')} ${product.unitModel.unit}',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    // Padding(
-                    //   padding: EdgeInsets.only(bottom: 6, right: 6),
-                    //   child: CircleAvatar(
-                    //     backgroundColor: Colors.grey[100],
-                    //     radius: 10,
-                    //     child: Icon(
-                    //       FontAwesomeIcons.solidHeart,
-                    //       size: 13,
-                    //       color: (product.favourite != null)
-                    //           ? Theme.of(context).primaryColor
-                    //           : Colors.grey[400],
-                    //     ),
-                    //   ),
-                    // ),
-                  ],
-                ),
               ),
-              SizedBox(height: 4),
-              Padding(
-                padding: EdgeInsets.only(left: 4, right: 4),
-                child: Text(
-                  product.name,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+            ),
+            Container(
+              color: Colors.grey[50],
+              padding: EdgeInsets.all(6),
+              child: Column(
                 children: [
-                  (double.parse(product.discount) > 0)
-                      ? Row(
-                          children: [
-                            Text(
-                              Get.find<HelperInstance>()
-                                  .formatMoney(double.parse(product.price)),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey[400],
-                                decoration: TextDecoration.lineThrough,
-                              ),
-                            ),
-                            SizedBox(width: 4),
-                          ],
-                        )
-                      : SizedBox.shrink(),
                   Text(
-                    Get.find<HelperInstance>()
-                        .formatMoney(double.parse(product.lastPrice)),
+                    product.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: Get.theme.primaryColor,
+                      fontSize: 12,
                     ),
                   ),
+                  SizedBox(height: 6),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      (double.parse(product.discount) > 0)
+                          ? Row(
+                              children: [
+                                Text(
+                                  Get.find<HelperInstance>()
+                                      .formatMoney(double.parse(product.price)),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey[400],
+                                    decoration: TextDecoration.lineThrough,
+                                  ),
+                                ),
+                                SizedBox(width: 4),
+                              ],
+                            )
+                          : SizedBox.shrink(),
+                      Text(
+                        Get.find<HelperInstance>()
+                            .formatMoney(double.parse(product.lastPrice)),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Get.theme.primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 6),
+                  RatingBar(
+                    initialRating: product.ratingWeightModel != null
+                        ? double.parse(product.ratingWeightModel.rating)
+                        : 0,
+                    minRating: 0,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    ignoreGestures: true,
+                    itemSize: 12,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                    ratingWidget: RatingWidget(
+                        empty: Icon(
+                          Icons.star,
+                          color: Colors.grey,
+                        ),
+                        half: Icon(
+                          Icons.star_half,
+                          color: Colors.amber,
+                        ),
+                        full: Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        )),
+                    onRatingUpdate: (_) {},
+                  ),
+                  SizedBox(height: 6),
+                  AyoDeliveryTypeContainer(type: product.deliveryTypeModel),
                 ],
               ),
-              SizedBox(height: 5),
-              RatingBar(
-                initialRating: product.ratingWeightModel != null
-                    ? double.parse(product.ratingWeightModel.rating)
-                    : 0,
-                minRating: 0,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                ignoreGestures: true,
-                itemSize: 12,
-                itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                ratingWidget: RatingWidget(
-                    empty: Icon(
-                      Icons.star,
-                      color: Colors.grey,
-                    ),
-                    half: Icon(
-                      Icons.star_half,
-                      color: Colors.amber,
-                    ),
-                    full: Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    )),
-                onRatingUpdate: (_) {},
-              ),
-              Spacer(),
-              AyoDeliveryTypeContainer(type: product.deliveryTypeModel),
-              SizedBox(height: 8),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -162,7 +162,7 @@ class _HomePageState extends State<HomePage>
                 ),
                 SliverToBoxAdapter(
                   child: AyoHomeSection(
-                    height: 260,
+                    height: 300,
                     heading: 'Produk Terlaris',
                     tapText: 'Lihat Semua',
                     onTap: () {

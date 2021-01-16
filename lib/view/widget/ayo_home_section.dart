@@ -26,6 +26,7 @@ class AyoHomeSection extends StatelessWidget {
       padding: EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
             padding: EdgeInsets.only(left: 10, right: 5),

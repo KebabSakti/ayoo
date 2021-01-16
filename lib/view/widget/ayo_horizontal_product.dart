@@ -16,6 +16,7 @@ class AyoHorizontalProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      shrinkWrap: true,
       scrollDirection: Axis.horizontal,
       itemCount: (!loading) ? products.length : 4,
       itemBuilder: (context, index) {

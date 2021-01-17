@@ -26,7 +26,10 @@ class ShoppingCartPageControler extends GetxController {
         shoppingCartController.shoppingCart[index]?.qty.toString();
   }
 
-  void setNotes(int index, String note, ProductModel product) {}
+  void setNotes(int index, String note, ProductModel product) {
+    shoppingCartController.setNote(product: product, note: note);
+    // noteFieldControllers[index].text = note;
+  }
 
   void init() {
     for (int i = 0; i < shoppingCartController.shoppingCart.length; i++) {

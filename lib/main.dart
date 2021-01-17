@@ -9,5 +9,6 @@ void main() {
     initialRoute: '/',
     getPages: AppRouter.routes,
     theme: AppTheme.primary,
+    showPerformanceOverlay: true,
   ));
 }

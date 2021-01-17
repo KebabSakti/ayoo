@@ -277,14 +277,13 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                 ),
                                 SizedBox(height: 8),
                                 TextField(
-                                  controller: controller
-                                      .noteFieldControllers[index]
-                                    ..text = cartItem.note?.toString() ?? '',
+                                  controller:
+                                      controller.noteFieldControllers[index]
+                                        ..text = cartItem.note?.toString(),
                                   textAlign: TextAlign.left,
                                   showCursor: true,
                                   cursorColor: Colors.grey[800],
                                   cursorWidth: 1,
-                                  keyboardType: TextInputType.text,
                                   maxLines: 1,
                                   style: TextStyle(
                                     fontSize: 14,
@@ -304,28 +303,11 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                       horizontal: 2,
                                     ),
                                   ),
-                                  onChanged: (value) {},
-                                )
-                                // (controller.noteStatus[index])
-                                //     ? Text(
-                                //         cartItem.note,
-                                //         textAlign: TextAlign.justify,
-                                //         style: TextStyle(
-                                //           fontSize: 12,
-                                //           color: Colors.grey[600],
-                                //         ),
-                                //       )
-                                //     : GestureDetector(
-                                //         onTap: () {},
-                                //         child: Text(
-                                //           'Tambah Catatan',
-                                //           style: TextStyle(
-                                //             color: Colors.green,
-                                //             fontSize: 12,
-                                //             fontWeight: FontWeight.w600,
-                                //           ),
-                                //         ),
-                                //       ),
+                                  onSubmitted: (value) {
+                                    controller.setNotes(
+                                        index, value, cartItem.product);
+                                  },
+                                ),
                               ],
                             );
                           },

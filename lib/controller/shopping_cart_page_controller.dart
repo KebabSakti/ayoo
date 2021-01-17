@@ -10,6 +10,7 @@ class ShoppingCartPageControler extends GetxController {
   final ScrollController scrollController = ScrollController();
 
   List<TextEditingController> textFieldControllers = [];
+  List<TextEditingController> noteFieldControllers = [];
 
   void plusQty(int index, ProductModel productModel) {
     var index = shoppingCartController.getCartItemIndex(productModel.productId);
@@ -25,10 +26,13 @@ class ShoppingCartPageControler extends GetxController {
         shoppingCartController.shoppingCart[index]?.qty.toString();
   }
 
+  void setNotes(int index, String note, ProductModel product) {}
+
   void init() {
-    textFieldControllers = shoppingCartController.shoppingCart
-        .map((i) => TextEditingController(text: i.qty.toString()))
-        .toList();
+    for (int i = 0; i < shoppingCartController.shoppingCart.length; i++) {
+      textFieldControllers.add(TextEditingController());
+      noteFieldControllers.add(TextEditingController());
+    }
   }
 
   @override

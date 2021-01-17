@@ -9,7 +9,6 @@ import 'package:ayoo/view/widget/ayo_horizontal_product.dart';
 import 'package:ayoo/view/widget/ayo_horizontal_product_filter.dart';
 import 'package:ayoo/view/widget/ayo_main_category.dart';
 import 'package:ayoo/view/widget/ayo_popular_search.dart';
-import 'package:ayoo/view/widget/ayo_product_item.dart';
 import 'package:ayoo/view/widget/ayo_scanner_with_point_bar.dart';
 import 'package:ayoo/view/widget/ayo_scroll_to_top_button.dart';
 import 'package:ayoo/view/widget/ayo_search_bar.dart';

@@ -70,6 +70,11 @@ class ShoppingCartController extends GetxController {
     }
   }
 
+  void setNote({@required ProductModel product, @required String note}) {
+    var index = getCartItemIndex(product.productId);
+    shoppingCart[index] = shoppingCart[index].copyWith(note: note);
+  }
+
   void removeProductById(String productId) {
     shoppingCart.assignAll(
         shoppingCart.where((i) => i.productId != productId).toList());

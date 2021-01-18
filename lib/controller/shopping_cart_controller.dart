@@ -1,9 +1,12 @@
 import 'package:ayoo/model/product_model.dart';
 import 'package:ayoo/model/shopping_cart_model.dart';
+import 'package:ayoo/repo/remote/shopping_cart_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ShoppingCartController extends GetxController {
+  final ShoppingCartApi _cartApi = ShoppingCartApi();
+
   var shoppingCart = List<ShoppingCartModel>().obs;
   var shoppingCartItem = ShoppingCartModel().obs;
 
@@ -70,6 +73,18 @@ class ShoppingCartController extends GetxController {
     }
   }
 
+  void setQty({@required ProductModel product, @required int qty}) {
+    var index = getCartItemIndex(product.productId);
+    if (qty > 0) {
+      shoppingCart[index] = shoppingCart[index].copyWith(
+        qty: qty,
+        total: (qty * double.parse(product.lastPrice)).toString(),
+      );
+    } else {
+      removeProductById(product.productId);
+    }
+  }
+
   void setNote({@required ProductModel product, @required String note}) {
     var index = getCartItemIndex(product.productId);
     shoppingCart[index] = shoppingCart[index].copyWith(note: note);
@@ -87,6 +102,10 @@ class ShoppingCartController extends GetxController {
       setTotalPaid(carts.fold(
           0.0, (value, element) => value + double.parse(element.total)));
     });
+
+    debounce(shoppingCart, (carts) {
+      _cartApi.uploadShoppingCart(carts: carts);
+    }, time: Duration(seconds: 1));
 
     super.onInit();
   }

@@ -48,6 +48,8 @@ class ProductDetailPageController extends GetxController {
 
   void setQty(int value) {
     qtyField.text = value.toString();
+    qtyField.selection = TextSelection.fromPosition(
+        TextPosition(offset: value.toString().length));
   }
 
   void init() {

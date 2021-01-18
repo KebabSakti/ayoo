@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ayoo/controller/shopping_cart_page_controller.dart';
 import 'package:ayoo/view/widget/ayo_delivery_type_container.dart';
 import 'package:ayoo/view/widget/ayo_shimmer.dart';
@@ -105,15 +107,26 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(6),
-                                      child: CachedNetworkImage(
-                                        imageUrl: cartItem.product.cover,
-                                        width: 80,
-                                        height: 70,
-                                        fit: BoxFit.cover,
-                                        placeholder: (context, url) =>
-                                            AyoShimmer(),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.offNamed(
+                                            '/product_detail/' +
+                                                Random()
+                                                    .nextInt(999999999)
+                                                    .toString(),
+                                            arguments: cartItem.product,
+                                            preventDuplicates: false);
+                                      },
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(6),
+                                        child: CachedNetworkImage(
+                                          imageUrl: cartItem.product.cover,
+                                          width: 80,
+                                          height: 70,
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                              AyoShimmer(),
+                                        ),
                                       ),
                                     ),
                                     SizedBox(width: 10),
@@ -147,13 +160,13 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                                           cartItem.productId);
                                                 },
                                                 child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 10),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 0),
                                                   child: FaIcon(
                                                     FontAwesomeIcons.times,
-                                                    color: Colors.red,
-                                                    size: 14,
+                                                    color: Colors.redAccent,
+                                                    size: 18,
                                                   ),
                                                 ),
                                               ),
@@ -175,7 +188,7 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                                         cartItem.total)),
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w800,
-                                                  color: Colors.grey[800],
+                                                  color: Get.theme.primaryColor,
                                                 ),
                                               ),
                                               Row(
@@ -213,7 +226,14 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                                                 .textFieldControllers[
                                                             index]
                                                           ..text = cartItem.qty
-                                                              .toString(),
+                                                              .toString()
+                                                          ..selection = TextSelection
+                                                              .fromPosition(TextPosition(
+                                                                  offset: controller
+                                                                      .textFieldControllers[
+                                                                          index]
+                                                                      .text
+                                                                      .length)),
                                                         textAlign:
                                                             TextAlign.center,
                                                         showCursor: false,
@@ -237,7 +257,16 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                                           border:
                                                               InputBorder.none,
                                                         ),
-                                                        onChanged: (value) {},
+                                                        onSubmitted: (value) {
+                                                          controller
+                                                              .shoppingCartController
+                                                              .setQty(
+                                                            product: cartItem
+                                                                .product,
+                                                            qty: int.parse(
+                                                                value),
+                                                          );
+                                                        },
                                                       ),
                                                     ),
                                                   ),
@@ -275,11 +304,17 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 8),
+                                SizedBox(height: 2),
                                 TextField(
-                                  controller:
-                                      controller.noteFieldControllers[index]
-                                        ..text = cartItem.note?.toString(),
+                                  controller: controller
+                                      .noteFieldControllers[index]
+                                    ..text = cartItem.note?.toString()
+                                    ..selection = TextSelection.fromPosition(
+                                        TextPosition(
+                                            offset: controller
+                                                .noteFieldControllers[index]
+                                                .text
+                                                .length)),
                                   textAlign: TextAlign.left,
                                   showCursor: true,
                                   cursorColor: Colors.grey[800],
@@ -304,8 +339,8 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                     ),
                                   ),
                                   onSubmitted: (value) {
-                                    controller.setNotes(
-                                        index, value, cartItem.product);
+                                    controller.shoppingCartController.setNote(
+                                        product: cartItem.product, note: value);
                                   },
                                 ),
                               ],

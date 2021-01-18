@@ -61,7 +61,7 @@ class AyoCartItemControl extends StatelessWidget {
             decoration: InputDecoration(
               border: InputBorder.none,
             ),
-            onChanged: (value) => change,
+            onSubmitted: (value) => change,
           ),
         ),
         SizedBox(width: 4),

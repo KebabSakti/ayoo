@@ -36,7 +36,7 @@ class ShoppingCartModel {
   String price;
   int qty;
   String total;
-  dynamic note;
+  String note;
   DateTime createdAt;
   DateTime updatedAt;
   ProductModel product;
@@ -50,7 +50,7 @@ class ShoppingCartModel {
     String price,
     int qty,
     String total,
-    dynamic note,
+    String note,
     DateTime createdAt,
     DateTime updatedAt,
     ProductModel product,
@@ -80,7 +80,7 @@ class ShoppingCartModel {
         price: json["price"] == null ? null : json["price"],
         qty: json["qty"] == null ? null : json["qty"],
         total: json["total"] == null ? null : json["total"],
-        note: json["note"],
+        note: json["note"] == null ? null : json["note"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
@@ -101,7 +101,7 @@ class ShoppingCartModel {
         "price": price == null ? null : price,
         "qty": qty == null ? null : qty,
         "total": total == null ? null : total,
-        "note": note,
+        "note": note == null ? null : note,
         "created_at": createdAt == null ? null : createdAt.toIso8601String(),
         "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
         "product": product == null ? null : product.toJson(),

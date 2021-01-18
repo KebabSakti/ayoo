@@ -766,7 +766,9 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                           .minQty(product: controller.product),
                       plus: () => controller.shoppingCart
                           .plusQty(product: controller.product),
-                      change: controller.setQty,
+                      change: () => controller.shoppingCart.setQty(
+                          product: controller.product,
+                          qty: int.parse(controller.qtyField.text)),
                     ),
                     Column(
                       children: [

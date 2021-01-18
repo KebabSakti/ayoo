@@ -28,7 +28,6 @@ class ShoppingCartPageControler extends GetxController {
 
   void setNotes(int index, String note, ProductModel product) {
     shoppingCartController.setNote(product: product, note: note);
-    // noteFieldControllers[index].text = note;
   }
 
   void init() {

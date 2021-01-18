@@ -46,19 +46,12 @@ class ProductDetailPageController extends GetxController {
         : ShoppingCartModel();
   }
 
-  void setQty(int value) {
-    qtyField.text = value.toString();
-    qtyField.selection = TextSelection.fromPosition(
-        TextPosition(offset: value.toString().length));
-  }
-
   void init() {
-    setQty(cartItem().qty ?? 0);
     fetchProductDetail();
     fetchRelatedProduct();
 
-    ever(shoppingCart.shoppingCart, (_) {
-      setQty(cartItem().qty ?? 0);
+    ever(shoppingCart.shoppingCart, (shop) {
+      qtyField.text = cartItem().qty?.toString() ?? '0';
     });
   }
 

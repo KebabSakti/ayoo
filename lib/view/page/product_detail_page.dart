@@ -14,6 +14,7 @@ import 'package:ayoo/view/widget/ayo_sliding_up_panel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -760,15 +761,87 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                             )
                           : SizedBox.shrink();
                     }),
-                    AyoCartItemControl(
-                      qtyField: controller.qtyField,
-                      minus: () => controller.shoppingCart
-                          .minQty(product: controller.product),
-                      plus: () => controller.shoppingCart
-                          .plusQty(product: controller.product),
-                      change: () => controller.shoppingCart.setQty(
-                          product: controller.product,
-                          qty: int.parse(controller.qtyField.text)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: FlatButton(
+                            onPressed: () {
+                              controller.shoppingCart
+                                  .minQty(product: controller.product);
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25)),
+                            color: Colors.grey[50],
+                            child: FaIcon(
+                              FontAwesomeIcons.minus,
+                              size: 20,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 4),
+                        Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Colors.grey[50],
+                          ),
+                          alignment: Alignment.center,
+                          child: TextField(
+                            controller: controller.qtyField
+                              ..text =
+                                  controller.cartItem().qty?.toString() ?? '0'
+                              ..selection = TextSelection.fromPosition(
+                                TextPosition(
+                                  offset: controller.qtyField.text.length,
+                                ),
+                              ),
+                            textAlign: TextAlign.center,
+                            showCursor: false,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(3),
+                            ],
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey[800],
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                            ),
+                            onSubmitted: (value) {
+                              controller.shoppingCart.setQty(
+                                  product: controller.product,
+                                  qty: int.parse(value));
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 4),
+                        SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: FlatButton(
+                            onPressed: () {
+                              controller.shoppingCart
+                                  .plusQty(product: controller.product);
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25)),
+                            color: Colors.grey[50],
+                            child: FaIcon(
+                              FontAwesomeIcons.plus,
+                              size: 20,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     Column(
                       children: [

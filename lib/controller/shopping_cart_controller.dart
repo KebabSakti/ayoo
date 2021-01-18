@@ -76,12 +76,25 @@ class ShoppingCartController extends GetxController {
   void setQty({@required ProductModel product, @required int qty}) {
     var index = getCartItemIndex(product.productId);
     if (qty > 0) {
-      shoppingCart[index] = shoppingCart[index].copyWith(
-        qty: qty,
-        total: (qty * double.parse(product.lastPrice)).toString(),
-      );
+      if (index >= 0) {
+        shoppingCart[index] = shoppingCart[index].copyWith(
+          qty: qty,
+          total: (qty * double.parse(product.lastPrice)).toString(),
+        );
+      } else {
+        shoppingCart.add(ShoppingCartModel(
+          productId: product.productId,
+          checked: 1,
+          price: product.lastPrice,
+          qty: qty,
+          total: product.lastPrice,
+          product: product,
+        ));
+      }
     } else {
-      removeProductById(product.productId);
+      if (index >= 0) {
+        removeProductById(product.productId);
+      }
     }
   }
 

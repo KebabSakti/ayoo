@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 class HelperInstance {
@@ -8,5 +10,16 @@ class HelperInstance {
       decimalDigits: digit ?? 0,
     );
     return f.format(number);
+  }
+
+  void showToast(String message, {ToastGravity gravity = ToastGravity.BOTTOM}) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: gravity,
+      backgroundColor: Colors.grey[800],
+      textColor: Colors.white,
+      fontSize: 14.0,
+    );
   }
 }

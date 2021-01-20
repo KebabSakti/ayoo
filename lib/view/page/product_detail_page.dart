@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:ayoo/controller/product_detail_page_controller.dart';
 import 'package:ayoo/model/product_model.dart';
 import 'package:ayoo/model/product_query_model.dart';
-import 'package:ayoo/view/widget/ayo_cart_item_control.dart';
 import 'package:ayoo/view/widget/ayo_delivery_type_container.dart';
 import 'package:ayoo/view/widget/ayo_horizontal_product.dart';
 import 'package:ayoo/view/widget/ayo_product_detail_statistic.dart';
@@ -86,101 +85,86 @@ class ProductDetailPage extends GetView<ProductDetailPageController> {
                       child: (!loading)
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            controller.helper.formatMoney(
-                                                    double.parse(controller
-                                                        .product.lastPrice)) +
-                                                ' / ' +
-                                                product.unitModel.unit,
-                                            style: TextStyle(
-                                              color: Colors.grey[800],
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18,
-                                            ),
-                                          ),
-                                          SizedBox(height: 6),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 6),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  padding: EdgeInsets.only(
-                                                    left: 6,
-                                                    right: 6,
-                                                    top: 4,
-                                                    bottom: 4,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.amberAccent,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4),
-                                                  ),
-                                                  child: Text(
-                                                    '${controller.helper.formatMoney(double.parse(product.discount), name: '')}% OFF',
-                                                    style: TextStyle(
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(width: 6),
-                                                Text(
-                                                  '${controller.helper.formatMoney(double.parse(product.price))}',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Colors.grey[400],
-                                                    decoration: TextDecoration
-                                                        .lineThrough,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Text(
-                                            product.name,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              color: Colors.grey[800],
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                          SizedBox(height: 6),
-                                        ],
+                                    Text(
+                                      controller.helper.formatMoney(
+                                              double.parse(controller
+                                                  .product.lastPrice)) +
+                                          ' / ' +
+                                          product.unitModel.unit,
+                                      style: TextStyle(
+                                        color: Colors.grey[800],
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
                                       ),
                                     ),
-                                    IconButton(
-                                      onPressed: () {
+                                    GestureDetector(
+                                      onTap: () {
                                         controller.toggleFavourite();
                                       },
-                                      icon: Icon(
-                                        FontAwesomeIcons.solidHeart,
+                                      child: Icon(
+                                        (product.favouriteModel.length > 0)
+                                            ? FontAwesomeIcons.solidHeart
+                                            : FontAwesomeIcons.heart,
                                         color:
                                             (product.favouriteModel.length > 0)
                                                 ? Get.theme.primaryColor
-                                                : Colors.grey,
-                                        size: 24,
+                                                : Colors.grey[800],
+                                        size: 20,
                                       ),
                                     ),
                                   ],
                                 ),
+                                SizedBox(height: 6),
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(
+                                        left: 6,
+                                        right: 6,
+                                        top: 4,
+                                        bottom: 4,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Colors.amberAccent,
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        '${controller.helper.formatMoney(double.parse(product.discount), name: '')}% OFF',
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 6),
+                                    Text(
+                                      '${controller.helper.formatMoney(double.parse(product.price))}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.grey[400],
+                                        decoration: TextDecoration.lineThrough,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 6),
+                                Text(
+                                  product.name,
+                                  style: TextStyle(
+                                    color: Colors.grey[800],
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                SizedBox(height: 6),
                                 (!loading)
                                     ? AyoProductDetailStatistic(
                                         productModel: product)

@@ -23,6 +23,7 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                 SliverAppBar(
                   pinned: true,
                   titleSpacing: 0,
+                  centerTitle: true,
                   title: Text(
                     'Keranjang Belanja',
                     style: TextStyle(
@@ -160,9 +161,8 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                                           cartItem.productId);
                                                 },
                                                 child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 0),
+                                                  padding: const EdgeInsets
+                                                      .symmetric(horizontal: 7),
                                                   child: FaIcon(
                                                     FontAwesomeIcons.times,
                                                     color: Colors.redAccent,

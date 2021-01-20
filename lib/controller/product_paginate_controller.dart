@@ -1,11 +1,15 @@
+import 'package:ayoo/instance/helper_instance.dart';
 import 'package:ayoo/model/product_model.dart';
 import 'package:ayoo/model/product_paginate_model.dart';
 import 'package:ayoo/model/product_query_model.dart';
 import 'package:ayoo/repo/remote/product_paginate_api.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class ProductPaginateController extends GetxController {
+  final HelperInstance helper = Get.find();
+
   final _productPaginateApi = ProductPaginateApi();
   final scrollController = ScrollController();
 
@@ -99,15 +103,13 @@ class ProductPaginateController extends GetxController {
         .then((product) {
       if (product != null) {
         setProductDetail(product);
+        if (product[0].favouriteModel.length > 0)
+          helper.showToast('Sukses menambah favorit');
+        else
+          helper.showToast('Sukses menghapus favorit');
       }
     });
   }
-
-  // Future isFavourite({@required String productId}) async {
-  //   await _productPaginateApi
-  //       .toggleFavourite(productId: productId)
-  //       .then((value) => favourite.value = value);
-  // }
 
   Future setProductPaginateModel(ProductPaginateModel productPaginate) async {
     productPaginateModel.value = productPaginate;

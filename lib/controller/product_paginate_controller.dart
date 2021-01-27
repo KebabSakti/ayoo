@@ -4,7 +4,6 @@ import 'package:ayoo/model/product_paginate_model.dart';
 import 'package:ayoo/model/product_query_model.dart';
 import 'package:ayoo/repo/remote/product_paginate_api.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class ProductPaginateController extends GetxController {

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:ayoo/instance/helper_instance.dart';
 import 'package:ayoo/model/product_model.dart';
 import 'package:ayoo/view/widget/ayo_delivery_type_container.dart';
@@ -19,10 +17,14 @@ class AyoProductItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(6),
       child: GestureDetector(
         onTap: () {
-          Get.toNamed(
-              '/product_detail/' + Random().nextInt(999999999).toString(),
-              arguments: product,
-              preventDuplicates: false);
+          Get.toNamed('/product_detail',
+              arguments: product, preventDuplicates: false);
+
+          // Get.toNamed(
+          //   '/product_detail_other',
+          //   arguments: product,
+          //   preventDuplicates: false,
+          // );
         },
         child: Column(
           mainAxisSize: MainAxisSize.min,

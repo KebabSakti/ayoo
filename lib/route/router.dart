@@ -14,6 +14,7 @@ import 'package:ayoo/view/page/page.dart';
 import 'package:ayoo/binding/binding.dart';
 import 'package:ayoo/view/page/product_category_page.dart';
 import 'package:ayoo/view/page/product_detail_page.dart';
+import 'package:ayoo/view/page/product_detail_page_other.dart';
 import 'package:ayoo/view/page/product_review_page.dart';
 import 'package:ayoo/view/page/shopping_cart_page.dart';
 import 'package:get/get.dart';
@@ -73,9 +74,8 @@ class AppRouter {
       transitionDuration: _transitionDuration,
     ),
     GetPage(
-      name: '/product_detail/:tag',
+      name: '/product_detail',
       page: () => ProductDetailPage(),
-      binding: ProductDetailPageBinding(),
       transition: _transition,
       transitionDuration: _transitionDuration,
     ),
@@ -97,6 +97,12 @@ class AppRouter {
       name: '/order_summary',
       page: () => OrderSummaryPage(),
       binding: OrderSummaryPageBinding(),
+      transition: _transition,
+      transitionDuration: _transitionDuration,
+    ),
+    GetPage(
+      name: '/product_detail_other',
+      page: () => ProductDetailPageOther(),
       transition: _transition,
       transitionDuration: _transitionDuration,
     ),

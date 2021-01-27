@@ -1,6 +1,7 @@
 import 'package:ayoo/binding/app_page_binding.dart';
 import 'package:ayoo/binding/category_page_binding.dart';
 import 'package:ayoo/binding/intro_page_binding.dart';
+import 'package:ayoo/binding/order_summary_page_binding.dart';
 import 'package:ayoo/binding/product_category_page_binding.dart';
 import 'package:ayoo/binding/product_detail_page_binding.dart';
 import 'package:ayoo/binding/product_page_binding.dart';
@@ -8,6 +9,7 @@ import 'package:ayoo/binding/product_review_page_binding.dart';
 import 'package:ayoo/binding/search_page_binding.dart';
 import 'package:ayoo/binding/shopping_cart_page_binding.dart';
 import 'package:ayoo/view/page/category_page.dart';
+import 'package:ayoo/view/page/order_summary_page.dart';
 import 'package:ayoo/view/page/page.dart';
 import 'package:ayoo/binding/binding.dart';
 import 'package:ayoo/view/page/product_category_page.dart';
@@ -88,6 +90,13 @@ class AppRouter {
       name: '/cart_page',
       page: () => ShoppingCartPage(),
       binding: ShoppingCartPageBinding(),
+      transition: _transition,
+      transitionDuration: _transitionDuration,
+    ),
+    GetPage(
+      name: '/order_summary',
+      page: () => OrderSummaryPage(),
+      binding: OrderSummaryPageBinding(),
       transition: _transition,
       transitionDuration: _transitionDuration,
     ),

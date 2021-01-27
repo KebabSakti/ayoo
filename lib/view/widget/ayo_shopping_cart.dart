@@ -32,10 +32,11 @@ class AyoShoppingCart extends GetView<ShoppingCartController> {
           top: 10,
           child: Obx(
             () => TweenAnimationBuilder(
+              curve: Curves.bounceOut,
+              duration: Duration(milliseconds: 300),
               tween: Tween<double>(
                   begin: 0.0,
                   end: (controller.totalItem.value > 0) ? 1.0 : 0.0),
-              duration: Duration(milliseconds: 200),
               builder: (context, scale, child) {
                 return Transform.scale(scale: scale, child: child);
               },

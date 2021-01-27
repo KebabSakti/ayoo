@@ -17,6 +17,7 @@ import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
 import 'package:ayoo/view/widget/ayo_vertical_product.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get/get.dart';
 

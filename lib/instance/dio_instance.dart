@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ayoo/config/config.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:ayoo/model/auth_model.dart';
@@ -11,7 +12,7 @@ class DioInstance {
   DioInstance() {
     //dio default configuration
     var option = BaseOptions(
-        baseUrl: 'http://192.168.3.215:8000/api/',
+        baseUrl: baseUrl,
         connectTimeout: 30000,
         receiveTimeout: 30000,
         responseType: ResponseType.plain,
@@ -27,7 +28,7 @@ class DioInstance {
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {
       client.findProxy = (uri) {
-        return "PROXY 192.168.3.215:8001";
+        return "PROXY 192.168.3.211:8001";
       };
       client.badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;

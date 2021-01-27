@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
   @override
@@ -200,10 +201,12 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                                         color: Colors.grey[200],
                                                         child: InkWell(
                                                           onTap: () {
-                                                            controller.minQty(
-                                                                index,
-                                                                cartItem
-                                                                    .product);
+                                                            controller
+                                                                .shoppingCartController
+                                                                .minQty(
+                                                                    product:
+                                                                        cartItem
+                                                                            .product);
                                                           },
                                                           child: Center(
                                                             child: FaIcon(
@@ -222,18 +225,16 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                                     size: Size(40, 30),
                                                     child: Center(
                                                       child: TextField(
-                                                        controller: controller
-                                                                .textFieldControllers[
-                                                            index]
-                                                          ..text = cartItem.qty
-                                                              .toString()
-                                                          ..selection = TextSelection
-                                                              .fromPosition(TextPosition(
-                                                                  offset: controller
-                                                                      .textFieldControllers[
-                                                                          index]
-                                                                      .text
-                                                                      .length)),
+                                                        controller:
+                                                            TextEditingController()
+                                                              ..text = cartItem
+                                                                  .qty
+                                                                  .toString()
+                                                              ..selection = TextSelection
+                                                                  .fromPosition(TextPosition(
+                                                                      offset: TextEditingController()
+                                                                          .text
+                                                                          .length)),
                                                         textAlign:
                                                             TextAlign.center,
                                                         showCursor: false,
@@ -277,10 +278,12 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                                         color: Colors.grey[200],
                                                         child: InkWell(
                                                           onTap: () {
-                                                            controller.plusQty(
-                                                                index,
-                                                                cartItem
-                                                                    .product);
+                                                            controller
+                                                                .shoppingCartController
+                                                                .plusQty(
+                                                                    product:
+                                                                        cartItem
+                                                                            .product);
                                                           },
                                                           child: Center(
                                                             child: FaIcon(
@@ -306,13 +309,11 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                 ),
                                 SizedBox(height: 2),
                                 TextField(
-                                  controller: controller
-                                      .noteFieldControllers[index]
+                                  controller: TextEditingController()
                                     ..text = cartItem.note?.toString()
                                     ..selection = TextSelection.fromPosition(
                                         TextPosition(
-                                            offset: controller
-                                                .noteFieldControllers[index]
+                                            offset: TextEditingController()
                                                 .text
                                                 .length)),
                                   textAlign: TextAlign.left,
@@ -358,14 +359,13 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
         bottomNavigationBar: Obx(
           () => (controller.shoppingCartController.shoppingCart.length > 0)
               ? Container(
-                  height: 56,
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border(
                       top: BorderSide(
                         width: 1,
-                        color: Colors.grey[100],
+                        color: Colors.grey[200],
                       ),
                     ),
                   ),
@@ -374,7 +374,7 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
                             'Total',
@@ -405,7 +405,45 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                         );
                       }),
                       FlatButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          if (await Permission.location.isGranted == false) {
+                            Get.dialog(
+                              AlertDialog(
+                                title: Center(
+                                  child: FaIcon(
+                                    FontAwesomeIcons.mapMarkerAlt,
+                                    color: Colors.redAccent,
+                                    size: 40,
+                                  ),
+                                ),
+                                content: Text(
+                                  'Aplikasi memerlukan akses lokasi perangkat anda',
+                                  textAlign: TextAlign.center,
+                                ),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text('Batal'),
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                  ),
+                                  FlatButton(
+                                    child: Text('Lanjut'),
+                                    onPressed: () async {
+                                      Get.back();
+                                      if (await Permission.location
+                                          .request()
+                                          .isGranted)
+                                        Get.toNamed('/order_summary');
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            Get.toNamed('/order_summary');
+                          }
+                        },
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         color: Get.theme.primaryColor,
                         shape: RoundedRectangleBorder(

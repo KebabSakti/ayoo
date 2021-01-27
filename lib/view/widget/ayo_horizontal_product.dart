@@ -21,18 +21,13 @@ class AyoHorizontalProduct extends StatelessWidget {
       itemCount: (!loading) ? products.length : 4,
       itemBuilder: (context, index) {
         return Container(
-          width: (Get.size.width - 30) / 2,
+          width: (Get.size.width - 20) / 2,
           padding: EdgeInsets.only(
             right: (!loading)
-                ? (index >= 0 && index < products.length - 2)
+                ? (index >= 0 && index < products.length - 1)
                     ? 10
                     : 0
                 : 10,
-            left: (!loading)
-                ? (index == products.length - 1)
-                    ? 10
-                    : 0
-                : 0,
           ),
           child: (!loading)
               ? AyoProductItem(

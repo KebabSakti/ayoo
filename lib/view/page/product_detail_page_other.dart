@@ -1,4 +1,3 @@
-import 'package:ayoo/controller/product_detail_page_other_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,7 +5,7 @@ class ProductDetailPageOther extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-      init: ProductDetailPageOtherController(),
+      // init: ProductDetailPageOtherController(),
       builder: (controller) => Scaffold(
         appBar: AppBar(
           title: Text('Product Detail Page Other'),

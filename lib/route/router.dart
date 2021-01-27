@@ -3,7 +3,6 @@ import 'package:ayoo/binding/category_page_binding.dart';
 import 'package:ayoo/binding/intro_page_binding.dart';
 import 'package:ayoo/binding/order_summary_page_binding.dart';
 import 'package:ayoo/binding/product_category_page_binding.dart';
-import 'package:ayoo/binding/product_detail_page_binding.dart';
 import 'package:ayoo/binding/product_page_binding.dart';
 import 'package:ayoo/binding/product_review_page_binding.dart';
 import 'package:ayoo/binding/search_page_binding.dart';

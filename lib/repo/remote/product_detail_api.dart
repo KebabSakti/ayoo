@@ -22,4 +22,17 @@ class ProductDetailApi {
       return null;
     }
   }
+
+  Future<List<ProductModel>> toggleFavourite(
+      {@required String productId}) async {
+    try {
+      var response = await _dio
+          .withAuth(auth: Get.find<AuthController>().authModel.value)
+          .post('product/favourite', data: {'product_id': productId});
+
+      return productModelFromJson(response.data);
+    } on DioError catch (_) {
+      return null;
+    }
+  }
 }

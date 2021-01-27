@@ -1,10 +1,8 @@
 import 'package:ayoo/controller/product_paginate_controller.dart';
 import 'package:ayoo/controller/shopping_cart_controller.dart';
 import 'package:ayoo/instance/helper_instance.dart';
-import 'package:ayoo/model/product_info_model.dart';
 import 'package:ayoo/model/product_model.dart';
 import 'package:ayoo/model/product_query_model.dart';
-import 'package:ayoo/model/rating_model.dart';
 import 'package:ayoo/model/shopping_cart_model.dart';
 import 'package:ayoo/repo/remote/product_detail_api.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,35 +12,47 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class ProductDetailPageController extends GetxController {
   final ProductDetailApi _productDetailApi = ProductDetailApi();
 
+  final ProductModel product = Get.arguments;
+  final ScrollController scrollController = ScrollController();
+  final PanelController panelController = PanelController();
+  final TextEditingController qtyField = TextEditingController();
+
   final HelperInstance helper = Get.find();
-  final ProductPaginateController productRelatedController =
+  final ProductPaginateController productRelated =
       Get.put(ProductPaginateController(), tag: 'ProductDetailPage');
   final ShoppingCartController shoppingCart = Get.find();
 
-  final TextEditingController qtyField = TextEditingController();
-  final ScrollController scrollController = ScrollController();
-  final PanelController panelController = PanelController();
+  final stacks = List<ProductModel>().obs;
 
-  final ProductModel product = Get.arguments;
-  final List<ProductInfoModel> productInfos = Get.arguments.productInfoModel;
-  final List<RatingModel> ratings = Get.arguments.ratingModel;
-
-  final _productDetail = ProductModel().obs;
+  final _productDetailModel = List<ProductModel>().obs;
   final loading = false.obs;
+  final error = false.obs;
 
-  void fetchRelatedProduct() {
-    productRelatedController.loading.value = true;
-    productRelatedController.setProductQuery(
+  ProductModel get productDetail => _productDetailModel[0];
+
+  void setProductDetailModel(List<ProductModel> productModel) {
+    _productDetailModel.assignAll(productModel);
+  }
+
+  Future _fetchProductDetail() async {
+    loading.value = true;
+    error.value = false;
+    await _productDetailApi
+        .fetchProductDetail(productId: product.productId)
+        .then((result) {
+      if (result != null) {
+        setProductDetailModel(result);
+      } else {
+        error.value = true;
+      }
+      loading.value = false;
+    });
+  }
+
+  void _fetchRelatedProduct() {
+    productRelated.loading.value = true;
+    productRelated.setProductQuery(
         query: ProductQueryModel(subCategoryId: Get.arguments.subCategoryId));
-  }
-
-  void fetchProductDetail() {
-    productRelatedController.detailLoading.value = true;
-    productRelatedController.fetchProductDetail(productId: product.productId);
-  }
-
-  void toggleFavourite() {
-    productRelatedController.toggleFavourite(productId: product.productId);
   }
 
   ShoppingCartModel cartItem() {
@@ -52,18 +62,31 @@ class ProductDetailPageController extends GetxController {
         : ShoppingCartModel();
   }
 
-  void init() {
-    fetchProductDetail();
-    fetchRelatedProduct();
-
-    ever(shoppingCart.shoppingCart, (shop) {
-      qtyField.text = cartItem().qty?.toString() ?? '0';
+  Future toggleFavourite() async {
+    await _productDetailApi
+        .toggleFavourite(productId: product.productId)
+        .then((result) {
+      if (result != null) setProductDetailModel(result);
+      if (result[0].favouriteModel.length > 0)
+        helper.showToast('Sukses menambah favorit');
+      else
+        helper.showToast('Sukses menghapus favorit');
     });
   }
 
   @override
   void onInit() {
-    init();
+    _fetchProductDetail();
+
+    qtyField.text = cartItem().qty?.toString() ?? '0';
+
+    ever(_productDetailModel, (_) {
+      _fetchRelatedProduct();
+    });
+
+    ever(shoppingCart.shoppingCart, (shop) {
+      qtyField.text = cartItem().qty?.toString() ?? '0';
+    });
     super.onInit();
   }
 }

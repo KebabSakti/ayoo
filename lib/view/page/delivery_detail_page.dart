@@ -36,41 +36,43 @@ class DeliveryDetailPage extends GetView<DeliveryDetailPageController> {
               controller.setMapController(mapController);
             },
           ),
-          (false)
-              ? Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 5, right: 1),
-                        child: AnimatedContainer(
-                          duration: Duration(milliseconds: 200),
-                          height: 7,
-                          width: 7,
-                          decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(7 / 2)),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: AnimatedPadding(
-                        padding: EdgeInsets.only(bottom: 50),
-                        duration: Duration(milliseconds: 200),
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Icon(
-                            FontAwesomeIcons.mapPin,
-                            color: Theme.of(context).primaryColor,
-                            size: 50,
+          Obx(() {
+            return (controller.manual)
+                ? Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 5, right: 1),
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 200),
+                            height: 7,
+                            width: 7,
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(7 / 2)),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                )
-              : SizedBox.shrink(),
+                      Align(
+                        alignment: Alignment.center,
+                        child: AnimatedPadding(
+                          padding: EdgeInsets.only(bottom: 50),
+                          duration: Duration(milliseconds: 200),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Icon(
+                              FontAwesomeIcons.mapPin,
+                              color: Theme.of(context).primaryColor,
+                              size: 50,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : SizedBox.shrink();
+          }),
           AyoSlidingUpPanel(
             panelController: controller.suggestionPanel,
             maxHeight: Get.size.height - 56,
@@ -105,12 +107,17 @@ class DeliveryDetailPage extends GetView<DeliveryDetailPageController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Pilih dari peta',
-                            style: TextStyle(
-                              color: Get.theme.primaryColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
+                          GestureDetector(
+                            onTap: () {
+                              controller.setManualSelect(true);
+                            },
+                            child: Text(
+                              'Pilih dari peta',
+                              style: TextStyle(
+                                color: Get.theme.primaryColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                           Divider(height: 30),

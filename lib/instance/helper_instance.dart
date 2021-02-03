@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class HelperInstance {
@@ -25,5 +26,34 @@ class HelperInstance {
 
   String placeName(String description) {
     return description.substring(0, description.indexOf(','));
+  }
+
+  void loading({String text = 'Loading..'}) {
+    Get.dialog(
+      AlertDialog(
+        title: Row(
+          children: [
+            SizedBox(
+              height: 30,
+              width: 30,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                backgroundColor: Colors.grey[100],
+                valueColor:
+                    AlwaysStoppedAnimation<Color>(Get.theme.primaryColor),
+              ),
+            ),
+            SizedBox(width: 20),
+            Text(
+              text,
+              style: TextStyle(
+                color: Colors.grey[800],
+                fontSize: 16,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

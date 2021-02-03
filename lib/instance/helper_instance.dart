@@ -22,4 +22,8 @@ class HelperInstance {
       fontSize: 14.0,
     );
   }
+
+  String placeName(String description) {
+    return description.substring(0, description.indexOf(','));
+  }
 }

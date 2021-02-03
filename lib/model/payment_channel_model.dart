@@ -41,8 +41,8 @@ class PaymentChannelModel {
   String currency;
   String channelCategory;
   int isEnabled;
-  dynamic feeFix;
-  dynamic feePercentage;
+  String feeFix;
+  String feePercentage;
   String image;
   int active;
   int isDefault;
@@ -59,8 +59,8 @@ class PaymentChannelModel {
     String currency,
     String channelCategory,
     int isEnabled,
-    dynamic feeFix,
-    dynamic feePercentage,
+    String feeFix,
+    String feePercentage,
     String image,
     int active,
     int isDefault,

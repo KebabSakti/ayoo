@@ -6,20 +6,16 @@ class PaymentChannelController extends GetxController {
   final _paymentChannelApi = PaymentChannelApi();
 
   final _paymentChannels = List<PaymentChannelModel>().obs;
-  final _selectedPayment = PaymentChannelModel().obs;
   final loading = false.obs;
   final error = false.obs;
 
   List<PaymentChannelModel> get paymentChannels => _paymentChannels;
 
+  PaymentChannelModel get defaultPayment =>
+      _paymentChannels.firstWhere((item) => item.isDefault > 0);
+
   void setPaymentChannel(List<PaymentChannelModel> paymentChannels) {
     _paymentChannels.assignAll(paymentChannels);
-  }
-
-  PaymentChannelModel get selectedPayment => _selectedPayment.value;
-
-  void setPayment(PaymentChannelModel payment) {
-    _selectedPayment.value = payment;
   }
 
   Future _fetchPaymentChannel() async {
@@ -40,8 +36,6 @@ class PaymentChannelController extends GetxController {
 
   @override
   void onInit() {
-    _fetchPaymentChannel();
-
     super.onInit();
   }
 }

@@ -5,22 +5,32 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class AyoSlidingUpPanel extends StatelessWidget {
   final PanelController panelController;
   final Widget panel;
+  final double minHeight;
   final double maxHeight;
+  final bool draggable;
+  final bool backdropTapClosesPanel;
+  final PanelState panelState;
 
   AyoSlidingUpPanel({
     @required this.panelController,
     @required this.panel,
+    this.panelState = PanelState.CLOSED,
+    this.minHeight = 0,
     this.maxHeight = 500,
+    this.draggable = true,
+    this.backdropTapClosesPanel = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return SlidingUpPanel(
       controller: panelController,
-      defaultPanelState: PanelState.CLOSED,
-      minHeight: 0,
+      isDraggable: draggable,
+      defaultPanelState: panelState,
+      minHeight: minHeight,
       maxHeight: maxHeight,
       backdropEnabled: true,
+      backdropTapClosesPanel: backdropTapClosesPanel,
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(20),
         topRight: Radius.circular(20),

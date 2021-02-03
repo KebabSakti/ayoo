@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:ayoo/model/carousel_banner_model.dart';
 import 'package:ayoo/model/customer_model.dart';
 import 'package:ayoo/model/main_category_model.dart';
+import 'package:ayoo/model/payment_channel_model.dart';
 import 'package:ayoo/model/product_paginate_model.dart';
 import 'package:ayoo/model/search_model.dart';
 
@@ -24,6 +25,7 @@ class InitialHomeModel {
     this.productPopularPaginateModel,
     this.productPaginateModel,
     this.mostSearchModel,
+    this.paymentChannelModel,
   });
 
   CustomerModel customerModel;
@@ -32,6 +34,7 @@ class InitialHomeModel {
   ProductPaginateModel productPopularPaginateModel;
   ProductPaginateModel productPaginateModel;
   List<SearchModel> mostSearchModel;
+  List<PaymentChannelModel> paymentChannelModel;
 
   InitialHomeModel copyWith({
     CustomerModel customerModel,
@@ -40,6 +43,7 @@ class InitialHomeModel {
     ProductPaginateModel productPopularPaginateModel,
     ProductPaginateModel productPaginateModel,
     List<SearchModel> mostSearchModel,
+    List<PaymentChannelModel> paymentChannelModel,
   }) =>
       InitialHomeModel(
         customerModel: customerModel ?? this.customerModel,
@@ -49,6 +53,7 @@ class InitialHomeModel {
             productPopularPaginateModel ?? this.productPopularPaginateModel,
         productPaginateModel: productPaginateModel ?? this.productPaginateModel,
         mostSearchModel: mostSearchModel ?? this.mostSearchModel,
+        paymentChannelModel: paymentChannelModel ?? this.paymentChannelModel,
       );
 
   factory InitialHomeModel.fromJson(Map<String, dynamic> json) =>
@@ -74,6 +79,10 @@ class InitialHomeModel {
             ? null
             : List<SearchModel>.from(
                 json["most_search_model"].map((x) => SearchModel.fromJson(x))),
+        paymentChannelModel: json["payment_channel_model"] == null
+            ? null
+            : List<PaymentChannelModel>.from(json["payment_channel_model"]
+                .map((x) => PaymentChannelModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -92,5 +101,9 @@ class InitialHomeModel {
         "most_search_model": mostSearchModel == null
             ? null
             : List<dynamic>.from(mostSearchModel.map((x) => x.toJson())),
+        "payment_channel_model": paymentChannelModel == null
+            ? null
+            : List<PaymentChannelModel>.from(
+                paymentChannelModel.map((x) => x.toJson())),
       };
 }

@@ -397,43 +397,7 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                     }),
                     FlatButton(
                       onPressed: () async {
-                        if (await Permission.location.isGranted == false) {
-                          Get.dialog(
-                            AlertDialog(
-                              title: Center(
-                                child: FaIcon(
-                                  FontAwesomeIcons.mapMarkerAlt,
-                                  color: Colors.redAccent,
-                                  size: 40,
-                                ),
-                              ),
-                              content: Text(
-                                'Aplikasi memerlukan akses lokasi perangkat anda',
-                                textAlign: TextAlign.center,
-                              ),
-                              actions: <Widget>[
-                                FlatButton(
-                                  child: Text('Batal'),
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                ),
-                                FlatButton(
-                                  child: Text('Lanjut'),
-                                  onPressed: () async {
-                                    Get.back();
-                                    if (await Permission.location
-                                        .request()
-                                        .isGranted)
-                                      Get.toNamed('/order_summary');
-                                  },
-                                ),
-                              ],
-                            ),
-                          );
-                        } else {
-                          Get.toNamed('/order_summary');
-                        }
+                        controller.navigateToOrderSummaryPage();
                       },
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       color: Get.theme.primaryColor,

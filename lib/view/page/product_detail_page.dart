@@ -18,11 +18,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class ProductDetailPage extends StatelessWidget {
+  final String tag = Random().nextInt(999999999).toString();
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
         init: ProductDetailPageController(),
-        tag: Random().nextInt(999999999).toString(),
+        tag: tag,
         builder: (controller) {
           return WillPopScope(
             onWillPop: () async {
@@ -635,7 +636,7 @@ class ProductDetailPage extends StatelessWidget {
                     bottom: 56,
                     right: 0,
                     child: AyoScrollToTopButton(
-                      tag: 'ProductDetailPage',
+                      tag: tag,
                       scrollController: controller.scrollController,
                     ),
                   ),
@@ -658,7 +659,9 @@ class ProductDetailPage extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: FlatButton(
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        controller.navigateToOrderSummaryPage();
+                                      },
                                       splashColor: Get.theme.accentColor
                                           .withOpacity(0.3),
                                       child: Text(
@@ -837,7 +840,7 @@ class ProductDetailPage extends StatelessWidget {
                               Obx(
                                 () {
                                   return Text(
-                                    (!controller.loading.value)
+                                    (controller.cartItem().total != null)
                                         ? controller.helper.formatMoney(
                                             double.parse(
                                                 controller.cartItem().total))

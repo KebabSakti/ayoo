@@ -6,13 +6,15 @@ import 'package:ayoo/model/product_query_model.dart';
 import 'package:ayoo/model/shopping_cart_model.dart';
 import 'package:ayoo/repo/remote/product_detail_api.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ProductDetailPageController extends GetxController {
   final ProductDetailApi _productDetailApi = ProductDetailApi();
 
-  final ProductModel product = Get.arguments;
   final ScrollController scrollController = ScrollController();
   final PanelController panelController = PanelController();
   final TextEditingController qtyField = TextEditingController();
@@ -21,6 +23,8 @@ class ProductDetailPageController extends GetxController {
   final ProductPaginateController productRelated =
       Get.put(ProductPaginateController(), tag: 'ProductDetailPage');
   final ShoppingCartController shoppingCart = Get.find();
+
+  final ProductModel product = Get.arguments;
 
   final stacks = List<ProductModel>().obs;
 
@@ -52,7 +56,7 @@ class ProductDetailPageController extends GetxController {
   void _fetchRelatedProduct() {
     productRelated.loading.value = true;
     productRelated.setProductQuery(
-        query: ProductQueryModel(subCategoryId: Get.arguments.subCategoryId));
+        query: ProductQueryModel(subCategoryId: product.subCategoryId));
   }
 
   ShoppingCartModel cartItem() {
@@ -72,6 +76,68 @@ class ProductDetailPageController extends GetxController {
       else
         helper.showToast('Sukses menghapus favorit');
     });
+  }
+
+  Future navigateToOrderSummaryPage() async {
+    if (await Permission.location.isGranted == false) {
+      Get.dialog(
+        AlertDialog(
+          title: Center(
+            child: FaIcon(
+              FontAwesomeIcons.mapMarkerAlt,
+              color: Colors.redAccent,
+              size: 40,
+            ),
+          ),
+          content: Text(
+            'Aplikasi memerlukan akses lokasi perangkat anda',
+            textAlign: TextAlign.center,
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Batal'),
+              onPressed: () {
+                Get.back();
+              },
+            ),
+            FlatButton(
+              child: Text('Lanjut'),
+              onPressed: () async {
+                Get.back();
+                if (await Permission.location.request().isGranted)
+                  Get.toNamed(
+                    '/order_summary',
+                    arguments: [
+                      ShoppingCartModel(
+                        checked: 1,
+                        price: product.lastPrice,
+                        productId: product.productId,
+                        qty: 1,
+                        total: product.lastPrice,
+                        product: product,
+                      )
+                    ],
+                  );
+              },
+            ),
+          ],
+        ),
+      );
+    } else {
+      Get.toNamed(
+        '/order_summary',
+        arguments: [
+          ShoppingCartModel(
+            checked: 1,
+            price: product.lastPrice,
+            productId: product.productId,
+            qty: 1,
+            total: product.lastPrice,
+            product: product,
+          )
+        ],
+      );
+    }
   }
 
   @override

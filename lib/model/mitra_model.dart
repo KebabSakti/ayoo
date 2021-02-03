@@ -6,10 +6,11 @@ import 'dart:convert';
 
 import 'package:ayoo/model/delivery_type_model.dart';
 
-MitraModel mitraModelFromJson(String str) =>
-    MitraModel.fromJson(json.decode(str));
+List<MitraModel> mitraModelFromJson(String str) =>
+    List<MitraModel>.from(json.decode(str).map((x) => MitraModel.fromJson(x)));
 
-String mitraModelToJson(MitraModel data) => json.encode(data.toJson());
+String mitraModelToJson(List<MitraModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class MitraModel {
   MitraModel({
@@ -27,7 +28,7 @@ class MitraModel {
     this.createdAt,
     this.updatedAt,
     this.distance,
-    this.deliveryType,
+    this.deliveryTypeModel,
     this.ongkir,
   });
 
@@ -45,7 +46,7 @@ class MitraModel {
   DateTime createdAt;
   DateTime updatedAt;
   double distance;
-  DeliveryTypeModel deliveryType;
+  DeliveryTypeModel deliveryTypeModel;
   String ongkir;
 
   MitraModel copyWith({
@@ -63,7 +64,7 @@ class MitraModel {
     DateTime createdAt,
     DateTime updatedAt,
     double distance,
-    DeliveryTypeModel deliveryType,
+    DeliveryTypeModel deliveryTypeModel,
     String ongkir,
   }) =>
       MitraModel(
@@ -81,7 +82,7 @@ class MitraModel {
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         distance: distance ?? this.distance,
-        deliveryType: deliveryType ?? this.deliveryType,
+        deliveryTypeModel: deliveryTypeModel ?? this.deliveryTypeModel,
         ongkir: ongkir ?? this.ongkir,
       );
 
@@ -105,7 +106,7 @@ class MitraModel {
             ? null
             : DateTime.parse(json["updated_at"]),
         distance: json["distance"] == null ? null : json["distance"].toDouble(),
-        deliveryType: json["delivery_type_model"] == null
+        deliveryTypeModel: json["delivery_type_model"] == null
             ? null
             : DeliveryTypeModel.fromJson(json["delivery_type_model"]),
         ongkir: json["ongkir"] == null ? null : json["ongkir"],
@@ -127,7 +128,7 @@ class MitraModel {
         "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
         "distance": distance == null ? null : distance,
         "delivery_type_model":
-            deliveryType == null ? null : deliveryType.toJson(),
+            deliveryTypeModel == null ? null : deliveryTypeModel.toJson(),
         "ongkir": ongkir == null ? null : ongkir,
       };
 }

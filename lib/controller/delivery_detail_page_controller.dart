@@ -1,12 +1,14 @@
 import 'package:ayoo/controller/google_place_controller.dart';
 import 'package:ayoo/instance/helper_instance.dart';
 import 'package:ayoo/model/delivery_detail_model.dart';
+import 'package:ayoo/model/mitra_model.dart';
 import 'package:ayoo/repo/remote/mitra_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_webservice/geocoding.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class DeliveryDetailPageController extends GetxController {
@@ -14,11 +16,16 @@ class DeliveryDetailPageController extends GetxController {
   final MitraApi _mitraApi = MitraApi();
   final GooglePlaceController googlePlaceController = Get.find();
   final PanelController suggestionPanel = PanelController();
+  final PanelController manualMapPanel = PanelController();
   final TextEditingController searchField = TextEditingController();
   final HelperInstance helper = HelperInstance();
   final List<String> itemTypes = Get.arguments;
 
+  var manualLocation;
+
   final manualSelect = false.obs;
+  final loading = false.obs;
+  final geocodingResult = List<GeocodingResult>().obs;
 
   bool get manual => manualSelect.value;
 
@@ -30,6 +37,26 @@ class DeliveryDetailPageController extends GetxController {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     _moveMapCamera(LatLng(position.latitude, position.longitude));
+  }
+
+  void onCameraMovedStarted() {
+    loading.value = true;
+    setPanelPosition(0.5, panel: manualMapPanel);
+  }
+
+  void onCameraIdle() async {
+    if (manualMapPanel.panelPosition > 0.0)
+      await googlePlaceController
+          .reverseGeocoding(manualLocation)
+          .then((geocoding) {
+        geocodingResult.assignAll(geocoding.results);
+        setPanelPosition(1.0, panel: manualMapPanel);
+        loading.value = false;
+      });
+  }
+
+  void onCameraMove(CameraPosition position) {
+    manualLocation = position.target;
   }
 
   void _moveMapCamera(LatLng latLng) {
@@ -61,98 +88,62 @@ class DeliveryDetailPageController extends GetxController {
   void selectPlaceModeToggle() {
     if (manualSelect.value) {
       setPanelPosition(0.0);
+      // Future.delayed(Duration(milliseconds: 200),
+      //     () => setPanelPosition(1.0, panel: manualMapPanel));
       Future.delayed(Duration(milliseconds: 200), () {
         _zoomToDeviceLocation();
       });
+    } else {
+      setPanelPosition(0.0, panel: manualMapPanel);
+      Future.delayed(Duration(milliseconds: 200), () => setPanelPosition(1.0));
     }
   }
 
-  Future fetchNearestMitra(String placeId) async {
-    Get.dialog(
-      AlertDialog(
-        title: Row(
-          children: [
-            SizedBox(
-              height: 30,
-              width: 30,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                backgroundColor: Colors.grey[100],
-                valueColor:
-                    AlwaysStoppedAnimation<Color>(Get.theme.primaryColor),
-              ),
-            ),
-            SizedBox(width: 20),
-            Text(
-              'Loading..',
-              style: TextStyle(
-                color: Colors.grey[800],
-                fontSize: 16,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  List<DeliveryDetailModel> filterMitra(
+      List<MitraModel> mitras, String address) {
+    var idSet = <String>{};
+    var details = <DeliveryDetailModel>[];
 
-    await googlePlaceController
-        .getDetailsByPlaceId(placeId)
-        .then((result) async {
-      await _mitraApi
-          .fetchNearesMitra(
-              itemTypes,
-              LatLng(result.result.geometry.location.lat,
-                  result.result.geometry.location.lng))
-          .then((mitras) {
-        if (mitras != null) {
-          var idSet = <String>{};
-          var details = <DeliveryDetailModel>[];
-
-          for (var item in mitras) {
-            if (idSet.add(item.deliveryTypeId)) {
-              details.add(DeliveryDetailModel(
-                deliveryTypeModel: [item.deliveryTypeModel],
-                mitraModel: [item],
-                description: result.result.formattedAddress,
-                distance: item.distance.toString(),
-                fee: item.ongkir.toString(),
-              ));
-            }
-          }
-
-          Get.back(result: details, closeOverlays: true);
-        }
-      });
-    });
+    for (var item in mitras) {
+      if (idSet.add(item.deliveryTypeId)) {
+        details.add(DeliveryDetailModel(
+          deliveryTypeModel: [item.deliveryTypeModel],
+          mitraModel: [item],
+          description: address,
+          distance: item.distance.toString(),
+          fee: item.ongkir.toString(),
+        ));
+      }
+    }
+    return details;
   }
 
-  Future getDetailsByPlaceId(String placeId) async {
+  Future<List<MitraModel>> fetchNearestMitra(LatLng latLng) async {
+    return await _mitraApi.fetchNearesMitra(itemTypes, latLng);
+  }
+
+  Future selectPlaceSuggestion(String placeId) async {
+    helper.loading();
+
     await googlePlaceController
         .getDetailsByPlaceId(placeId)
         .then((result) async {
-      await _mitraApi
-          .fetchNearesMitra(
-              itemTypes,
-              LatLng(result.result.geometry.location.lat,
-                  result.result.geometry.location.lng))
-          .then((mitras) {
+      await fetchNearestMitra(LatLng(result.result.geometry.location.lat,
+              result.result.geometry.location.lng))
+          .then((mitras) async {
+        // await googlePlaceController.distanceWithLocation([
+        //   Location(result.result.geometry.location.lat,
+        //       result.result.geometry.location.lng)
+        // ], [
+        //   Location(result.result.geometry.location.lat,
+        //       result.result.geometry.location.lng)
+        // ]);
+
         if (mitras != null) {
-          var idSet = <String>{};
-          var details = <DeliveryDetailModel>[];
-
-          for (var item in mitras) {
-            if (idSet.add(item.deliveryTypeId)) {
-              details.add(DeliveryDetailModel(
-                deliveryTypeModel: [item.deliveryTypeModel],
-                mitraModel: [item],
-                description: result.result.formattedAddress,
-                distance: item.distance.toString(),
-                fee: item.ongkir.toString(),
-              ));
-            }
-          }
-
-          Get.back(result: details, closeOverlays: true);
+          Get.back(
+            result: filterMitra(mitras, result.result.formattedAddress),
+            closeOverlays: true,
+          );
         }
       });
     });

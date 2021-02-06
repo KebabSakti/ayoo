@@ -10,6 +10,7 @@ class AyoSlidingUpPanel extends StatelessWidget {
   final bool draggable;
   final bool backdropTapClosesPanel;
   final PanelState panelState;
+  final bool backdropEnabled;
 
   AyoSlidingUpPanel({
     @required this.panelController,
@@ -19,6 +20,7 @@ class AyoSlidingUpPanel extends StatelessWidget {
     this.maxHeight = 500,
     this.draggable = true,
     this.backdropTapClosesPanel = true,
+    this.backdropEnabled = true,
   });
 
   @override
@@ -29,7 +31,7 @@ class AyoSlidingUpPanel extends StatelessWidget {
       defaultPanelState: panelState,
       minHeight: minHeight,
       maxHeight: maxHeight,
-      backdropEnabled: true,
+      backdropEnabled: backdropEnabled,
       backdropTapClosesPanel: backdropTapClosesPanel,
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(20),

@@ -186,15 +186,41 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                                                 .deliveryDetails
                                                                 .length >
                                                             0)
-                                                    ? Text(
-                                                        '${controller.summary.deliveryDetails[0].description}',
-                                                        textAlign:
-                                                            TextAlign.justify,
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          color:
-                                                              Colors.grey[800],
-                                                        ),
+                                                    ? Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            controller.helper
+                                                                .placeName(controller
+                                                                    .summary
+                                                                    .deliveryDetails[
+                                                                        0]
+                                                                    .description),
+                                                            textAlign: TextAlign
+                                                                .justify,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              color: Colors
+                                                                  .grey[800],
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: 4),
+                                                          Text(
+                                                            '${controller.summary.deliveryDetails[0].description}',
+                                                            textAlign: TextAlign
+                                                                .justify,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              color: Colors
+                                                                  .grey[800],
+                                                            ),
+                                                          ),
+                                                        ],
                                                       )
                                                     : Text(
                                                         'Set lokasi pengiriman',
@@ -392,7 +418,10 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                               ),
                             ],
                           ),
-                          (controller.summary.orderItems[index].note != null)
+                          (controller.summary.orderItems[index].note != null &&
+                                  controller.summary.orderItems[index].note
+                                          .length >
+                                      0)
                               ? Container(
                                   padding: const EdgeInsets.only(top: 10),
                                   width: double.infinity,
@@ -430,48 +459,50 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            'Lihat Semua',
-                            style: TextStyle(
-                              color: Get.theme.primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          // Container(
-                          //   width: 50,
-                          //   height: 40,
-                          //   color: Colors.grey,
-                          // ),
-                          CachedNetworkImage(
-                            imageUrl: controller.summary.payment.image,
-                            width: 50,
-                            height: 40,
-                            placeholder: (context, index) => AyoShimmer(
-                              radius: 6,
-                              width: 50,
-                              height: 40,
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
+                          GestureDetector(
+                            onTap: () {
+                              controller.navigateToPaymentChannelPage();
+                            },
                             child: Text(
-                              '${controller.summary.payment.name}',
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                              'Lihat Semua',
                               style: TextStyle(
-                                color: Colors.grey[800],
-                                fontWeight: FontWeight.w600,
+                                color: Get.theme.primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
                               ),
                             ),
                           ),
                         ],
                       ),
+                      SizedBox(height: 10),
+                      Obx(() {
+                        return Row(
+                          children: [
+                            CachedNetworkImage(
+                              imageUrl: controller.summary.payment.image,
+                              width: 50,
+                              height: 40,
+                              placeholder: (context, index) => AyoShimmer(
+                                radius: 6,
+                                width: 50,
+                                height: 40,
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                '${controller.summary.payment.name}',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.grey[800],
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }),
                       Divider(height: 25),
                       Text(
                         'Rincian Pembayaran',

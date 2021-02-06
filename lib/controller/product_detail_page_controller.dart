@@ -17,7 +17,9 @@ class ProductDetailPageController extends GetxController {
 
   final ScrollController scrollController = ScrollController();
   final PanelController panelController = PanelController();
+  final PanelController beliLangsungPanel = PanelController();
   final TextEditingController qtyField = TextEditingController();
+  final TextEditingController noteField = TextEditingController();
 
   final HelperInstance helper = Get.find();
   final ProductPaginateController productRelated =
@@ -78,66 +80,21 @@ class ProductDetailPageController extends GetxController {
     });
   }
 
-  Future navigateToOrderSummaryPage() async {
-    if (await Permission.location.isGranted == false) {
-      Get.dialog(
-        AlertDialog(
-          title: Center(
-            child: FaIcon(
-              FontAwesomeIcons.mapMarkerAlt,
-              color: Colors.redAccent,
-              size: 40,
-            ),
-          ),
-          content: Text(
-            'Aplikasi memerlukan akses lokasi perangkat anda',
-            textAlign: TextAlign.center,
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Batal'),
-              onPressed: () {
-                Get.back();
-              },
-            ),
-            FlatButton(
-              child: Text('Lanjut'),
-              onPressed: () async {
-                Get.back();
-                if (await Permission.location.request().isGranted)
-                  Get.toNamed(
-                    '/order_summary',
-                    arguments: [
-                      ShoppingCartModel(
-                        checked: 1,
-                        price: product.lastPrice,
-                        productId: product.productId,
-                        qty: 1,
-                        total: product.lastPrice,
-                        product: product,
-                      )
-                    ],
-                  );
-              },
-            ),
-          ],
-        ),
-      );
-    } else {
-      Get.toNamed(
-        '/order_summary',
-        arguments: [
-          ShoppingCartModel(
-            checked: 1,
-            price: product.lastPrice,
-            productId: product.productId,
-            qty: 1,
-            total: product.lastPrice,
-            product: product,
-          )
-        ],
-      );
-    }
+  void navigateToOrderSummaryPage() {
+    Get.toNamed(
+      '/order_summary',
+      arguments: [
+        ShoppingCartModel(
+          checked: 1,
+          price: product.lastPrice,
+          productId: product.productId,
+          qty: 1,
+          total: product.lastPrice,
+          product: product,
+          note: noteField.text,
+        )
+      ],
+    );
   }
 
   @override

@@ -221,16 +221,15 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                                     child: TextField(
                                                       controller:
                                                           TextEditingController()
-                                                            ..text =
-                                                                cartItem
-                                                                    .qty
-                                                                    .toString()
+                                                            ..text = cartItem
+                                                                .qty
+                                                                .toString()
                                                             ..selection = TextSelection
-                                                                .fromPosition(
-                                                                    TextPosition(
-                                                                        offset: TextEditingController()
-                                                                            .text
-                                                                            .length)),
+                                                                .fromPosition(TextPosition(
+                                                                    offset: cartItem
+                                                                        .qty
+                                                                        .toString()
+                                                                        .length)),
                                                       textAlign:
                                                           TextAlign.center,
                                                       showCursor: false,
@@ -303,10 +302,12 @@ class ShoppingCartPage extends GetView<ShoppingCartPageControler> {
                                 controller: TextEditingController()
                                   ..text = cartItem.note?.toString()
                                   ..selection = TextSelection.fromPosition(
-                                      TextPosition(
-                                          offset: TextEditingController()
-                                              .text
-                                              .length)),
+                                      (cartItem.note != null)
+                                          ? TextPosition(
+                                              offset: cartItem.note
+                                                  .toString()
+                                                  .length)
+                                          : TextPosition(offset: 0)),
                                 textAlign: TextAlign.left,
                                 showCursor: true,
                                 cursorColor: Colors.grey[800],

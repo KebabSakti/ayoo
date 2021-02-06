@@ -12,11 +12,12 @@ class DioInstance {
   DioInstance() {
     //dio default configuration
     var option = BaseOptions(
-        baseUrl: baseUrl,
-        connectTimeout: 30000,
-        receiveTimeout: 30000,
-        responseType: ResponseType.plain,
-        headers: {"Accept": "application/json"});
+      baseUrl: baseUrl,
+      connectTimeout: 30000,
+      receiveTimeout: 30000,
+      responseType: ResponseType.plain,
+      headers: {"Accept": "application/json"},
+    );
 
     //apply configuration to dio instance
     dio = Dio(option);

@@ -4,11 +4,15 @@ import 'package:ayoo/repo/remote/google_place_api.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_webservice/distance.dart';
+import 'package:google_maps_webservice/geocoding.dart';
 import 'package:google_maps_webservice/places.dart';
 
 class GooglePlaceController extends GetxController {
   final GooglePlaceApi _googlePlaceApi = GooglePlaceApi();
   final _places = GoogleMapsPlaces(apiKey: key);
+  final _geocoding = GoogleMapsGeocoding(apiKey: key);
+  final _distance = GoogleDistanceMatrix(apiKey: key);
 
   final _placeSearchResult = List<Prediction>().obs;
   final _placeSuggestions = List<PlaceModel>().obs;
@@ -36,6 +40,7 @@ class GooglePlaceController extends GetxController {
       location: Location(-0.495951, 117.135010),
       radius: 10000,
       strictbounds: true,
+      language: 'id',
     )
         .then((response) {
       _placeSearchResult.addAll(response.predictions);
@@ -77,6 +82,24 @@ class GooglePlaceController extends GetxController {
     return await _places.getDetailsByPlaceId(placeId);
   }
 
+  Future<GeocodingResponse> reverseGeocoding(LatLng latLng) async {
+    return await _geocoding.searchByLocation(
+        Location(latLng.latitude, latLng.longitude),
+        language: 'id');
+  }
+
+  Future<DistanceResponse> distanceWithLocation(
+      List<Location> origin, List<Location> destination) async {
+    await _distance
+        .distanceWithLocation(origin, destination,
+            travelMode: TravelMode.driving, languageCode: 'id')
+        .then((distance) {
+      print('DISTANCE IS ${distance.results[0].elements[0].distance}');
+      print('DURATION IS ${distance.results[0].elements[0].duration}');
+    });
+    return await null;
+  }
+
   void init() {
     debounce(keyword, (_) {
       if (_.length > 0)
@@ -84,6 +107,7 @@ class GooglePlaceController extends GetxController {
       else
         setPlaceSuggestion([]);
     });
+
     debounce(_placeSearchResult, (_) => storePlaces(),
         time: Duration(seconds: 1));
   }

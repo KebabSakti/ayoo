@@ -9,6 +9,7 @@ import 'package:ayoo/view/widget/ayo_scroll_to_top_button.dart';
 import 'package:ayoo/view/widget/ayo_shimmer.dart';
 import 'package:ayoo/view/widget/ayo_shopping_cart.dart';
 import 'package:ayoo/view/widget/ayo_sliding_up_panel.dart';
+import 'package:ayoo/view/widget/ayo_text_form_field.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -30,9 +31,12 @@ class ProductDetailPage extends StatelessWidget {
               if (controller.panelController.panelPosition > 0) {
                 //close panel if open
                 controller.panelController.close();
+              } else if (controller.beliLangsungPanel.panelPosition > 0) {
+                controller.beliLangsungPanel.close();
               } else {
                 Get.back();
               }
+
               return false;
             },
             child: Scaffold(
@@ -660,7 +664,8 @@ class ProductDetailPage extends StatelessWidget {
                                   Expanded(
                                     child: FlatButton(
                                       onPressed: () async {
-                                        controller.navigateToOrderSummaryPage();
+                                        // controller.navigateToOrderSummaryPage();
+                                        controller.beliLangsungPanel.open();
                                       },
                                       splashColor: Get.theme.accentColor
                                           .withOpacity(0.3),
@@ -704,6 +709,109 @@ class ProductDetailPage extends StatelessWidget {
                         : SizedBox.shrink();
                   }),
                   AyoSlidingUpPanel(
+                    panelController: controller.beliLangsungPanel,
+                    maxHeight: Get.size.height / 2.5,
+                    panel: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Obx(() {
+                            return (!controller.loading.value)
+                                ? Column(
+                                    children: [
+                                      Text(
+                                        controller.productDetail.name,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey[800],
+                                        ),
+                                      ),
+                                      SizedBox(height: 6),
+                                      Text(
+                                        controller.helper.formatMoney(
+                                                double.parse(controller
+                                                    .product.lastPrice)) +
+                                            ' / ' +
+                                            controller
+                                                .productDetail.unitModel.unit,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.grey[800],
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : SizedBox.shrink();
+                          }),
+                          Column(
+                            children: [
+                              SizedBox(
+                                width: 280,
+                                child: TextField(
+                                  controller: controller.noteField
+                                    ..text
+                                    ..selection = TextSelection.fromPosition(
+                                        TextPosition(
+                                            offset: controller
+                                                .noteField.text.length)),
+                                  showCursor: true,
+                                  keyboardType: TextInputType.text,
+                                  maxLines: 3,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey[800],
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: 'Note untuk produk ini',
+                                    isDense: true, // Added this
+                                    filled: true,
+                                    fillColor: Colors.grey[100],
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 12,
+                                    ),
+                                    hintStyle: TextStyle(
+                                      color: Colors.grey[400],
+                                      fontSize: 14,
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              FlatButton(
+                                onPressed: () {
+                                  controller.navigateToOrderSummaryPage();
+                                },
+                                splashColor:
+                                    Get.theme.accentColor.withOpacity(0.3),
+                                color: Get.theme.primaryColor,
+                                child: Text(
+                                  'Lanjut',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  AyoSlidingUpPanel(
                     panelController: controller.panelController,
                     maxHeight: Get.size.height / 2.5,
                     panel: Container(
@@ -741,7 +849,7 @@ class ProductDetailPage extends StatelessWidget {
                                           fontWeight: FontWeight.w600,
                                           color: Colors.grey[800],
                                         ),
-                                      )
+                                      ),
                                     ],
                                   )
                                 : SizedBox.shrink();

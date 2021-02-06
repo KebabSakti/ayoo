@@ -9,7 +9,10 @@ import 'package:ayoo/model/order_model.dart';
 import 'package:ayoo/model/order_summary_model.dart';
 import 'package:ayoo/model/payment_channel_model.dart';
 import 'package:ayoo/model/shopping_cart_model.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class OrderSummaryPageController extends GetxController {
   final HelperInstance helper = Get.find();
@@ -75,7 +78,7 @@ class OrderSummaryPageController extends GetxController {
     return (summary.payment.channelCategory != "COD")
         ? (summary.payment.feeFix == null)
             ? (double.parse(summary.payment.feePercentage) / 100) * total
-            : summary.payment.feeFix.toString()
+            : double.parse(summary.payment.feeFix)
         : 0;
   }
 
@@ -95,6 +98,47 @@ class OrderSummaryPageController extends GetxController {
         calculateAdminFee();
   }
 
+  Future requestLocationPermission(Function proceed) async {
+    if (await Permission.location.isGranted == false) {
+      Get.dialog(
+        AlertDialog(
+          title: Center(
+            child: FaIcon(
+              FontAwesomeIcons.mapMarkerAlt,
+              color: Colors.redAccent,
+              size: 40,
+            ),
+          ),
+          content: Text(
+            'Aplikasi memerlukan akses lokasi perangkat anda',
+            textAlign: TextAlign.center,
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Batal'),
+              onPressed: () {
+                Get.back();
+              },
+            ),
+            FlatButton(
+              child: Text('Lanjut'),
+              onPressed: () async {
+                Get.back();
+                if (await Permission.location.request().isGranted) {
+                  proceed();
+                } else {
+                  helper.showToast('Izin lokasi di perlukan untuk melanjutkan');
+                }
+              },
+            ),
+          ],
+        ),
+      );
+    } else {
+      proceed();
+    }
+  }
+
   Future navigateToDeliveryAddressPage() async {
     var address =
         await Get.toNamed('/delivery_address_page', arguments: 'summary_page');
@@ -102,11 +146,24 @@ class OrderSummaryPageController extends GetxController {
   }
 
   Future navigateToDeliveryDetailPage() async {
-    var deliveryDetails =
-        await Get.toNamed('/delivery_detail_page', arguments: getOrderTypes());
-    if (deliveryDetails != null) setDeliveryDetail(deliveryDetails);
-    setOrderTotal();
+    requestLocationPermission(() async {
+      var deliveryDetails = await Get.toNamed('/delivery_detail_page',
+          arguments: getOrderTypes());
+      if (deliveryDetails != null) setDeliveryDetail(deliveryDetails);
+      setOrderTotal();
+    });
   }
+
+  Future navigateToPaymentChannelPage() async {
+    var payment =
+        await Get.toNamed('/payment_channel_page', arguments: summary.payment);
+    if (payment != null) {
+      setPayment(payment);
+      setOrderTotal();
+    }
+  }
+
+  void submitOrder() {}
 
   void init() {
     if (customerController.customer.deliveryAddressModel.length > 0)

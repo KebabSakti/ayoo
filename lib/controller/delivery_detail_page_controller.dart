@@ -1,6 +1,7 @@
 import 'package:ayoo/controller/google_place_controller.dart';
 import 'package:ayoo/instance/helper_instance.dart';
-import 'package:ayoo/model/delivery_detail_model.dart';
+import 'package:ayoo/model/delivery_mitra_model.dart';
+import 'package:ayoo/model/delivery_type_model.dart';
 import 'package:ayoo/model/mitra_model.dart';
 import 'package:ayoo/repo/remote/mitra_api.dart';
 import 'package:flutter/cupertino.dart';
@@ -99,22 +100,29 @@ class DeliveryDetailPageController extends GetxController {
     }
   }
 
-  List<DeliveryDetailModel> filterMitra(
-      List<MitraModel> mitras, String address) {
+  dynamic calculateShippingFee(
+      DeliveryTypeModel deliveryTypeModel, dynamic distance) {
+    if (deliveryTypeModel.instant > 0) {
+      if (distance <= 0) {
+        return 5000;
+      } else {
+        return (distance / 1000) * 5000;
+      }
+    } else {
+      return 10000;
+    }
+  }
+
+  List<MitraModel> filterMitra(List<MitraModel> mitras) {
     var idSet = <String>{};
-    var details = <DeliveryDetailModel>[];
+    var details = <MitraModel>[];
 
     for (var item in mitras) {
       if (idSet.add(item.deliveryTypeId)) {
-        details.add(DeliveryDetailModel(
-          deliveryTypeModel: [item.deliveryTypeModel],
-          mitraModel: [item],
-          description: address,
-          distance: item.distance.toString(),
-          fee: item.ongkir.toString(),
-        ));
+        details.add(item);
       }
     }
+
     return details;
   }
 
@@ -125,28 +133,40 @@ class DeliveryDetailPageController extends GetxController {
   Future selectPlaceSuggestion(String placeId) async {
     helper.loading();
 
-    await googlePlaceController
-        .getDetailsByPlaceId(placeId)
-        .then((result) async {
-      await fetchNearestMitra(LatLng(result.result.geometry.location.lat,
-              result.result.geometry.location.lng))
-          .then((mitras) async {
-        // await googlePlaceController.distanceWithLocation([
-        //   Location(result.result.geometry.location.lat,
-        //       result.result.geometry.location.lng)
-        // ], [
-        //   Location(result.result.geometry.location.lat,
-        //       result.result.geometry.location.lng)
-        // ]);
+    List<DeliveryMitraModel> deliveryMitras = [];
 
-        if (mitras != null) {
-          Get.back(
-            result: filterMitra(mitras, result.result.formattedAddress),
-            closeOverlays: true,
-          );
-        }
+    var placeDetailResult =
+        await googlePlaceController.getDetailsByPlaceId(placeId);
+
+    var mitras = await fetchNearestMitra(LatLng(
+      placeDetailResult.result.geometry.location.lat,
+      placeDetailResult.result.geometry.location.lng,
+    ));
+
+    var filteredMitras = filterMitra(mitras);
+
+    await Future.forEach(filteredMitras, (item) async {
+      var origin = Location(placeDetailResult.result.geometry.location.lat,
+          placeDetailResult.result.geometry.location.lng);
+      var destination =
+          Location(double.parse(item.lat), double.parse(item.lng));
+
+      await googlePlaceController
+          .distanceWithLocation([origin], [destination]).then((distance) {
+        deliveryMitras.add(DeliveryMitraModel(
+          mitraModel: item,
+          distance: distance.results[0].elements[0].distance.value,
+          distanceText: distance.results[0].elements[0].distance.text,
+          duration: distance.results[0].elements[0].duration.value,
+          durationText: distance.results[0].elements[0].duration.text,
+          fee: calculateShippingFee(item.deliveryTypeModel,
+                  distance.results[0].elements[0].distance.value)
+              .toString(),
+        ));
       });
     });
+
+    Get.back(result: [deliveryMitras, placeDetailResult], closeOverlays: true);
   }
 
   void init() {

@@ -65,7 +65,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            (controller.summary.deliveryAddress != null)
+                            (controller.order.deliveryAddressModel != null)
                                 ? Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -74,7 +74,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                         children: [
                                           Flexible(
                                             child: Text(
-                                              '${controller.summary.deliveryAddress.title}',
+                                              '${controller.order.deliveryAddressModel.title}',
                                               textAlign: TextAlign.justify,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
@@ -86,7 +86,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                             ),
                                           ),
                                           SizedBox(width: 4),
-                                          (controller.summary.deliveryAddress
+                                          (controller.order.deliveryAddressModel
                                                       .isDefault >
                                                   0)
                                               ? ClipRRect(
@@ -117,7 +117,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                       ),
                                       SizedBox(height: 5),
                                       Text(
-                                        '${controller.summary.deliveryAddress.name} (${controller.summary.deliveryAddress.phone})',
+                                        '${controller.order.deliveryAddressModel.name} (${controller.order.deliveryAddressModel.phone})',
                                         textAlign: TextAlign.justify,
                                         style: TextStyle(
                                           fontSize: 12,
@@ -126,7 +126,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                       ),
                                       SizedBox(height: 2),
                                       Text(
-                                        '${controller.summary.deliveryAddress.address}',
+                                        '${controller.order.deliveryAddressModel.address}',
                                         textAlign: TextAlign.justify,
                                         style: TextStyle(
                                           fontSize: 12,
@@ -178,12 +178,12 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                           child: Row(
                                             children: [
                                               Expanded(
-                                                child: (controller.summary
-                                                                .deliveryDetails !=
+                                                child: (controller.order
+                                                                .mapAddress !=
                                                             null &&
                                                         controller
-                                                                .summary
-                                                                .deliveryDetails
+                                                                .order
+                                                                .deliveryMitraModel
                                                                 .length >
                                                             0)
                                                     ? Column(
@@ -193,11 +193,10 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                                         children: [
                                                           Text(
                                                             controller.helper
-                                                                .placeName(controller
-                                                                    .summary
-                                                                    .deliveryDetails[
-                                                                        0]
-                                                                    .description),
+                                                                .placeName(
+                                                              controller.order
+                                                                  .mapAddress,
+                                                            ),
                                                             textAlign: TextAlign
                                                                 .justify,
                                                             style: TextStyle(
@@ -211,7 +210,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                                           ),
                                                           SizedBox(height: 4),
                                                           Text(
-                                                            '${controller.summary.deliveryDetails[0].description}',
+                                                            '${controller.order.mapAddress}',
                                                             textAlign: TextAlign
                                                                 .justify,
                                                             style: TextStyle(
@@ -233,20 +232,13 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                                         ),
                                                       ),
                                               ),
-                                              // SizedBox(width: 15),
-                                              // FaIcon(
-                                              //   FontAwesomeIcons.chevronRight,
-                                              //   color: Colors.grey[600],
-                                              //   size: 12,
-                                              // ),
                                             ],
                                           ),
                                         ),
                                       ],
                                     ),
-                                    (controller.summary.deliveryDetails !=
-                                                null &&
-                                            controller.summary.deliveryDetails
+                                    (controller.order.mapAddress != null &&
+                                            controller.order.deliveryMitraModel
                                                     .length >
                                                 0)
                                         ? ListView.separated(
@@ -254,8 +246,8 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                                 (context, index) =>
                                                     Divider(height: 20),
                                             shrinkWrap: true,
-                                            itemCount: controller
-                                                .summary.deliveryDetails.length,
+                                            itemCount: controller.order
+                                                .deliveryMitraModel.length,
                                             physics:
                                                 NeverScrollableScrollPhysics(),
                                             itemBuilder: (context, index) =>
@@ -264,7 +256,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  '${controller.summary.deliveryDetails[index].mitraModel[0].name}',
+                                                  '${controller.order.deliveryMitraModel[index].mitraModel.name}',
                                                   style: TextStyle(
                                                     color: Colors.grey[800],
                                                     fontWeight: FontWeight.bold,
@@ -283,7 +275,11 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      '${controller.helper.formatMoney(double.parse(controller.summary.deliveryDetails[index].distance), digit: 1, name: '')} km',
+                                                      controller
+                                                          .order
+                                                          .deliveryMitraModel[
+                                                              index]
+                                                          .distanceText,
                                                       style: TextStyle(
                                                         color: Colors.grey[800],
                                                       ),
@@ -303,7 +299,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      '${controller.helper.formatMoney(double.parse(controller.summary.deliveryDetails[index].fee))}',
+                                                      '${controller.helper.formatMoney(double.parse(controller.order.deliveryMitraModel[index].fee))}',
                                                       style: TextStyle(
                                                         color: Colors.grey[800],
                                                       ),
@@ -317,9 +313,11 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                                   child:
                                                       AyoDeliveryTypeContainer(
                                                     type: controller
-                                                        .summary
-                                                        .deliveryDetails[index]
-                                                        .deliveryTypeModel[0],
+                                                        .order
+                                                        .deliveryMitraModel[
+                                                            index]
+                                                        .mitraModel
+                                                        .deliveryTypeModel,
                                                   ),
                                                 ),
                                               ],
@@ -352,7 +350,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                     removeTop: true,
                     context: context,
                     child: ListView.separated(
-                      itemCount: controller.summary.orderItems.length,
+                      itemCount: controller.order.orderDetailModel.length,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       separatorBuilder: (context, index) => Divider(
@@ -366,8 +364,8 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(6),
                                 child: CachedNetworkImage(
-                                  imageUrl: controller
-                                      .summary.orderItems[index].product.cover,
+                                  imageUrl: controller.order
+                                      .orderDetailModel[index].product.cover,
                                   height: 60,
                                   width: 70,
                                   fit: BoxFit.cover,
@@ -380,7 +378,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '${controller.summary.orderItems[index].product.name}',
+                                      '${controller.order.orderDetailModel[index].product.name}',
                                       style: TextStyle(
                                         color: Colors.grey[800],
                                         fontWeight: FontWeight.bold,
@@ -388,7 +386,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                     ),
                                     SizedBox(height: 4),
                                     Text(
-                                      '${controller.summary.orderItems[index].qty} item (${controller.summary.orderItems[index].qty} ${controller.summary.orderItems[index].product.unitModel.unit})',
+                                      '${controller.order.orderDetailModel[index].qty} item (${controller.order.orderDetailModel[index].qty} ${controller.order.orderDetailModel[index].product.unitModel.unit})',
                                       style: TextStyle(
                                         color: Colors.grey[600],
                                         fontSize: 12,
@@ -396,7 +394,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                     ),
                                     SizedBox(height: 4),
                                     Text(
-                                      '${controller.helper.formatMoney(double.parse(controller.summary.orderItems[index].total))}',
+                                      '${controller.helper.formatMoney(double.parse(controller.order.orderDetailModel[index].total))}',
                                       style: TextStyle(
                                         color: Get.theme.primaryColor,
                                         fontWeight: FontWeight.bold,
@@ -406,8 +404,8 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                                     AyoDeliveryTypeContainer(
                                       type: DeliveryTypeModel(
                                         instant: controller
-                                            .summary
-                                            .orderItems[index]
+                                            .order
+                                            .orderDetailModel[index]
                                             .product
                                             .deliveryTypeModel
                                             .instant,
@@ -418,15 +416,16 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                               ),
                             ],
                           ),
-                          (controller.summary.orderItems[index].note != null &&
-                                  controller.summary.orderItems[index].note
+                          (controller.order.orderDetailModel[index].note !=
+                                      null &&
+                                  controller.order.orderDetailModel[index].note
                                           .length >
                                       0)
                               ? Container(
                                   padding: const EdgeInsets.only(top: 10),
                                   width: double.infinity,
                                   child: Text(
-                                    '${controller.summary.orderItems[index].note}',
+                                    '${controller.order.orderDetailModel[index].note}',
                                     style: TextStyle(
                                       color: Colors.grey[600],
                                       fontSize: 12,
@@ -479,7 +478,8 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                         return Row(
                           children: [
                             CachedNetworkImage(
-                              imageUrl: controller.summary.payment.image,
+                              imageUrl:
+                                  controller.order.paymentChannelModel.image,
                               width: 50,
                               height: 40,
                               placeholder: (context, index) => AyoShimmer(
@@ -491,7 +491,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                             SizedBox(width: 10),
                             Expanded(
                               child: Text(
-                                '${controller.summary.payment.name}',
+                                '${controller.order.paymentChannelModel.name}',
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -524,7 +524,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                           ),
                           Obx(() {
                             return Text(
-                              '${controller.helper.formatMoney(double.parse(controller.summary.summary.shopTotal))}',
+                              '${controller.helper.formatMoney(double.parse(controller.order.shopTotal ?? '0'))}',
                               style: TextStyle(
                                 color: Colors.grey[800],
                                 fontWeight: FontWeight.w600,
@@ -546,7 +546,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                           ),
                           Obx(() {
                             return Text(
-                              '${controller.helper.formatMoney(double.parse(controller.summary.summary.deliveryTotal))}',
+                              '${controller.helper.formatMoney(double.parse(controller.order.deliveryTotal ?? '0'))}',
                               style: TextStyle(
                                 color: Colors.grey[800],
                                 fontWeight: FontWeight.w600,
@@ -568,7 +568,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                           ),
                           Obx(() {
                             return Text(
-                              '${controller.helper.formatMoney(double.parse(controller.summary.summary.adminFeeTotal))}',
+                              '${controller.helper.formatMoney(double.parse(controller.order.adminFeeTotal ?? '0'))}',
                               style: TextStyle(
                                 color: Colors.grey[800],
                                 fontWeight: FontWeight.w600,

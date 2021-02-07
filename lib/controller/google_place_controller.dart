@@ -90,14 +90,15 @@ class GooglePlaceController extends GetxController {
 
   Future<DistanceResponse> distanceWithLocation(
       List<Location> origin, List<Location> destination) async {
-    await _distance
+    return await _distance
         .distanceWithLocation(origin, destination,
             travelMode: TravelMode.driving, languageCode: 'id')
         .then((distance) {
-      print('DISTANCE IS ${distance.results[0].elements[0].distance}');
-      print('DURATION IS ${distance.results[0].elements[0].duration}');
+      print('DISTANCE IS ${distance.results[0].elements[0].distance.text}');
+      print('DURATION IS ${distance.results[0].elements[0].duration.text}');
+
+      return distance;
     });
-    return await null;
   }
 
   void init() {

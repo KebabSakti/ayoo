@@ -3,12 +3,10 @@ import 'package:ayoo/controller/payment_channel_controller.dart';
 import 'package:ayoo/instance/helper_instance.dart';
 import 'package:ayoo/model/customer_model.dart';
 import 'package:ayoo/model/delivery_address_model.dart';
-import 'package:ayoo/model/delivery_detail_model.dart';
-import 'package:ayoo/model/mitra_model.dart';
+import 'package:ayoo/model/delivery_mitra_model.dart';
+import 'package:ayoo/model/order_detail_model.dart';
 import 'package:ayoo/model/order_model.dart';
-import 'package:ayoo/model/order_summary_model.dart';
 import 'package:ayoo/model/payment_channel_model.dart';
-import 'package:ayoo/model/shopping_cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -18,78 +16,71 @@ class OrderSummaryPageController extends GetxController {
   final HelperInstance helper = Get.find();
   final PaymentChannelController paymentChannelController = Get.find();
   final CustomerController customerController = Get.find();
-  final List<ShoppingCartModel> items = Get.arguments;
-  final Rx<OrderSummaryModel> _orderSummary = OrderSummaryModel().obs;
+  final List<OrderDetailModel> items = Get.arguments;
+  final Rx<OrderModel> _orderModel = OrderModel().obs;
 
-  OrderSummaryModel get summary => _orderSummary.value;
+  OrderModel get order => _orderModel.value;
 
-  void setOrderSummary(OrderSummaryModel summary) {
-    _orderSummary.value = summary;
+  void setOrderSummary(OrderModel order) {
+    _orderModel.value = order;
   }
 
   void setCustomer(CustomerModel customer) {
-    setOrderSummary(summary.copyWith(customer: customer));
+    setOrderSummary(order.copyWith(customerModel: customer));
   }
 
   void setDeliveryAddress(DeliveryAddressModel deliveryAddress) {
-    setOrderSummary(summary.copyWith(deliveryAddress: deliveryAddress));
+    setOrderSummary(order.copyWith(deliveryAddressModel: deliveryAddress));
   }
 
-  void setDeliveryDetail(List<DeliveryDetailModel> deliveryDetails) {
-    setOrderSummary(summary.copyWith(deliveryDetails: deliveryDetails));
+  void setMitra(List<DeliveryMitraModel> mitras) {
+    setOrderSummary(order.copyWith(deliveryMitraModel: mitras));
   }
 
-  void setMitra(List<MitraModel> mitras) {
-    setOrderSummary(summary.copyWith(mitras: mitras));
-  }
-
-  void setOrderItems(List<ShoppingCartModel> orderItems) {
-    setOrderSummary(summary.copyWith(orderItems: orderItems));
+  void setOrderItems(List<OrderDetailModel> orderItems) {
+    setOrderSummary(order.copyWith(orderDetailModel: orderItems));
   }
 
   void setPayment(PaymentChannelModel payment) {
-    setOrderSummary(summary.copyWith(payment: payment));
-  }
-
-  void setOrder(OrderModel order) {
-    setOrderSummary(summary.copyWith(summary: order));
+    setOrderSummary(order.copyWith(paymentChannelModel: payment));
   }
 
   List<String> getOrderTypes() {
-    var ids = items.map((item) => item.product.deliveryTypeId).toList();
+    var ids = order.orderDetailModel
+        .map((item) => item.product.deliveryTypeId)
+        .toList();
     return [
       ...{...ids}
     ];
   }
 
   double calculateShopTotal() {
-    return summary.orderItems
+    return order.orderDetailModel
         .fold(0, (value, element) => value + double.parse(element.total));
   }
 
   double calculateShippingTotal() {
-    return summary.deliveryDetails
+    return order.deliveryMitraModel
             ?.fold(0, (value, element) => value + double.parse(element.fee)) ??
         0;
   }
 
   double calculateAdminFee() {
     double total = calculateShopTotal() + calculateShippingTotal();
-    return (summary.payment.channelCategory != "COD")
-        ? (summary.payment.feeFix == null)
-            ? (double.parse(summary.payment.feePercentage) / 100) * total
-            : double.parse(summary.payment.feeFix)
+    return (order.paymentChannelModel.channelCategory != "COD")
+        ? (order.paymentChannelModel.feeFix == null)
+            ? (double.parse(order.paymentChannelModel.feePercentage) / 100) *
+                total
+            : double.parse(order.paymentChannelModel.feeFix)
         : 0;
   }
 
   void setOrderTotal() {
-    setOrder(
-      OrderModel(
-        shopTotal: calculateShopTotal().toString(),
-        deliveryTotal: calculateShippingTotal().toString(),
-        adminFeeTotal: calculateAdminFee().toString(),
-      ),
-    );
+    setOrderSummary(order.copyWith(
+      shopTotal: calculateShopTotal().toString(),
+      deliveryTotal: calculateShippingTotal().toString(),
+      adminFeeTotal: calculateAdminFee().toString(),
+    ));
   }
 
   double calculateGrandTotal() {
@@ -147,16 +138,25 @@ class OrderSummaryPageController extends GetxController {
 
   Future navigateToDeliveryDetailPage() async {
     requestLocationPermission(() async {
-      var deliveryDetails = await Get.toNamed('/delivery_detail_page',
+      var result = await Get.toNamed('/delivery_detail_page',
           arguments: getOrderTypes());
-      if (deliveryDetails != null) setDeliveryDetail(deliveryDetails);
-      setOrderTotal();
+
+      if (result != null && result.length > 0) {
+        Future.delayed(Duration(milliseconds: 100), () {
+          setOrderSummary(order.copyWith(
+            deliveryMitraModel: result[0],
+            mapAddress: result[1].result.formattedAddress,
+          ));
+
+          setOrderTotal();
+        });
+      }
     });
   }
 
   Future navigateToPaymentChannelPage() async {
-    var payment =
-        await Get.toNamed('/payment_channel_page', arguments: summary.payment);
+    var payment = await Get.toNamed('/payment_channel_page',
+        arguments: order.paymentChannelModel);
     if (payment != null) {
       setPayment(payment);
       setOrderTotal();

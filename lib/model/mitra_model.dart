@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:ayoo/model/courier_model.dart';
 import 'package:ayoo/model/delivery_type_model.dart';
 
 List<MitraModel> mitraModelFromJson(String str) =>
@@ -27,9 +28,8 @@ class MitraModel {
     this.status,
     this.createdAt,
     this.updatedAt,
-    this.distance,
+    this.courierModel,
     this.deliveryTypeModel,
-    this.ongkir,
   });
 
   int id;
@@ -45,9 +45,8 @@ class MitraModel {
   String status;
   DateTime createdAt;
   DateTime updatedAt;
-  double distance;
+  List<CourierModel> courierModel;
   DeliveryTypeModel deliveryTypeModel;
-  String ongkir;
 
   MitraModel copyWith({
     int id,
@@ -63,9 +62,8 @@ class MitraModel {
     String status,
     DateTime createdAt,
     DateTime updatedAt,
-    double distance,
+    List<CourierModel> courierModel,
     DeliveryTypeModel deliveryTypeModel,
-    String ongkir,
   }) =>
       MitraModel(
         id: id ?? this.id,
@@ -81,9 +79,8 @@ class MitraModel {
         status: status ?? this.status,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
-        distance: distance ?? this.distance,
+        courierModel: courierModel ?? this.courierModel,
         deliveryTypeModel: deliveryTypeModel ?? this.deliveryTypeModel,
-        ongkir: ongkir ?? this.ongkir,
       );
 
   factory MitraModel.fromJson(Map<String, dynamic> json) => MitraModel(
@@ -105,11 +102,13 @@ class MitraModel {
         updatedAt: json["updated_at"] == null
             ? null
             : DateTime.parse(json["updated_at"]),
-        distance: json["distance"] == null ? null : json["distance"].toDouble(),
+        courierModel: json["courier_model"] == null
+            ? null
+            : List<CourierModel>.from(
+                json["courier_model"].map((x) => CourierModel.fromJson(x))),
         deliveryTypeModel: json["delivery_type_model"] == null
             ? null
             : DeliveryTypeModel.fromJson(json["delivery_type_model"]),
-        ongkir: json["ongkir"] == null ? null : json["ongkir"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -126,9 +125,10 @@ class MitraModel {
         "status": status == null ? null : status,
         "created_at": createdAt == null ? null : createdAt.toIso8601String(),
         "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
-        "distance": distance == null ? null : distance,
+        "courier_model": courierModel == null
+            ? null
+            : List<dynamic>.from(courierModel.map((x) => x.toJson())),
         "delivery_type_model":
             deliveryTypeModel == null ? null : deliveryTypeModel.toJson(),
-        "ongkir": ongkir == null ? null : ongkir,
       };
 }

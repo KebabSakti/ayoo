@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:ayoo/model/product_model.dart';
+
 List<OrderDetailModel> orderDetailModelFromJson(String str) =>
     List<OrderDetailModel>.from(
         json.decode(str).map((x) => OrderDetailModel.fromJson(x)));
@@ -16,11 +18,11 @@ class OrderDetailModel {
     this.id,
     this.saleDetailId,
     this.saleId,
-    this.deliveryTypeId,
     this.productId,
     this.note,
     this.qty,
     this.total,
+    this.product,
     this.createdAt,
     this.updatedAt,
   });
@@ -28,11 +30,11 @@ class OrderDetailModel {
   int id;
   String saleDetailId;
   String saleId;
-  String deliveryTypeId;
   String productId;
-  dynamic note;
+  String note;
   int qty;
   String total;
+  ProductModel product;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -42,9 +44,10 @@ class OrderDetailModel {
     String saleId,
     String deliveryTypeId,
     String productId,
-    dynamic note,
+    String note,
     int qty,
     String total,
+    ProductModel product,
     DateTime createdAt,
     DateTime updatedAt,
   }) =>
@@ -52,11 +55,11 @@ class OrderDetailModel {
         id: id ?? this.id,
         saleDetailId: saleDetailId ?? this.saleDetailId,
         saleId: saleId ?? this.saleId,
-        deliveryTypeId: deliveryTypeId ?? this.deliveryTypeId,
         productId: productId ?? this.productId,
         note: note ?? this.note,
         qty: qty ?? this.qty,
         total: total ?? this.total,
+        product: product ?? this.product,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
@@ -67,12 +70,13 @@ class OrderDetailModel {
         saleDetailId:
             json["sale_detail_id"] == null ? null : json["sale_detail_id"],
         saleId: json["sale_id"] == null ? null : json["sale_id"],
-        deliveryTypeId:
-            json["delivery_type_id"] == null ? null : json["delivery_type_id"],
         productId: json["product_id"] == null ? null : json["product_id"],
-        note: json["note"],
+        note: json["note"] == null ? null : json["note"],
         qty: json["qty"] == null ? null : json["qty"],
         total: json["total"] == null ? null : json["total"],
+        product: json["product"] == null
+            ? null
+            : ProductModel.fromJson(json["product"]),
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
@@ -85,11 +89,11 @@ class OrderDetailModel {
         "id": id == null ? null : id,
         "sale_detail_id": saleDetailId == null ? null : saleDetailId,
         "sale_id": saleId == null ? null : saleId,
-        "delivery_type_id": deliveryTypeId == null ? null : deliveryTypeId,
         "product_id": productId == null ? null : productId,
-        "note": note,
+        "note": note == null ? null : note,
         "qty": qty == null ? null : qty,
         "total": total == null ? null : total,
+        "product": product == null ? null : product.toJson(),
         "created_at": createdAt == null ? null : createdAt.toIso8601String(),
         "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
       };

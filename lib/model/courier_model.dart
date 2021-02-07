@@ -1,9 +1,14 @@
+// To parse this JSON data, do
+//
+//     final courierModel = courierModelFromJson(jsonString);
+
 import 'dart:convert';
 
-CourierModel courierModelFromJson(String str) =>
-    CourierModel.fromJson(json.decode(str));
+List<CourierModel> courierModelFromJson(String str) => List<CourierModel>.from(
+    json.decode(str).map((x) => CourierModel.fromJson(x)));
 
-String courierModelToJson(CourierModel data) => json.encode(data.toJson());
+String courierModelToJson(List<CourierModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class CourierModel {
   CourierModel({
@@ -12,7 +17,6 @@ class CourierModel {
     this.mitraId,
     this.name,
     this.phone,
-    this.password,
     this.active,
     this.createdAt,
     this.updatedAt,
@@ -23,7 +27,6 @@ class CourierModel {
   String mitraId;
   String name;
   String phone;
-  String password;
   int active;
   DateTime createdAt;
   DateTime updatedAt;
@@ -34,7 +37,6 @@ class CourierModel {
     String mitraId,
     String name,
     String phone,
-    String password,
     int active,
     DateTime createdAt,
     DateTime updatedAt,
@@ -45,7 +47,6 @@ class CourierModel {
         mitraId: mitraId ?? this.mitraId,
         name: name ?? this.name,
         phone: phone ?? this.phone,
-        password: password ?? this.password,
         active: active ?? this.active,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
@@ -57,7 +58,6 @@ class CourierModel {
         mitraId: json["mitra_id"] == null ? null : json["mitra_id"],
         name: json["name"] == null ? null : json["name"],
         phone: json["phone"] == null ? null : json["phone"],
-        password: json["password"] == null ? null : json["password"],
         active: json["active"] == null ? null : json["active"],
         createdAt: json["created_at"] == null
             ? null
@@ -73,7 +73,6 @@ class CourierModel {
         "mitra_id": mitraId == null ? null : mitraId,
         "name": name == null ? null : name,
         "phone": phone == null ? null : phone,
-        "password": password == null ? null : password,
         "active": active == null ? null : active,
         "created_at": createdAt == null ? null : createdAt.toIso8601String(),
         "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),

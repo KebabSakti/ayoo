@@ -1,15 +1,14 @@
 import 'package:ayoo/controller/product_paginate_controller.dart';
 import 'package:ayoo/controller/shopping_cart_controller.dart';
 import 'package:ayoo/instance/helper_instance.dart';
+import 'package:ayoo/model/order_detail_model.dart';
 import 'package:ayoo/model/product_model.dart';
 import 'package:ayoo/model/product_query_model.dart';
 import 'package:ayoo/model/shopping_cart_model.dart';
 import 'package:ayoo/repo/remote/product_detail_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ProductDetailPageController extends GetxController {
@@ -84,9 +83,7 @@ class ProductDetailPageController extends GetxController {
     Get.toNamed(
       '/order_summary',
       arguments: [
-        ShoppingCartModel(
-          checked: 1,
-          price: product.lastPrice,
+        OrderDetailModel(
           productId: product.productId,
           qty: 1,
           total: product.lastPrice,

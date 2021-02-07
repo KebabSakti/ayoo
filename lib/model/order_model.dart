@@ -5,7 +5,9 @@
 import 'dart:convert';
 
 import 'package:ayoo/model/customer_model.dart';
-import 'package:ayoo/model/delivery_detail_model.dart';
+import 'package:ayoo/model/delivery_address_model.dart';
+import 'package:ayoo/model/delivery_courier_model.dart';
+import 'package:ayoo/model/delivery_mitra_model.dart';
 import 'package:ayoo/model/order_detail_model.dart';
 import 'package:ayoo/model/order_status_model.dart';
 import 'package:ayoo/model/payment_channel_model.dart';
@@ -35,10 +37,13 @@ class OrderModel {
     this.updatedAt,
     this.orderStatusModel,
     this.orderDetailModel,
-    this.deliveryDetailModel,
     this.paymentChannelModel,
     this.paymentStatusModel,
     this.customerModel,
+    this.mapAddress,
+    this.deliveryAddressModel,
+    this.deliveryMitraModel,
+    this.deliveryCourierModel,
   });
 
   int id;
@@ -57,10 +62,13 @@ class OrderModel {
   DateTime updatedAt;
   List<OrderStatusModel> orderStatusModel;
   List<OrderDetailModel> orderDetailModel;
-  List<DeliveryDetailModel> deliveryDetailModel;
   PaymentChannelModel paymentChannelModel;
   List<PaymentStatusModel> paymentStatusModel;
   CustomerModel customerModel;
+  String mapAddress;
+  DeliveryAddressModel deliveryAddressModel;
+  List<DeliveryMitraModel> deliveryMitraModel;
+  List<DeliveryCourierModel> deliveryCourierModel;
 
   OrderModel copyWith({
     int id,
@@ -79,10 +87,13 @@ class OrderModel {
     DateTime updatedAt,
     List<OrderStatusModel> orderStatusModel,
     List<OrderDetailModel> orderDetailModel,
-    List<DeliveryDetailModel> deliveryDetailModel,
     PaymentChannelModel paymentChannelModel,
     List<PaymentStatusModel> paymentStatusModel,
     CustomerModel customerModel,
+    String mapAddress,
+    DeliveryAddressModel deliveryAddressModel,
+    List<DeliveryMitraModel> deliveryMitraModel,
+    List<DeliveryCourierModel> deliveryCourierModel,
   }) =>
       OrderModel(
         id: id ?? this.id,
@@ -101,10 +112,13 @@ class OrderModel {
         updatedAt: updatedAt ?? this.updatedAt,
         orderStatusModel: orderStatusModel ?? this.orderStatusModel,
         orderDetailModel: orderDetailModel ?? this.orderDetailModel,
-        deliveryDetailModel: deliveryDetailModel ?? this.deliveryDetailModel,
         paymentChannelModel: paymentChannelModel ?? this.paymentChannelModel,
         paymentStatusModel: paymentStatusModel ?? this.paymentStatusModel,
         customerModel: customerModel ?? this.customerModel,
+        mapAddress: mapAddress ?? this.mapAddress,
+        deliveryAddressModel: deliveryAddressModel ?? this.deliveryAddressModel,
+        deliveryMitraModel: deliveryMitraModel ?? this.deliveryMitraModel,
+        deliveryCourierModel: deliveryCourierModel ?? this.deliveryCourierModel,
       );
 
   factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
@@ -139,10 +153,6 @@ class OrderModel {
             ? null
             : List<OrderDetailModel>.from(json["order_detail_model"]
                 .map((x) => OrderDetailModel.fromJson(x))),
-        deliveryDetailModel: json["delivery_detail_model"] == null
-            ? null
-            : List<DeliveryDetailModel>.from(json["delivery_detail_model"]
-                .map((x) => DeliveryDetailModel.fromJson(x))),
         paymentChannelModel: json["payment_channel_model"] == null
             ? null
             : PaymentChannelModel.fromJson(json["payment_channel_model"]),
@@ -153,6 +163,18 @@ class OrderModel {
         customerModel: json["customer_model"] == null
             ? null
             : CustomerModel.fromJson(json["customer_model"]),
+        mapAddress: json["map_address"] == null ? null : json["map_address"],
+        deliveryAddressModel: json["delivery_address_model"] == null
+            ? null
+            : DeliveryAddressModel.fromJson(json["delivery_address_model"]),
+        deliveryMitraModel: json["delivery_mitra_model"] == null
+            ? null
+            : List<DeliveryMitraModel>.from(json["delivery_mitra_model"]
+                .map((x) => DeliveryMitraModel.fromJson(x))),
+        deliveryCourierModel: json["delivery_courier_model"] == null
+            ? null
+            : List<DeliveryCourierModel>.from(json["delivery_courier_model"]
+                .map((x) => DeliveryCourierModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -177,14 +199,20 @@ class OrderModel {
         "order_detail_model": orderDetailModel == null
             ? null
             : List<dynamic>.from(orderDetailModel.map((x) => x.toJson())),
-        "delivery_detail_model": deliveryDetailModel == null
-            ? null
-            : List<dynamic>.from(deliveryDetailModel.map((x) => x.toJson())),
         "payment_channel_model":
             paymentChannelModel == null ? null : paymentChannelModel.toJson(),
         "payment_status_model": paymentStatusModel == null
             ? null
             : List<dynamic>.from(paymentStatusModel.map((x) => x.toJson())),
         "customer_model": customerModel == null ? null : customerModel.toJson(),
+        "map_address": mapAddress == null ? null : mapAddress,
+        "delivery_address_model":
+            deliveryAddressModel == null ? null : deliveryAddressModel.toJson(),
+        "delivery_mitra_model": deliveryMitraModel == null
+            ? null
+            : List<dynamic>.from(deliveryMitraModel.map((x) => x.toJson())),
+        "delivery_courier_model": deliveryCourierModel == null
+            ? null
+            : List<dynamic>.from(deliveryCourierModel.map((x) => x.toJson())),
       };
 }

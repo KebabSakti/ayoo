@@ -50,51 +50,28 @@ class AppPage extends GetView<AppPageController> {
               children: [
                 Expanded(
                   child: PageView(
-                    controller: controller.appPageViewController,
+                    controller: controller.pageController,
                     physics: NeverScrollableScrollPhysics(),
-                    children: [
-                      HomePage(),
-                      OrderPage(),
-                      Container(),
-                      Container(),
-                      Container(),
-                    ],
+                    children: controller.menus.map((menu) {
+                      return menu.page;
+                    }).toList(),
                   ),
                 ),
-                AyoBottomNavigationBar(
-                  items: [
-                    AyoBottomNavigationBarItem(
+                Obx(() {
+                  return AyoBottomNavigationBar(
+                      items: controller.menus.map((menu) {
+                    return AyoBottomNavigationBarItem(
                       width: Get.size.width / 5,
-                      icon: FontAwesomeIcons.shoppingCart,
-                      text: 'Home',
-                      index: 0,
-                    ),
-                    AyoBottomNavigationBarItem(
-                      width: Get.size.width / 5,
-                      icon: FontAwesomeIcons.clipboardList,
-                      text: 'Order',
-                      index: 1,
-                    ),
-                    AyoBottomNavigationBarItem(
-                      width: Get.size.width / 5,
-                      icon: FontAwesomeIcons.solidCommentDots,
-                      text: 'Chat',
-                      index: 2,
-                    ),
-                    AyoBottomNavigationBarItem(
-                      width: Get.size.width / 5,
-                      icon: FontAwesomeIcons.solidBell,
-                      text: 'Notif',
-                      index: 3,
-                    ),
-                    AyoBottomNavigationBarItem(
-                      width: Get.size.width / 5,
-                      icon: FontAwesomeIcons.userAlt,
-                      text: 'Akun',
-                      index: 4,
-                    ),
-                  ],
-                ),
+                      icon: menu.icon,
+                      text: menu.name,
+                      notification: menu.notification,
+                      color: controller.activePage.value == menu.index
+                          ? Get.theme.primaryColor
+                          : Colors.grey[500],
+                      onTap: () => controller.activePage(menu.index),
+                    );
+                  }).toList());
+                }),
               ],
             ),
             AyoSlidingUpPanel(

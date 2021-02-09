@@ -626,7 +626,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
             ),
             FlatButton(
               onPressed: () async {
-                 controller.submitOrder();
+                controller.submitOrder();
               },
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               color: Get.theme.primaryColor,

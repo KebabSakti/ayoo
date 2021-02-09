@@ -174,11 +174,25 @@ class _HomePageState extends State<HomePage>
                     child: Obx(
                       () => Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: AyoHorizontalProduct(
-                          loading: controller.loading.value,
-                          products: controller.productPaginatePopularController
-                              .productPaginateModel.value.data,
-                        ),
+                        child: (controller.loading.value == false &&
+                                controller
+                                        .productPaginatePopularController
+                                        .productPaginateModel
+                                        .value
+                                        .data
+                                        .length >
+                                    0)
+                            ? AyoHorizontalProduct(
+                                loading: controller.loading.value,
+                                products: controller
+                                    .productPaginatePopularController
+                                    .productPaginateModel
+                                    .value
+                                    .data,
+                              )
+                            : Center(
+                                child: Text('Belum ada produk'),
+                              ),
                       ),
                     ),
                   ),

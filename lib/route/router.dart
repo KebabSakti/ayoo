@@ -6,6 +6,7 @@ import 'package:ayoo/binding/delivery_detail_page_binding.dart';
 import 'package:ayoo/binding/intro_page_binding.dart';
 import 'package:ayoo/binding/order_summary_page_binding.dart';
 import 'package:ayoo/binding/payment_channel_page_binding.dart';
+import 'package:ayoo/binding/place_order_page_binding.dart';
 import 'package:ayoo/binding/product_category_page_binding.dart';
 import 'package:ayoo/binding/product_page_binding.dart';
 import 'package:ayoo/binding/product_review_page_binding.dart';
@@ -19,6 +20,7 @@ import 'package:ayoo/view/page/order_summary_page.dart';
 import 'package:ayoo/view/page/page.dart';
 import 'package:ayoo/binding/binding.dart';
 import 'package:ayoo/view/page/payment_channel_page.dart';
+import 'package:ayoo/view/page/place_order_page.dart';
 import 'package:ayoo/view/page/product_category_page.dart';
 import 'package:ayoo/view/page/product_detail_page.dart';
 import 'package:ayoo/view/page/product_detail_page_other.dart';
@@ -107,6 +109,11 @@ class AppRouter {
       name: '/payment_channel_page',
       page: () => PaymentChannelPage(),
       binding: PaymentChannelPageBinding(),
+    ),
+    GetPage(
+      name: '/place_order_page',
+      page: () => PLaceOrderPage(),
+      binding: PlaceOrderPageBinding(),
     ),
   ];
 }

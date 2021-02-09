@@ -16,7 +16,8 @@ class OrderSummaryPageController extends GetxController {
   final HelperInstance helper = Get.find();
   final PaymentChannelController paymentChannelController = Get.find();
   final CustomerController customerController = Get.find();
-  final List<OrderDetailModel> items = Get.arguments;
+  final List<OrderDetailModel> items = Get.arguments.items;
+  final bool clearShoppingCart = Get.arguments.clearShoppingCart;
   final Rx<OrderModel> _orderModel = OrderModel().obs;
 
   OrderModel get order => _orderModel.value;
@@ -43,6 +44,10 @@ class OrderSummaryPageController extends GetxController {
 
   void setPayment(PaymentChannelModel payment) {
     setOrderSummary(order.copyWith(paymentChannelModel: payment));
+  }
+
+  void setClearCartRule() {
+    setOrderSummary(order.copyWith(clearShoppingCart: clearShoppingCart));
   }
 
   List<String> getOrderTypes() {
@@ -80,6 +85,7 @@ class OrderSummaryPageController extends GetxController {
       shopTotal: calculateShopTotal().toString(),
       deliveryTotal: calculateShippingTotal().toString(),
       adminFeeTotal: calculateAdminFee().toString(),
+      total: calculateGrandTotal().toStringAsFixed(0),
     ));
   }
 
@@ -163,18 +169,28 @@ class OrderSummaryPageController extends GetxController {
     }
   }
 
-  void submitOrder() {}
+  void submitOrder() {
+    if (order.deliveryAddressModel != null &&
+        order.deliveryMitraModel != null) {
+      Get.offAllNamed('/place_order_page', arguments: order);
+    } else {
+      helper.showToast('Alamat dan tujuan pengiriman tidak boleh kosong');
+    }
+  }
 
   void init() {
-    if (customerController.customer.deliveryAddressModel.length > 0)
+    if (customerController.customer.deliveryAddressModel.length > 0) {
       setDeliveryAddress(customerController.customer.deliveryAddressModel
           .firstWhere((item) => item.isDefault > 0));
+    }
 
     setOrderItems(items);
 
     setPayment(paymentChannelController.defaultPayment);
 
     setOrderTotal();
+
+    setClearCartRule();
   }
 
   @override

@@ -46,9 +46,9 @@ class PaymentChannelPage extends GetView<PaymentChannelPageController> {
                       height: 40,
                     ),
                   ),
-                  trailing: (controller.selectedPaymend.businessId ==
+                  trailing: (controller.selectedPaymend.channelCode ==
                           controller.paymentController.paymentChannels[index]
-                              .businessId)
+                              .channelCode)
                       ? Icon(
                           FontAwesomeIcons.checkCircle,
                           size: 20,

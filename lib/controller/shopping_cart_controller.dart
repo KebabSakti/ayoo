@@ -108,6 +108,12 @@ class ShoppingCartController extends GetxController {
         shoppingCart.where((i) => i.productId != productId).toList());
   }
 
+  Future clearShoppingCart() async {
+    _cartApi.clearShoppingCart().then((_) {
+      setShoppingCart([]);
+    });
+  }
+
   @override
   void onInit() {
     ever(shoppingCart, (carts) {

@@ -44,6 +44,7 @@ class OrderModel {
     this.deliveryAddressModel,
     this.deliveryMitraModel,
     this.deliveryCourierModel,
+    this.clearShoppingCart = false,
   });
 
   int id;
@@ -69,6 +70,7 @@ class OrderModel {
   DeliveryAddressModel deliveryAddressModel;
   List<DeliveryMitraModel> deliveryMitraModel;
   List<DeliveryCourierModel> deliveryCourierModel;
+  bool clearShoppingCart;
 
   OrderModel copyWith({
     int id,
@@ -94,6 +96,7 @@ class OrderModel {
     DeliveryAddressModel deliveryAddressModel,
     List<DeliveryMitraModel> deliveryMitraModel,
     List<DeliveryCourierModel> deliveryCourierModel,
+    bool clearShoppingCart,
   }) =>
       OrderModel(
         id: id ?? this.id,
@@ -119,6 +122,7 @@ class OrderModel {
         deliveryAddressModel: deliveryAddressModel ?? this.deliveryAddressModel,
         deliveryMitraModel: deliveryMitraModel ?? this.deliveryMitraModel,
         deliveryCourierModel: deliveryCourierModel ?? this.deliveryCourierModel,
+        clearShoppingCart: clearShoppingCart ?? this.clearShoppingCart,
       );
 
   factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(

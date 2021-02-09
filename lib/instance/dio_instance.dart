@@ -41,6 +41,7 @@ class DioInstance {
       "Accept": "application/json",
       "Authorization": "Bearer ${auth.token}",
       "User-Id": "${auth.userId}",
+      "Content-Type": "application/json"
     };
 
     return dio;

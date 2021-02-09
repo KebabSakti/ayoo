@@ -34,4 +34,16 @@ class ShoppingCartApi {
       return null;
     }
   }
+
+  Future clearShoppingCart() async {
+    try {
+      await _dio
+          .withAuth(auth: Get.find<AuthController>().authModel.value)
+          .post('cart/clear');
+
+      return true;
+    } on d.DioError catch (_) {
+      return null;
+    }
+  }
 }

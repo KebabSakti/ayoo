@@ -1,6 +1,7 @@
 import 'package:ayoo/controller/product_paginate_controller.dart';
 import 'package:ayoo/controller/shopping_cart_controller.dart';
 import 'package:ayoo/instance/helper_instance.dart';
+import 'package:ayoo/model/checkout_item_model.dart';
 import 'package:ayoo/model/order_detail_model.dart';
 import 'package:ayoo/model/product_model.dart';
 import 'package:ayoo/model/product_query_model.dart';
@@ -82,7 +83,7 @@ class ProductDetailPageController extends GetxController {
   void navigateToOrderSummaryPage() {
     Get.toNamed(
       '/order_summary',
-      arguments: [
+      arguments: CheckoutItemModel(items: [
         OrderDetailModel(
           productId: product.productId,
           qty: 1,
@@ -90,7 +91,7 @@ class ProductDetailPageController extends GetxController {
           product: product,
           note: noteField.text,
         )
-      ],
+      ]),
     );
   }
 

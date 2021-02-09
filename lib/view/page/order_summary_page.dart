@@ -614,7 +614,7 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
                 SizedBox(height: 2),
                 Obx(() {
                   return Text(
-                    '${controller.helper.formatMoney(controller.calculateGrandTotal())}',
+                    '${controller.helper.formatMoney(double.parse(controller.order.total))}',
                     style: TextStyle(
                       color: Get.theme.primaryColor,
                       fontWeight: FontWeight.bold,
@@ -625,7 +625,9 @@ class OrderSummaryPage extends GetView<OrderSummaryPageController> {
               ],
             ),
             FlatButton(
-              onPressed: () async {},
+              onPressed: () async {
+                 controller.submitOrder();
+              },
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               color: Get.theme.primaryColor,
               shape: RoundedRectangleBorder(

@@ -4,13 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() {
-  runApp(GetMaterialApp(
-    debugShowCheckedModeBanner: false,
-    initialRoute: '/',
-    defaultTransition: Transition.rightToLeft,
-    transitionDuration: Duration(milliseconds: 200),
-    getPages: AppRouter.routes,
-    theme: AppTheme.primary,
-    showPerformanceOverlay: false,
-  ));
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      defaultTransition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 200),
+      getPages: AppRouter.routes,
+      theme: AppTheme.primary,
+      showPerformanceOverlay: false,
+    );
+  }
 }

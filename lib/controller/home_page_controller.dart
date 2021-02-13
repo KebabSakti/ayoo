@@ -1,7 +1,9 @@
 import 'package:ayoo/controller/app_page_controller.dart';
 import 'package:ayoo/controller/carousel_banner_controller.dart';
 import 'package:ayoo/controller/customer_controller.dart';
+import 'package:ayoo/controller/fcm_controller.dart';
 import 'package:ayoo/controller/main_category_controller.dart';
+import 'package:ayoo/controller/order_controller.dart';
 import 'package:ayoo/controller/payment_channel_controller.dart';
 import 'package:ayoo/controller/search_controller.dart';
 import 'package:ayoo/controller/product_paginate_controller.dart';
@@ -16,6 +18,7 @@ class HomePageController extends GetxController {
   final ScrollController scrollController = ScrollController();
 
   final CustomerController customerController = Get.find();
+  final FcmController fcm = Get.find();
   final CarouselBannerController carouselBannerController = Get.find();
   final MainCategoryController mainCategoryController = Get.find();
   final ProductPaginateController productPaginatePopularController =
@@ -23,6 +26,7 @@ class HomePageController extends GetxController {
   final ProductPaginateController productPaginateController = Get.find();
   final SearchController searchController = Get.find(tag: 'MostSearch');
   final PaymentChannelController paymentChannelController = Get.find();
+  final OrderController orderController = Get.find();
 
   final PanelController panelController =
       Get.find<AppPageController>().panelController;
@@ -35,6 +39,7 @@ class HomePageController extends GetxController {
 
     await _initialHomeApi.fetchInitialHome().then((data) async {
       customerController.setCustomer(data.customerModel);
+      fcm.init();
       await carouselBannerController
           .setCarouselBanners(data.carouselBannerModel);
       await mainCategoryController.setMainCategories(data.mainCategoryModel);
@@ -44,6 +49,7 @@ class HomePageController extends GetxController {
           .setProductPaginateModel(data.productPaginateModel);
       await searchController.setSearchModel(data.mostSearchModel);
       paymentChannelController.setPaymentChannel(data.paymentChannelModel);
+      await orderController.fetchOrder();
     });
 
     loading.value = false;

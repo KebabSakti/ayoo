@@ -8,6 +8,18 @@ import 'package:get/get.dart';
 class OrderApi {
   final DioInstance _dio = Get.find();
 
+  Future<List<OrderModel>> fetchOrder() async {
+    try {
+      var response = await _dio
+          .withAuth(auth: Get.find<AuthController>().authModel.value)
+          .post('order/fetch');
+
+      return orderModelFromJson(response.data);
+    } on d.DioError catch (_) {
+      return null;
+    }
+  }
+
   Future<List<OrderModel>> createOrder({@required OrderModel order}) async {
     try {
       var response = await _dio
@@ -49,6 +61,31 @@ class OrderApi {
           );
 
       return orderModelFromJson(response.data);
+    } on d.DioError catch (_) {
+      return null;
+    }
+  }
+
+  Future resetRequestQueue({@required String saleId}) async {
+    try {
+      await _dio
+          .withAuth(auth: Get.find<AuthController>().authModel.value)
+          .post('order/reset', data: {'sale_id': saleId});
+    } on d.DioError catch (_) {
+      return null;
+    }
+  }
+
+  Future addOrderQueue({@required OrderModel order}) async {
+    try {
+      await _dio
+          .withAuth(auth: Get.find<AuthController>().authModel.value)
+          .post('order/queue', data: {
+        'sale_id': order.saleId,
+        'mitra_id': order.deliveryMitraModel[0].mitraId,
+      });
+
+      return true;
     } on d.DioError catch (_) {
       return null;
     }

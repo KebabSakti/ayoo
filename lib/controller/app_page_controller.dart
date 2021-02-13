@@ -11,8 +11,8 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class AppPageController extends GetxController {
   final ProductPaginateController productController = Get.find();
 
-  final pageController = PageController();
-  final panelController = PanelController();
+  final PageController pageController = PageController();
+  final PanelController panelController = PanelController();
 
   final menus = [
     MainMenuModel(
@@ -47,14 +47,13 @@ class AppPageController extends GetxController {
     )
   ].obs;
 
-  var activePage = 0.obs;
+  final activePage = 0.obs;
 
   void showNotifMenu(String target, bool value) {
     menus.assignAll(menus.map((item) {
       if (item.name == target) {
         return item.copyWith(notification: value);
       }
-
       return item;
     }).toList());
   }
@@ -64,7 +63,6 @@ class AppPageController extends GetxController {
     ever(activePage, (index) {
       pageController.jumpToPage(index);
     });
-
     super.onInit();
   }
 }

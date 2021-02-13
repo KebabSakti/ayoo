@@ -28,6 +28,12 @@ class HelperInstance {
     return description.substring(0, description.indexOf(','));
   }
 
+  String parseDate(DateTime date, {DateFormat dateFormat}) {
+    var mDate = date.toLocal();
+
+    return (dateFormat != null) ? dateFormat.format(mDate) : mDate.toString();
+  }
+
   void loading({String text = 'Loading..'}) {
     Get.dialog(
       AlertDialog(

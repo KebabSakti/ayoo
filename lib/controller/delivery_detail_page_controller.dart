@@ -177,9 +177,20 @@ class DeliveryDetailPageController extends GetxController {
     ever(manualSelect, (_) => selectPlaceModeToggle());
   }
 
+  void close() {
+    mapController.dispose();
+    searchField.dispose();
+  }
+
   @override
   void onInit() {
     init();
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    close();
+    super.onClose();
   }
 }

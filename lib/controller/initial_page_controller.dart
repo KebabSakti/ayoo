@@ -8,9 +8,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 class InitialPageController extends GetxController {
   final _initialDataApi = InitialDataApi();
 
-  final _authController = Get.find<AuthController>();
-  final _shoppingCartController = Get.find<ShoppingCartController>();
-  final _introBannerController = Get.find<IntroBannerController>();
+  final AuthController _authController = Get.find<AuthController>();
+  final ShoppingCartController _shoppingCartController =
+      Get.find<ShoppingCartController>();
+  final IntroBannerController _introBannerController =
+      Get.find<IntroBannerController>();
 
   var error = false.obs;
 

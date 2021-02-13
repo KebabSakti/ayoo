@@ -18,6 +18,7 @@ class CustomerModel {
     this.name,
     this.phone,
     this.active,
+    this.fcmToken,
     this.type,
     this.createdAt,
     this.updatedAt,
@@ -29,6 +30,7 @@ class CustomerModel {
   dynamic name;
   dynamic phone;
   int active;
+  String fcmToken;
   String type;
   DateTime createdAt;
   DateTime updatedAt;
@@ -40,6 +42,7 @@ class CustomerModel {
     dynamic name,
     dynamic phone,
     int active,
+    String fcmToken,
     String type,
     DateTime createdAt,
     DateTime updatedAt,
@@ -51,6 +54,7 @@ class CustomerModel {
         name: name ?? this.name,
         phone: phone ?? this.phone,
         active: active ?? this.active,
+        fcmToken: fcmToken ?? this.fcmToken,
         type: type ?? this.type,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
@@ -63,6 +67,7 @@ class CustomerModel {
         name: json["name"],
         phone: json["phone"],
         active: json["active"] == null ? null : json["active"],
+        fcmToken: json["fcm_token"] == null ? null : json["fcm_token"],
         type: json["type"] == null ? null : json["type"],
         createdAt: json["created_at"] == null
             ? null
@@ -82,6 +87,7 @@ class CustomerModel {
         "name": name,
         "phone": phone,
         "active": active == null ? null : active,
+        "fcm_token": fcmToken == null ? null : fcmToken,
         "type": type == null ? null : type,
         "created_at": createdAt == null ? null : createdAt.toIso8601String(),
         "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),

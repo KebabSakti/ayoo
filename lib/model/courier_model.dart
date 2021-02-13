@@ -17,6 +17,7 @@ class CourierModel {
     this.mitraId,
     this.name,
     this.phone,
+    this.fcmToken,
     this.active,
     this.createdAt,
     this.updatedAt,
@@ -27,6 +28,7 @@ class CourierModel {
   String mitraId;
   String name;
   String phone;
+  String fcmToken;
   int active;
   DateTime createdAt;
   DateTime updatedAt;
@@ -37,6 +39,7 @@ class CourierModel {
     String mitraId,
     String name,
     String phone,
+    String fcmToken,
     int active,
     DateTime createdAt,
     DateTime updatedAt,
@@ -47,6 +50,7 @@ class CourierModel {
         mitraId: mitraId ?? this.mitraId,
         name: name ?? this.name,
         phone: phone ?? this.phone,
+        fcmToken: fcmToken ?? this.fcmToken,
         active: active ?? this.active,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
@@ -58,6 +62,7 @@ class CourierModel {
         mitraId: json["mitra_id"] == null ? null : json["mitra_id"],
         name: json["name"] == null ? null : json["name"],
         phone: json["phone"] == null ? null : json["phone"],
+        fcmToken: json["fcm_token"] == null ? null : json["fcm_token"],
         active: json["active"] == null ? null : json["active"],
         createdAt: json["created_at"] == null
             ? null
@@ -73,6 +78,7 @@ class CourierModel {
         "mitra_id": mitraId == null ? null : mitraId,
         "name": name == null ? null : name,
         "phone": phone == null ? null : phone,
+        "fcm_token": fcmToken == null ? null : fcmToken,
         "active": active == null ? null : active,
         "created_at": createdAt == null ? null : createdAt.toIso8601String(),
         "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),

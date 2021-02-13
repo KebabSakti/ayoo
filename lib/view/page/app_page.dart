@@ -1,13 +1,10 @@
 import 'package:ayoo/controller/app_page_controller.dart';
-import 'package:ayoo/view/page/home_page.dart';
-import 'package:ayoo/view/page/order_page.dart';
 import 'package:ayoo/view/widget/ayo_bottom_navigation_bar.dart';
 import 'package:ayoo/view/widget/ayo_bottom_navigation_bar_item.dart';
 import 'package:ayoo/view/widget/ayo_sliding_up_panel.dart';
 import 'package:ayoo/view/widget/ayo_wrap_product_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class AppPage extends GetView<AppPageController> {

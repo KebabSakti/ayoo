@@ -130,7 +130,7 @@ Widget _listOrder(BuildContext context, List<OrderModel> orders,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '#ORDER-00000${index + 1}',
+                        '#${order.orderNumber}',
                         style: TextStyle(
                           color: Colors.grey[800],
                           fontWeight: FontWeight.bold,

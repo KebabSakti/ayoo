@@ -1,7 +1,10 @@
+// import 'dart:io';
+
 import 'dart:io';
 
 import 'package:ayoo/config/config.dart';
 import 'package:dio/adapter.dart';
+// import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:ayoo/model/auth_model.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +12,16 @@ import 'package:flutter/material.dart';
 class DioInstance {
   Dio dio;
 
-  DioInstance() {
+  DioInstance({
+    int connectTimeout = 30000,
+    int receiveTimeout = 30000,
+    String url = baseUrl,
+  }) {
     //dio default configuration
     var option = BaseOptions(
-      baseUrl: baseUrl,
-      connectTimeout: 30000,
-      receiveTimeout: 30000,
+      baseUrl: url,
+      connectTimeout: connectTimeout,
+      receiveTimeout: receiveTimeout,
       responseType: ResponseType.plain,
       headers: {"Accept": "application/json"},
     );
@@ -22,14 +29,14 @@ class DioInstance {
     //apply configuration to dio instance
     dio = Dio(option);
 
-    //interceptor for logging (development only)
-    dio.interceptors.add(LogInterceptor(responseBody: false));
+    // interceptor for logging (development only)
+    // dio.interceptors.add(LogInterceptor(responseBody: false));
 
     //proxy all connection to local sever for request/response logging (development only)
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {
       client.findProxy = (uri) {
-        return "PROXY 192.168.3.211:8001";
+        return "PROXY 192.168.3.211:8000";
       };
       client.badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;

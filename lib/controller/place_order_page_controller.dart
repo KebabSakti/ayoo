@@ -11,25 +11,25 @@ class PlaceOrderPageController extends GetxController {
   final OrderController orderController = Get.find();
 
   final loading = true.obs;
-
-  void setLoading(bool value) {
-    loading.value = value;
-  }
+  final progress = "Membuat orderan, mohon tunggu..".obs;
 
   Future _makeOrder() async {
     await _orderApi.createOrder(order: order).then((result) async {
       if (result != null) {
         orderController.setOrders(result);
+
         if (order.clearShoppingCart) {
           await cart.clearShoppingCart();
         }
-        setLoading(false);
+
+        loading(false);
       }
     });
   }
 
   void navigateToHome() {
-    Get.offNamed('/app');
+    // Get.offNamed('/app');
+    Get.back();
   }
 
   @override

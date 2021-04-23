@@ -8,6 +8,7 @@ class AyoTextFormField extends StatelessWidget {
   final int maxLines;
   final Function validator;
   final TextInputAction textInputAction;
+  final bool obscureText;
 
   AyoTextFormField({
     this.hintText,
@@ -16,6 +17,7 @@ class AyoTextFormField extends StatelessWidget {
     this.maxLines = 1,
     this.textInputAction = TextInputAction.next,
     this.validator,
+    this.obscureText = false,
     @required this.controller,
   });
 
@@ -30,6 +32,7 @@ class AyoTextFormField extends StatelessWidget {
       keyboardType: textInputType,
       maxLines: maxLines,
       textInputAction: textInputAction,
+      obscureText: obscureText,
       decoration: InputDecoration(
         hintText: hintText,
         isDense: true, // Added this

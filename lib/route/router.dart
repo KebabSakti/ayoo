@@ -3,7 +3,9 @@ import 'package:ayoo/binding/app_page_binding.dart';
 import 'package:ayoo/binding/category_page_binding.dart';
 import 'package:ayoo/binding/delivery_address_page_binding.dart';
 import 'package:ayoo/binding/delivery_detail_page_binding.dart';
+import 'package:ayoo/binding/find_courier_page_binding.dart';
 import 'package:ayoo/binding/intro_page_binding.dart';
+import 'package:ayoo/binding/login_page_binding.dart';
 import 'package:ayoo/binding/order_detail_page_binding.dart';
 import 'package:ayoo/binding/order_summary_page_binding.dart';
 import 'package:ayoo/binding/payment_channel_page_binding.dart';
@@ -11,6 +13,7 @@ import 'package:ayoo/binding/place_order_page_binding.dart';
 import 'package:ayoo/binding/product_category_page_binding.dart';
 import 'package:ayoo/binding/product_page_binding.dart';
 import 'package:ayoo/binding/product_review_page_binding.dart';
+import 'package:ayoo/binding/register_page_binding.dart';
 import 'package:ayoo/binding/search_page_binding.dart';
 import 'package:ayoo/binding/shopping_cart_page_binding.dart';
 import 'package:ayoo/view/page/add_delivery_address_page.dart';
@@ -18,6 +21,8 @@ import 'package:ayoo/view/page/category_page.dart';
 import 'package:ayoo/view/page/courier_accept_order_page.dart';
 import 'package:ayoo/view/page/delivery_address_page.dart';
 import 'package:ayoo/view/page/delivery_detail_page.dart';
+import 'package:ayoo/view/page/find_courier_page.dart';
+import 'package:ayoo/view/page/login_page.dart';
 import 'package:ayoo/view/page/order_detail_page.dart';
 import 'package:ayoo/view/page/order_summary_page.dart';
 import 'package:ayoo/view/page/page.dart';
@@ -28,6 +33,7 @@ import 'package:ayoo/view/page/product_category_page.dart';
 import 'package:ayoo/view/page/product_detail_page.dart';
 import 'package:ayoo/view/page/product_detail_page_other.dart';
 import 'package:ayoo/view/page/product_review_page.dart';
+import 'package:ayoo/view/page/register_page.dart';
 import 'package:ayoo/view/page/reset_courier_search_page.dart';
 import 'package:ayoo/view/page/shopping_cart_page.dart';
 import 'package:get/get.dart';
@@ -120,6 +126,11 @@ class AppRouter {
       binding: PlaceOrderPageBinding(),
     ),
     GetPage(
+      name: '/find_courier_page',
+      page: () => FindCourierPage(),
+      binding: FindCourierPageBinding(),
+    ),
+    GetPage(
       name: '/order_detail_page',
       page: () => OrderDetailPage(),
       binding: OrderDetailPageBinding(),
@@ -131,6 +142,16 @@ class AppRouter {
     GetPage(
       name: '/courier_accept_order_page',
       page: () => CourierAcceptOrderPage(),
+    ),
+    GetPage(
+      name: '/login',
+      binding: LoginPageBinding(),
+      page: () => LoginPage(),
+    ),
+    GetPage(
+      name: '/register',
+      binding: RegisterPageBinding(),
+      page: () => RegisterPage(),
     ),
   ];
 }

@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      enableLog: false,
       initialRoute: '/',
       defaultTransition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 200),

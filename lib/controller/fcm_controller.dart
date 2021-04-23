@@ -1,10 +1,9 @@
 import 'package:ayoo/controller/customer_controller.dart';
 import 'package:ayoo/instance/helper_instance.dart';
+import 'package:ayoo/model/courier_request_model.dart';
 import 'package:ayoo/repo/remote/fcm_api.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class FcmController extends GetxController {
@@ -13,6 +12,8 @@ class FcmController extends GetxController {
   final HelperInstance helper = Get.find();
   final CustomerController _customerController = Get.find();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+  final courierRequest = CourierRequestModel().obs;
 
   Future registerNotificationChannel() async {
     MethodChannel _channel = MethodChannel('ayobelanja.com/default_channel');
@@ -59,16 +60,29 @@ class FcmController extends GetxController {
     );
   }
 
-  void _fcmHandler(Map<String, dynamic> payload) {
+  void _fcmHandler(Map<String, dynamic> payload) async {
     var target = payload['data']['target'];
-    switch (target) {
-      case 'reset_courier_search':
-        Get.toNamed('/reset_courier_search_page', arguments: payload['data']);
-        break;
+    if (target == 'courier_request') {
+      await Future.delayed(Duration(milliseconds: 500));
+      print("onMessage: $payload");
 
-      case 'courier_accept_order':
-        Get.toNamed('/courier_accept_order_page', arguments: payload['data']);
-        break;
+      // Map<String, dynamic> courier =
+      //     await jsonDecode(payload['data']['courier_model']);
+      // courierRequest.value = CourierRequestModel(
+      //   request: payload['data']['request'],
+      //   timestamps: DateTime.parse(payload['data']['timestamps']),
+      //   courierModel: CourierModel(
+      //     id: courier['id'],
+      //     active: courier['active'],
+      //     courierId: courier['courier_id'],
+      //     fcmToken: courier['fcm_token'],
+      //     mitraId: courier['mitra_id'],
+      //     name: courier['name'],
+      //     phone: courier['phone'],
+      //     createdAt: DateTime.parse(courier['created_at']),
+      //     updatedAt: DateTime.parse(courier['updated_at']),
+      //   ),
+      // );
     }
   }
 

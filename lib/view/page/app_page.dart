@@ -4,8 +4,9 @@ import 'package:ayoo/view/widget/ayo_bottom_navigation_bar_item.dart';
 import 'package:ayoo/view/widget/ayo_sliding_up_panel.dart';
 import 'package:ayoo/view/widget/ayo_wrap_product_filter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:move_to_background/move_to_background.dart';
 
 class AppPage extends GetView<AppPageController> {
   @override
@@ -29,7 +30,8 @@ class AppPage extends GetView<AppPageController> {
                 FlatButton(
                   child: Text('Ya'),
                   onPressed: () {
-                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                    // SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                    MoveToBackground.moveTaskToBack();
                   },
                 ),
               ],
@@ -83,3 +85,16 @@ class AppPage extends GetView<AppPageController> {
     );
   }
 }
+
+// class ObserverWidget extends StatefulWidget {
+//   @override
+//   _ObserverWidgetState createState() => _ObserverWidgetState();
+// }
+
+// class _ObserverWidgetState extends State<ObserverWidget>
+//     with WidgetsBindingObserver {
+//   @override
+//   Widget build(BuildContext context) {
+//     return SizedBox.shrink();
+//   }
+// }

@@ -39,7 +39,9 @@ class HomePageController extends GetxController {
 
     await _initialHomeApi.fetchInitialHome().then((data) async {
       customerController.setCustomer(data.customerModel);
+
       fcm.init();
+
       await carouselBannerController
           .setCarouselBanners(data.carouselBannerModel);
       await mainCategoryController.setMainCategories(data.mainCategoryModel);

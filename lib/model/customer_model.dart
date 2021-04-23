@@ -23,6 +23,8 @@ class CustomerModel {
     this.createdAt,
     this.updatedAt,
     this.deliveryAddressModel,
+    this.status,
+    this.token,
   });
 
   int id;
@@ -35,6 +37,8 @@ class CustomerModel {
   DateTime createdAt;
   DateTime updatedAt;
   List<DeliveryAddressModel> deliveryAddressModel;
+  String status;
+  String token;
 
   CustomerModel copyWith({
     int id,
@@ -47,6 +51,8 @@ class CustomerModel {
     DateTime createdAt,
     DateTime updatedAt,
     List<DeliveryAddressModel> deliveryAddressModel,
+    String status,
+    String token,
   }) =>
       CustomerModel(
         id: id ?? this.id,
@@ -59,6 +65,8 @@ class CustomerModel {
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         deliveryAddressModel: deliveryAddressModel ?? this.deliveryAddressModel,
+        status: status,
+        token: token,
       );
 
   factory CustomerModel.fromJson(Map<String, dynamic> json) => CustomerModel(
@@ -79,6 +87,8 @@ class CustomerModel {
             ? null
             : List<DeliveryAddressModel>.from(json["delivery_address_model"]
                 .map((x) => DeliveryAddressModel.fromJson(x))),
+        status: json["status"] == null ? null : json["status"],
+        token: json["token"] == null ? null : json["token"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -94,5 +104,7 @@ class CustomerModel {
         "delivery_address_model": deliveryAddressModel == null
             ? null
             : List<dynamic>.from(deliveryAddressModel.map((x) => x.toJson())),
+        "status": status == null ? null : status,
+        "token": token == null ? null : token,
       };
 }

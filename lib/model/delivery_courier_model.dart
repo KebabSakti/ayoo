@@ -20,6 +20,7 @@ class DeliveryCourierModel {
     this.deliveryMitraId,
     this.courierId,
     this.saleId,
+    this.instant,
     this.deliveryNote,
     this.status,
     this.statusNote,
@@ -33,6 +34,7 @@ class DeliveryCourierModel {
   String deliveryMitraId;
   String courierId;
   String saleId;
+  int instant;
   String deliveryNote;
   String status;
   String statusNote;
@@ -46,6 +48,7 @@ class DeliveryCourierModel {
     String deliveryMitraId,
     String courierId,
     String saleId,
+    int instant,
     String deliveryNote,
     String status,
     String statusNote,
@@ -59,6 +62,7 @@ class DeliveryCourierModel {
         deliveryMitraId: deliveryMitraId ?? this.deliveryMitraId,
         courierId: courierId ?? this.courierId,
         saleId: saleId ?? this.saleId,
+        instant: instant ?? this.instant,
         deliveryNote: deliveryNote ?? this.deliveryNote,
         status: status ?? this.status,
         statusNote: statusNote ?? this.statusNote,
@@ -78,6 +82,7 @@ class DeliveryCourierModel {
             : json["delivery_mitra_id"],
         courierId: json["courier_id"] == null ? null : json["courier_id"],
         saleId: json["sale_id"] == null ? null : json["sale_id"],
+        instant: json["instant"] == null ? null : json["instant"],
         deliveryNote:
             json["delivery_note"] == null ? null : json["delivery_note"],
         status: json["status"] == null ? null : json["status"],
@@ -100,6 +105,7 @@ class DeliveryCourierModel {
         "delivery_mitra_id": deliveryMitraId == null ? null : deliveryMitraId,
         "courier_id": courierId == null ? null : courierId,
         "sale_id": saleId == null ? null : saleId,
+        "instant": instant == null ? null : instant,
         "delivery_note": deliveryNote == null ? null : deliveryNote,
         "status": status == null ? null : status,
         "status_note": statusNote == null ? null : statusNote,

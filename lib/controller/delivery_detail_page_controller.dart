@@ -114,10 +114,20 @@ class DeliveryDetailPageController extends GetxController {
   }
 
   List<MitraModel> filterMitra(List<MitraModel> mitras) {
+    var mMitras = [];
+    mitras.forEach((i) {
+      var courierOnline =
+          i.courierModel.where((e) => e.status == 'Online').length;
+
+      if (courierOnline > 0) {
+        mMitras.add(i);
+      }
+    });
+
     var idSet = <String>{};
     var details = <MitraModel>[];
 
-    for (var item in mitras) {
+    for (var item in mMitras) {
       if (idSet.add(item.deliveryTypeId)) {
         details.add(item);
       }
@@ -146,10 +156,16 @@ class DeliveryDetailPageController extends GetxController {
     var filteredMitras = filterMitra(mitras);
 
     await Future.forEach(filteredMitras, (item) async {
-      var origin = Location(placeDetailResult.result.geometry.location.lat,
+      var destination = Location(placeDetailResult.result.geometry.location.lat,
           placeDetailResult.result.geometry.location.lng);
-      var destination =
-          Location(double.parse(item.lat), double.parse(item.lng));
+      var origin = Location(double.parse(item.lat), double.parse(item.lng));
+
+      print('DESTINATION : ' +
+          destination.lat.toString() +
+          ', ' +
+          destination.lng.toString());
+
+      print('ORIGIN : ' + origin.lat.toString() + ', ' + origin.lng.toString());
 
       await googlePlaceController
           .distanceWithLocation([origin], [destination]).then((distance) {
@@ -162,6 +178,10 @@ class DeliveryDetailPageController extends GetxController {
           fee: calculateShippingFee(item.deliveryTypeModel,
                   distance.results[0].elements[0].distance.value)
               .toString(),
+          originLat: origin.lat.toString(),
+          originLng: origin.lng.toString(),
+          destLat: destination.lat.toString(),
+          destLng: destination.lng.toString(),
         ));
       });
     });

@@ -18,6 +18,7 @@ class MitraModel {
     this.id,
     this.mitraId,
     this.deliveryTypeId,
+    this.instant,
     this.name,
     this.address,
     this.owner,
@@ -35,6 +36,7 @@ class MitraModel {
   int id;
   String mitraId;
   String deliveryTypeId;
+  int instant;
   String name;
   String address;
   String owner;
@@ -52,6 +54,7 @@ class MitraModel {
     int id,
     String mitraId,
     String deliveryTypeId,
+    String instant,
     String name,
     String address,
     String owner,
@@ -69,6 +72,7 @@ class MitraModel {
         id: id ?? this.id,
         mitraId: mitraId ?? this.mitraId,
         deliveryTypeId: deliveryTypeId ?? this.deliveryTypeId,
+        instant: instant ?? this.instant,
         name: name ?? this.name,
         address: address ?? this.address,
         owner: owner ?? this.owner,
@@ -88,6 +92,7 @@ class MitraModel {
         mitraId: json["mitra_id"] == null ? null : json["mitra_id"],
         deliveryTypeId:
             json["delivery_type_id"] == null ? null : json["delivery_type_id"],
+        instant: json["instant"] == null ? null : json["instant"],
         name: json["name"] == null ? null : json["name"],
         address: json["address"] == null ? null : json["address"],
         owner: json["owner"] == null ? null : json["owner"],
@@ -115,6 +120,7 @@ class MitraModel {
         "id": id == null ? null : id,
         "mitra_id": mitraId == null ? null : mitraId,
         "delivery_type_id": deliveryTypeId == null ? null : deliveryTypeId,
+        "instant": instant == null ? null : instant,
         "name": name == null ? null : name,
         "address": address == null ? null : address,
         "owner": owner == null ? null : owner,

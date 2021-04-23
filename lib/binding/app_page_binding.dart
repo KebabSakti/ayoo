@@ -1,3 +1,4 @@
+import 'package:ayoo/controller/account_page_controller.dart';
 import 'package:ayoo/controller/app_page_controller.dart';
 import 'package:ayoo/controller/carousel_banner_controller.dart';
 import 'package:ayoo/controller/customer_controller.dart';
@@ -28,5 +29,6 @@ class AppPageBinding extends Bindings {
     Get.lazyPut<OrderController>(() => OrderController());
     Get.lazyPut(() => AppPageController());
     Get.lazyPut(() => HomePageController());
+    Get.lazyPut(() => AccountPageCountroller());
   }
 }

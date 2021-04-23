@@ -94,9 +94,6 @@ class GooglePlaceController extends GetxController {
         .distanceWithLocation(origin, destination,
             travelMode: TravelMode.driving, languageCode: 'id')
         .then((distance) {
-      print('DISTANCE IS ${distance.results[0].elements[0].distance.text}');
-      print('DURATION IS ${distance.results[0].elements[0].duration.text}');
-
       return distance;
     });
   }

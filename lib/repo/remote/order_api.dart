@@ -42,11 +42,16 @@ class OrderApi {
               'mitras': order.deliveryMitraModel
                   .map((item) => {
                         'mitra_id': item.mitraModel.mitraId,
+                        'instant': item.mitraModel.instant,
                         'distance': item.distance,
                         'distance_text': item.distanceText,
                         'duration': item.duration,
                         'duration_text': item.durationText,
                         'fee': item.fee,
+                        'origin_lat': item.originLat,
+                        'origin_lng': item.originLng,
+                        'dest_lat': item.destLat,
+                        'dest_lng': item.destLng,
                       })
                   .toList(),
               'items': order.orderDetailModel

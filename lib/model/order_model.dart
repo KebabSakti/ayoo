@@ -22,6 +22,7 @@ String orderModelToJson(List<OrderModel> data) =>
 class OrderModel {
   OrderModel({
     this.id,
+    this.orderNumber,
     this.saleId,
     this.customerId,
     this.paymentChannelId,
@@ -48,6 +49,7 @@ class OrderModel {
   });
 
   int id;
+  String orderNumber;
   String saleId;
   String customerId;
   String paymentChannelId;
@@ -74,6 +76,7 @@ class OrderModel {
 
   OrderModel copyWith({
     int id,
+    String orderNumber,
     String saleId,
     String customerId,
     String paymentChannelId,
@@ -100,6 +103,7 @@ class OrderModel {
   }) =>
       OrderModel(
         id: id ?? this.id,
+        orderNumber: orderNumber ?? this.orderNumber,
         saleId: saleId ?? this.saleId,
         customerId: customerId ?? this.customerId,
         paymentChannelId: paymentChannelId ?? this.paymentChannelId,
@@ -127,6 +131,7 @@ class OrderModel {
 
   factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
         id: json["id"] == null ? null : json["id"],
+        orderNumber: json["order_number"] == null ? null : json["order_number"],
         saleId: json["sale_id"] == null ? null : json["sale_id"],
         customerId: json["customer_id"] == null ? null : json["customer_id"],
         paymentChannelId: json["payment_channel_id"] == null
@@ -183,6 +188,7 @@ class OrderModel {
 
   Map<String, dynamic> toJson() => {
         "id": id == null ? null : id,
+        "order_number": orderNumber == null ? null : orderNumber,
         "sale_id": saleId == null ? null : saleId,
         "customer_id": customerId == null ? null : customerId,
         "payment_channel_id":

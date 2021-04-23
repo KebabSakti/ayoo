@@ -172,7 +172,20 @@ class OrderSummaryPageController extends GetxController {
   void submitOrder() {
     if (order.deliveryAddressModel != null &&
         order.deliveryMitraModel != null) {
-      Get.offAllNamed('/place_order_page', arguments: order);
+      Get.toNamed('/place_order_page', arguments: order);
+
+      // var mitra = order.deliveryMitraModel.firstWhere(
+      //   (item) => item.mitraModel.deliveryTypeModel.instant > 0,
+      //   orElse: () => null,
+      // );
+
+      // if (order.paymentChannelModel.channelCode == 'COD' && mitra != null) {
+      //   Get.toNamed('/place_order_page', arguments: order);
+      // } else {
+      //   //navigasi ke halaman pembayaran
+      //   //setelah bayar, cari kurir jika pengiriman instant
+      //   //selesai jika terjadwal (kurir akan mengirimkan notifikasi sebelum pengantaran barang besoknya)
+      // }
     } else {
       helper.showToast('Alamat dan tujuan pengiriman tidak boleh kosong');
     }

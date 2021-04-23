@@ -105,7 +105,7 @@ class PLaceOrderPage extends GetView<PlaceOrderPageController> {
                 Lottie.asset('assets/animation/makeorder.json'),
                 SizedBox(height: 60),
                 Text(
-                  'Membuat orderan, mohon tunggu..',
+                  controller.progress.value,
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.grey[800]),
                 ),

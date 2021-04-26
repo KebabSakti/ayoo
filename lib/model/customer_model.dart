@@ -17,6 +17,7 @@ class CustomerModel {
     this.userId,
     this.name,
     this.phone,
+    this.email,
     this.active,
     this.fcmToken,
     this.type,
@@ -31,6 +32,7 @@ class CustomerModel {
   String userId;
   dynamic name;
   dynamic phone;
+  String email;
   int active;
   String fcmToken;
   String type;
@@ -45,6 +47,7 @@ class CustomerModel {
     String userId,
     dynamic name,
     dynamic phone,
+    String email,
     int active,
     String fcmToken,
     String type,
@@ -58,6 +61,7 @@ class CustomerModel {
         id: id ?? this.id,
         userId: userId ?? this.userId,
         name: name ?? this.name,
+        email: email ?? this.email,
         phone: phone ?? this.phone,
         active: active ?? this.active,
         fcmToken: fcmToken ?? this.fcmToken,
@@ -73,6 +77,7 @@ class CustomerModel {
         id: json["id"] == null ? null : json["id"],
         userId: json["user_id"] == null ? null : json["user_id"],
         name: json["name"],
+        email: json["email"] == null ? null : json["email"],
         phone: json["phone"],
         active: json["active"] == null ? null : json["active"],
         fcmToken: json["fcm_token"] == null ? null : json["fcm_token"],
@@ -95,6 +100,7 @@ class CustomerModel {
         "id": id == null ? null : id,
         "user_id": userId == null ? null : userId,
         "name": name,
+        "email": email == null ? null : email,
         "phone": phone,
         "active": active == null ? null : active,
         "fcm_token": fcmToken == null ? null : fcmToken,

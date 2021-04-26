@@ -105,6 +105,25 @@ class ProductDetailPage extends StatelessWidget {
                                               fontSize: 18,
                                             ),
                                           ),
+                                          // IconButton(
+                                          //   onPressed: () {
+                                          //     controller.toggleFavourite();
+                                          //   },
+                                          //   constraints:
+                                          //       BoxConstraints(minHeight: 2),
+                                          //   icon: (controller.productDetail
+                                          //               .favouriteModel.length >
+                                          //           0)
+                                          //       ? Icon(
+                                          //           FontAwesomeIcons.solidHeart,
+                                          //           color:
+                                          //               Get.theme.primaryColor,
+                                          //         )
+                                          //       : Icon(
+                                          //           FontAwesomeIcons.heart,
+                                          //           color: Colors.grey[800],
+                                          //         ),
+                                          // ),
                                           GestureDetector(
                                             onTap: () {
                                               controller.toggleFavourite();

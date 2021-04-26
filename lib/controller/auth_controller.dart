@@ -1,4 +1,3 @@
-import 'package:ayoo/controller/customer_controller.dart';
 import 'package:ayoo/model/auth_model.dart';
 import 'package:ayoo/model/customer_model.dart';
 import 'package:ayoo/repo/remote/auth_api.dart';
@@ -40,10 +39,11 @@ class AuthController extends GetxController {
   Future<CustomerModel> register({
     @required String name,
     @required String phone,
+    @required String email,
     @required String password,
   }) async {
     return await _authApi
-        .register(name: name, phone: phone, password: password)
+        .register(name: name, phone: phone, email: email, password: password)
         .then((result) async {
       if (result != null) {
         final prefs = await SharedPreferences.getInstance();

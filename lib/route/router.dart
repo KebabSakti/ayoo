@@ -15,7 +15,9 @@ import 'package:ayoo/binding/product_page_binding.dart';
 import 'package:ayoo/binding/product_review_page_binding.dart';
 import 'package:ayoo/binding/register_page_binding.dart';
 import 'package:ayoo/binding/search_page_binding.dart';
+import 'package:ayoo/binding/setting_page_binding.dart';
 import 'package:ayoo/binding/shopping_cart_page_binding.dart';
+import 'package:ayoo/controller/setting_page_controller.dart';
 import 'package:ayoo/view/page/add_delivery_address_page.dart';
 import 'package:ayoo/view/page/category_page.dart';
 import 'package:ayoo/view/page/courier_accept_order_page.dart';
@@ -35,6 +37,7 @@ import 'package:ayoo/view/page/product_detail_page_other.dart';
 import 'package:ayoo/view/page/product_review_page.dart';
 import 'package:ayoo/view/page/register_page.dart';
 import 'package:ayoo/view/page/reset_courier_search_page.dart';
+import 'package:ayoo/view/page/setting_page.dart';
 import 'package:ayoo/view/page/shopping_cart_page.dart';
 import 'package:get/get.dart';
 
@@ -152,6 +155,11 @@ class AppRouter {
       name: '/register',
       binding: RegisterPageBinding(),
       page: () => RegisterPage(),
+    ),
+    GetPage(
+      name: '/setting',
+      binding: SettingPageBinding(),
+      page: () => SettingPage(),
     ),
   ];
 }

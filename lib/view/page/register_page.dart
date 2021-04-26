@@ -25,7 +25,7 @@ class RegisterPage extends GetView<RegisterPageController> {
             children: [
               SvgPicture.asset(
                 'assets/images/register_other.svg',
-                width: 200,
+                width: 150,
               ),
               SizedBox(height: 20),
               Text(
@@ -59,6 +59,18 @@ class RegisterPage extends GetView<RegisterPageController> {
                       controller: controller.phoneField,
                       hintText: 'No Telp',
                       textInputType: TextInputType.phone,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Field tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    AyoTextFormField(
+                      controller: controller.emailField,
+                      hintText: 'Email',
+                      textInputType: TextInputType.emailAddress,
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'Field tidak boleh kosong';

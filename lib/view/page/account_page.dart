@@ -36,7 +36,7 @@ class AccountPage extends GetView<AccountPageCountroller> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Julian Aryo',
+                                  controller.customerController.customer.name,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
@@ -44,7 +44,7 @@ class AccountPage extends GetView<AccountPageCountroller> {
                                 ),
                                 SizedBox(height: 6),
                                 Text(
-                                  '+6281254982664',
+                                  controller.customerController.customer.phone,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16,
@@ -53,7 +53,7 @@ class AccountPage extends GetView<AccountPageCountroller> {
                                 ),
                                 SizedBox(height: 6),
                                 Text(
-                                  'julian.aryo1989@gmail.com',
+                                  controller.customerController.customer.email,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16,
@@ -62,14 +62,14 @@ class AccountPage extends GetView<AccountPageCountroller> {
                                 ),
                               ],
                             ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                FontAwesomeIcons.pencilAlt,
-                                color: Colors.grey[800],
-                                size: 18,
-                              ),
-                            ),
+                            // IconButton(
+                            //   onPressed: () {},
+                            //   icon: Icon(
+                            //     FontAwesomeIcons.pencilAlt,
+                            //     color: Colors.grey[800],
+                            //     size: 18,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -103,7 +103,9 @@ class AccountPage extends GetView<AccountPageCountroller> {
                               physics: NeverScrollableScrollPhysics(),
                               children: [
                                 ListTile(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Get.toNamed('/setting');
+                                  },
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 2, horizontal: 15),
                                   title: Row(
@@ -134,7 +136,9 @@ class AccountPage extends GetView<AccountPageCountroller> {
                                   color: Colors.grey[400],
                                 ),
                                 ListTile(
-                                  onTap: () {},
+                                  onTap: () async {
+                                    //
+                                  },
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 2, horizontal: 15),
                                   title: Row(

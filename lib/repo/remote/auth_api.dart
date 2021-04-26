@@ -40,6 +40,7 @@ class AuthApi {
   Future<CustomerModel> register({
     @required String name,
     @required String phone,
+    @required String email,
     @required String password,
   }) async {
     try {
@@ -50,6 +51,7 @@ class AuthApi {
         data: {
           "name": name,
           "phone": phone,
+          "email": email,
           "password": password,
         },
       );

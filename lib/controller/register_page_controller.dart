@@ -14,6 +14,7 @@ class RegisterPageController extends GetxController {
 
   final TextEditingController nameField = TextEditingController();
   final TextEditingController phoneField = TextEditingController();
+  final TextEditingController emailField = TextEditingController();
   final TextEditingController passwordField = TextEditingController();
 
   Future register() async {
@@ -22,9 +23,11 @@ class RegisterPageController extends GetxController {
 
       await _authController
           .register(
-              name: nameField.text,
-              phone: phoneField.text,
-              password: passwordField.text)
+        name: nameField.text,
+        phone: phoneField.text,
+        email: emailField.text,
+        password: passwordField.text,
+      )
           .then((result) {
         if (result != null) {
           _customerController.setCustomer(result);

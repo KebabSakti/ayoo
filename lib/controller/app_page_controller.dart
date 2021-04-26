@@ -6,6 +6,7 @@ import 'package:ayoo/view/page/chat_page.dart';
 import 'package:ayoo/view/page/home_page.dart';
 import 'package:ayoo/view/page/notifikasi_page.dart';
 import 'package:ayoo/view/page/order_page.dart';
+import 'package:ayoo/view/page/voucher_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -35,9 +36,9 @@ class AppPageController extends GetxController with WidgetsBindingObserver {
     ),
     MainMenuModel(
       index: 2,
-      name: 'Chat',
-      icon: FontAwesomeIcons.solidCommentDots,
-      page: ChatPage(),
+      name: 'Voucher',
+      icon: FontAwesomeIcons.solidCalendarAlt,
+      page: VoucherPage(),
     ),
     MainMenuModel(
       index: 3,

@@ -7,13 +7,6 @@ class DeliveryAddressController extends GetxController {
 
   RxList<DeliveryAddressModel> addresses = List<DeliveryAddressModel>().obs;
 
-  Future<List<DeliveryAddressModel>> fetch() async {
-    var address = await _deliveryAddressApi.fetchDeliveryAddress();
-    addresses.assignAll(address ?? []);
-
-    return address;
-  }
-
   Future<List<DeliveryAddressModel>> add(DeliveryAddressModel datas) async {
     var address = await _deliveryAddressApi.addDeliveryAddress(datas);
     addresses.assignAll(address);
@@ -34,11 +27,5 @@ class DeliveryAddressController extends GetxController {
     addresses.assignAll(address);
 
     return address;
-  }
-
-  @override
-  void onInit() {
-    fetch();
-    super.onInit();
   }
 }
